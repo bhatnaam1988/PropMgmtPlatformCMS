@@ -1,17 +1,26 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { Home, MapPin, Calendar, Users as UsersIcon, Bed, Bath, Sliders } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 
 export default function StayPage() {
+  const searchParams = useSearchParams();
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // Initialize filters from URL params
   const [filters, setFilters] = useState({
-    location: '',
-    guests: 2,
+    location: searchParams.get('location') || '',
+    checkIn: searchParams.get('checkIn') ? new Date(searchParams.get('checkIn')) : null,
+    checkOut: searchParams.get('checkOut') ? new Date(searchParams.get('checkOut')) : null,
+    adults: parseInt(searchParams.get('adults') || '2'),
+    children: parseInt(searchParams.get('children') || '0'),
+    infants: parseInt(searchParams.get('infants') || '0'),
     bedrooms: 'any',
     amenities: 'any'
   });
@@ -32,9 +41,21 @@ export default function StayPage() {
     }
   }
 
+  const totalGuests = filters.adults + filters.children + filters.infants;
+  
   const filteredProperties = properties.filter(property => {
-    if (filters.guests && property.maximum_capacity < filters.guests) return false;
+    // Filter by guest capacity
+    if (totalGuests && property.maximum_capacity < totalGuests) return false;
+    
+    // Filter by bedrooms
     if (filters.bedrooms !== 'any' && property.bedrooms < parseInt(filters.bedrooms)) return false;
+    
+    // Filter by location (if Grächen is selected, show all since all properties are in Grächen)
+    if (filters.location && !filters.location.toLowerCase().includes('grächen') && 
+        !property.address?.city?.toLowerCase().includes(filters.location.toLowerCase())) {
+      return false;
+    }
+    
     return true;
   });
 
