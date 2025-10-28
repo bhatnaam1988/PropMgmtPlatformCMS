@@ -94,32 +94,42 @@ export default function StayPage() {
             and proximity to the best of local life – from mountain adventures to peaceful relaxation.
           </p>
 
-          {/* Filters */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-12">
+          {/* Filters - Fixed z-index */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-12 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Location</label>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white"
                     value={filters.location}
                     onChange={(e) => setFilters({...filters, location: e.target.value})}
                   >
                     <option value="">All locations</option>
-                    <option value="grachen">Grächen</option>
+                    <option value="Grächen">Grächen, Wallis</option>
                   </select>
                 </div>
               </div>
               
-              <div>
+              <div className="relative">
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Dates</label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Select dates"
+                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
+                  <DatePicker
+                    selected={filters.checkIn}
+                    onChange={(dates) => {
+                      const [start, end] = dates;
+                      setFilters({...filters, checkIn: start, checkOut: end});
+                    }}
+                    startDate={filters.checkIn}
+                    endDate={filters.checkOut}
+                    selectsRange
+                    placeholderText="Select dates"
                     className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg"
+                    dateFormat="MMM dd"
+                    minDate={new Date()}
+                    popperClassName="z-50"
                   />
                 </div>
               </div>
@@ -127,11 +137,11 @@ export default function StayPage() {
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Guests</label>
                 <div className="relative">
-                  <UsersIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <UsersIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg"
-                    value={filters.guests}
-                    onChange={(e) => setFilters({...filters, guests: parseInt(e.target.value)})}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white"
+                    value={totalGuests}
+                    onChange={(e) => setFilters({...filters, adults: parseInt(e.target.value), children: 0, infants: 0})}
                   >
                     <option value="1">1 guest</option>
                     <option value="2">2 guests</option>
@@ -145,9 +155,9 @@ export default function StayPage() {
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Bedrooms</label>
                 <div className="relative">
-                  <Bed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Bed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white"
                     value={filters.bedrooms}
                     onChange={(e) => setFilters({...filters, bedrooms: e.target.value})}
                   >
@@ -162,12 +172,16 @@ export default function StayPage() {
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Amenities</label>
                 <div className="relative">
-                  <Sliders className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <select className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg">
-                    <option>Any</option>
-                    <option>Parking</option>
-                    <option>Kitchen</option>
-                    <option>WiFi</option>
+                  <Sliders className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
+                  <select 
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white"
+                    value={filters.amenities}
+                    onChange={(e) => setFilters({...filters, amenities: e.target.value})}
+                  >
+                    <option value="any">Any</option>
+                    <option value="parking">Parking</option>
+                    <option value="kitchen">Kitchen</option>
+                    <option value="wifi">WiFi</option>
                   </select>
                 </div>
               </div>
