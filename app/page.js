@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Calendar, Users, MapPin, ChevronRight, Heart, Home, Users as UsersIcon, Sparkles } from 'lucide-react';
+import { ChevronRight, Heart, Home, Users as UsersIcon, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import SearchBar from '@/components/SearchBar';
 
 export default function HomePage() {
   const [properties, setProperties] = useState([]);
@@ -29,7 +30,6 @@ export default function HomePage() {
 
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Handle newsletter signup
     alert('Thank you for subscribing!');
     setEmail('');
   };
@@ -80,38 +80,8 @@ export default function HomePage() {
             Where authentic stays meet modern comfort and local adventure
           </p>
           
-          {/* Search Bar */}
-          <div className="bg-white rounded-2xl shadow-2xl p-4 flex flex-col md:flex-row gap-4 max-w-4xl w-full">
-            <div className="flex-1 flex items-center gap-3 px-4 py-3 border-r">
-              <MapPin className="w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Where are you going?"
-                className="w-full outline-none text-gray-700"
-              />
-            </div>
-            <div className="flex-1 flex items-center gap-3 px-4 py-3 border-r">
-              <Calendar className="w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Arrival Date - Departure..."
-                className="w-full outline-none text-gray-700"
-              />
-            </div>
-            <div className="flex-1 flex items-center gap-3 px-4 py-3">
-              <Users className="w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="2 Adults - 0 Children - 1..."
-                className="w-full outline-none text-gray-700"
-              />
-            </div>
-            <Link href="/stay" className="md:self-center">
-              <Button className="bg-black text-white hover:bg-gray-800 rounded-full px-8 py-6 w-full md:w-auto">
-                Plan Your Journey
-              </Button>
-            </Link>
-          </div>
+          {/* Search Bar Component */}
+          <SearchBar className="max-w-4xl w-full" />
         </div>
       </section>
 
