@@ -18,6 +18,8 @@ export default function PropertyDetailPage() {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [pricingLoading, setPricingLoading] = useState(false);
+  const [pricingData, setPricingData] = useState(null);
   
   // Booking widget state
   const [checkIn, setCheckIn] = useState(null);
@@ -28,6 +30,13 @@ export default function PropertyDetailPage() {
   useEffect(() => {
     fetchProperty();
   }, [params.id]);
+
+  // Fetch pricing when dates change
+  useEffect(() => {
+    if (checkIn && checkOut && property) {
+      fetchPricing();
+    }
+  }, [checkIn, checkOut, property]);
 
   async function fetchProperty() {
     try {
@@ -42,6 +51,29 @@ export default function PropertyDetailPage() {
       console.error('Error fetching property:', error);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function fetchPricing() {
+    if (!checkIn || !checkOut) return;
+    
+    setPricingLoading(true);
+    try {
+      const from = checkIn.toISOString().split('T')[0];
+      const to = checkOut.toISOString().split('T')[0];
+      
+      const res = await fetch(`/api/availability/${params.id}?from=${from}&to=${to}`);
+      const data = await res.json();
+      
+      setPricingData(data.pricing);
+      
+      if (!data.pricing.available) {
+        alert('Some dates in your selection are not available. Please choose different dates.');
+      }
+    } catch (error) {
+      console.error('Error fetching pricing:', error);
+    } finally {
+      setPricingLoading(false);
     }
   }
 
