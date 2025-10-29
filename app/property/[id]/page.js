@@ -15,16 +15,26 @@ import { Button } from '@/components/ui/button';
 export default function PropertyDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const [pricingLoading, setPricingLoading] = useState(false);
   const [pricingData, setPricingData] = useState(null);
   
-  // Booking widget state
-  const [checkIn, setCheckIn] = useState(null);
-  const [checkOut, setCheckOut] = useState(null);
-  const [guests, setGuests] = useState({ adults: 2, children: 0, infants: 0 });
+  // Initialize booking widget state from URL params if available
+  const [checkIn, setCheckIn] = useState(
+    searchParams.get('checkIn') ? new Date(searchParams.get('checkIn')) : null
+  );
+  const [checkOut, setCheckOut] = useState(
+    searchParams.get('checkOut') ? new Date(searchParams.get('checkOut')) : null
+  );
+  const [guests, setGuests] = useState({ 
+    adults: parseInt(searchParams.get('adults') || '2'),
+    children: parseInt(searchParams.get('children') || '0'),
+    infants: parseInt(searchParams.get('infants') || '0')
+  });
   const [showGuestPicker, setShowGuestPicker] = useState(false);
 
   useEffect(() => {
