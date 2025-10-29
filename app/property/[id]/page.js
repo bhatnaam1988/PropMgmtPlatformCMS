@@ -111,10 +111,10 @@ export default function PropertyDetailPage() {
   const basePrice = pricingData?.averageRate > 0 ? pricingData.averageRate : (checkIn && checkOut ? propertyBaseRate : 0);
   const totalAccommodation = pricingData?.total > 0 ? pricingData.total : (nights * basePrice);
   
-  // Get cleaning fee from property fees
+  // Get cleaning fee from property fees (fallback to 50 if not set in Uplisting)
   const cleaningFee = property?.fees?.find(f => 
     f.attributes?.name?.toLowerCase().includes('cleaning')
-  )?.attributes?.amount || 75;
+  )?.attributes?.amount || 50;
   
   // Get tax rate from property taxes
   const taxRate = property?.taxes?.reduce((sum, tax) => 
