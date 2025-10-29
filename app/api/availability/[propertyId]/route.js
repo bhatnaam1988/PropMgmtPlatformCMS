@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAvailability } from '@/lib/uplisting';
+import { getAvailability, calculatePricing } from '@/lib/uplisting';
 
 export async function GET(request, { params }) {
   try {
@@ -14,8 +14,13 @@ export async function GET(request, { params }) {
       );
     }
     
-    const data = await getAvailability(params.propertyId, from, to);
-    return NextResponse.json(data);
+    const calendarData = await getAvailability(params.propertyId, from, to);
+    const pricing = calculatePricing(calendarData);
+    
+    return NextResponse.json({
+      calendar: calendarData,
+      pricing
+    });
   } catch (error) {
     console.error('Error fetching availability:', error);
     return NextResponse.json(
