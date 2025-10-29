@@ -106,9 +106,10 @@ export default function PropertyDetailPage() {
   const totalGuests = guests.adults + guests.children + guests.infants;
   const nights = calculateNights();
   
-  // Use real pricing from Uplisting if available
-  const basePrice = pricingData?.averageRate || 0;
-  const totalAccommodation = pricingData?.total || (nights * basePrice);
+  // Use real pricing from Uplisting if available, otherwise use property base rate
+  const propertyBaseRate = property?.base_daily_rate || property?.rates?.find(r => r.type === 'base')?.amount || 150;
+  const basePrice = pricingData?.averageRate > 0 ? pricingData.averageRate : (checkIn && checkOut ? propertyBaseRate : 0);
+  const totalAccommodation = pricingData?.total > 0 ? pricingData.total : (nights * basePrice);
   
   // Get cleaning fee from property fees
   const cleaningFee = property?.fees?.find(f => 
