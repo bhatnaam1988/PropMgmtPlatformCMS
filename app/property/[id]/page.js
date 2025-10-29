@@ -106,23 +106,11 @@ export default function PropertyDetailPage() {
   const totalGuests = guests.adults + guests.children + guests.infants;
   const nights = calculateNights();
   
-  // ALWAYS use pricing from Uplisting API - no fallbacks
-  const basePrice = pricingData?.averageRate || 0;
-  const totalAccommodation = pricingData?.total || 0;
+  // Use real pricing from Uplisting if available, otherwise use property base rate
+  const propertyBaseRate = property?.base_daily_rate || property?.rates?.find(r => r.type === 'base')?.amount || 150;
+  const basePrice = pricingData?.averageRate > 0 ? pricingData.averageRate : (checkIn && checkOut ? propertyBaseRate : 0);
+  const totalAccommodation = pricingData?.total > 0 ? pricingData.total : (nights * basePrice);
   
-  // Get cleaning fee from property fees (fallback to 50 if not in API)
-  const cleaningFee = property?.fees?.find(f => 
-    f.attributes?.name?.toLowerCase().includes('cleaning')
-  )?.attributes?.amount || 50;
-  
-  // Get tax rate from property taxes
-  const taxRate = property?.taxes?.reduce((sum, tax) => 
-    sum + (parseFloat(tax.attributes?.percentage) || 0), 0
-  ) || 0;
-  
-  const subtotal = totalAccommodation + cleaningFee;
-  const taxAmount = Math.round(subtotal * (taxRate / 100));
-  const totalPrice = subtotal + taxAmount;
   const currency = pricingData?.currency || property?.currency || 'CHF';
   
   // Check if we have pricing data from API
