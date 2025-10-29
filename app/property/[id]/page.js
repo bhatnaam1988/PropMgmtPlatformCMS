@@ -312,17 +312,24 @@ export default function PropertyDetailPage() {
                     {pricingLoading ? (
                       <span className="text-xl text-gray-500">Loading pricing...</span>
                     ) : pricingData?.noCalendarData ? (
-                      <div className="text-center">
+                      <div className="text-center w-full">
                         <span className="text-red-600 text-sm">Unable to fetch pricing from Uplisting</span>
                         <p className="text-xs text-gray-500 mt-1">Please refresh or contact administrator</p>
                       </div>
                     ) : basePrice > 0 ? (
-                      <>
-                        <span className="text-3xl font-medium">{currency} {basePrice}</span>
-                        <span className="text-gray-600">/ night avg</span>
-                      </>
+                      <div className="w-full">
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-3xl font-medium">{currency} {basePrice}</span>
+                          <span className="text-gray-600">/ night avg</span>
+                        </div>
+                        {pricingData?.useFallback && (
+                          <p className="text-xs text-yellow-700 mt-2">
+                            ⚠️ Price subject to confirmation
+                          </p>
+                        )}
+                      </div>
                     ) : checkIn && checkOut ? (
-                      <div className="text-center">
+                      <div className="text-center w-full">
                         <span className="text-red-600 text-sm">No rates available for selected dates</span>
                         <p className="text-xs text-gray-500 mt-1">Please try different dates</p>
                       </div>
