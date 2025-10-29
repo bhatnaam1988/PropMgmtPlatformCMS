@@ -196,7 +196,7 @@ export default function StayPage() {
           {loading ? (
             <div className="text-center py-12">Loading properties...</div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-0">
               {filteredProperties.map((property) => (
                 <Link key={property.id} href={`/property/${property.id}`}>
                   <div className="group cursor-pointer">
