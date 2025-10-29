@@ -95,7 +95,7 @@ export default function StayPage() {
           </p>
 
           {/* Filters - Fixed z-index */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-12 relative z-10">
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-12 relative z-50">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Location</label>
