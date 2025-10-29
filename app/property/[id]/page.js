@@ -105,8 +105,25 @@ export default function PropertyDetailPage() {
 
   const totalGuests = guests.adults + guests.children + guests.infants;
   const nights = calculateNights();
-  const basePrice = 150; // We'll get this from Uplisting rates later
-  const totalPrice = nights * basePrice;
+  
+  // Use real pricing from Uplisting if available
+  const basePrice = pricingData?.averageRate || 0;
+  const totalAccommodation = pricingData?.total || (nights * basePrice);
+  
+  // Get cleaning fee from property fees
+  const cleaningFee = property?.fees?.find(f => 
+    f.attributes?.name?.toLowerCase().includes('cleaning')
+  )?.attributes?.amount || 75;
+  
+  // Get tax rate from property taxes
+  const taxRate = property?.taxes?.reduce((sum, tax) => 
+    sum + (parseFloat(tax.attributes?.percentage) || 0), 0
+  ) || 0;
+  
+  const subtotal = totalAccommodation + cleaningFee;
+  const taxAmount = Math.round(subtotal * (taxRate / 100));
+  const totalPrice = subtotal + taxAmount;
+  const currency = pricingData?.currency || property?.currency || 'CHF';
 
   if (loading) {
     return (
