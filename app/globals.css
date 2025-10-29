@@ -155,3 +155,9 @@ code {
 .react-datepicker-popper {
   z-index: 9999 !important;
 }
+
+/* Ensure select dropdowns appear above images */
+select {
+  position: relative;
+  z-index: 50;
+}
