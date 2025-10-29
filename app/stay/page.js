@@ -97,14 +97,15 @@ export default function StayPage() {
           {/* Filters - Fixed z-index */}
           <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-12 relative z-50">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-              <div>
+              <div className="relative">
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Location</label>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white relative z-50"
                     value={filters.location}
                     onChange={(e) => setFilters({...filters, location: e.target.value})}
+                    style={{ position: 'relative', zIndex: 50 }}
                   >
                     <option value="">All locations</option>
                     <option value="Grächen">Grächen, Wallis</option>
@@ -129,19 +130,21 @@ export default function StayPage() {
                     className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg"
                     dateFormat="MMM dd"
                     minDate={new Date()}
-                    popperClassName="z-50"
+                    popperClassName="z-[9999]"
+                    wrapperClassName="w-full"
                   />
                 </div>
               </div>
               
-              <div>
+              <div className="relative">
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Guests</label>
                 <div className="relative">
                   <UsersIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white relative z-50"
                     value={totalGuests}
                     onChange={(e) => setFilters({...filters, adults: parseInt(e.target.value), children: 0, infants: 0})}
+                    style={{ position: 'relative', zIndex: 50 }}
                   >
                     <option value="1">1 guest</option>
                     <option value="2">2 guests</option>
@@ -152,14 +155,15 @@ export default function StayPage() {
                 </div>
               </div>
               
-              <div>
+              <div className="relative">
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Bedrooms</label>
                 <div className="relative">
                   <Bed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white relative z-50"
                     value={filters.bedrooms}
                     onChange={(e) => setFilters({...filters, bedrooms: e.target.value})}
+                    style={{ position: 'relative', zIndex: 50 }}
                   >
                     <option value="any">Any</option>
                     <option value="1">1+</option>
