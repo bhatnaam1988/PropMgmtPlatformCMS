@@ -169,14 +169,15 @@ export default function StayPage() {
                 </div>
               </div>
               
-              <div>
+              <div className="relative">
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Amenities</label>
                 <div className="relative">
                   <Sliders className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white relative z-50"
                     value={filters.amenities}
                     onChange={(e) => setFilters({...filters, amenities: e.target.value})}
+                    style={{ position: 'relative', zIndex: 50 }}
                   >
                     <option value="any">Any</option>
                     <option value="parking">Parking</option>
