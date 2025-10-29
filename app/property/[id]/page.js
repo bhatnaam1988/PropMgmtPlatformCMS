@@ -320,7 +320,7 @@ export default function PropertyDetailPage() {
                       <div className="w-full">
                         <div className="flex items-baseline gap-2">
                           <span className="text-3xl font-medium">{currency} {basePrice}</span>
-                          <span className="text-gray-600">/ night avg</span>
+                          <span className="text-gray-600">/ night</span>
                         </div>
                         {pricingData?.useFallback && (
                           <p className="text-xs text-yellow-700 mt-2">
