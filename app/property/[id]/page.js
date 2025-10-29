@@ -305,8 +305,19 @@ export default function PropertyDetailPage() {
               <div className="sticky top-28 border border-gray-200 rounded-2xl p-6 shadow-lg">
                 <div className="mb-6">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-medium">CHF {basePrice}</span>
-                    <span className="text-gray-600">/ night</span>
+                    {pricingLoading ? (
+                      <span className="text-xl text-gray-500">Loading pricing...</span>
+                    ) : basePrice > 0 ? (
+                      <>
+                        <span className="text-3xl font-medium">{currency} {basePrice}</span>
+                        <span className="text-gray-600">/ night avg</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-xl text-gray-500">Select dates</span>
+                        <span className="text-gray-500 text-sm">to see pricing</span>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -427,29 +438,44 @@ export default function PropertyDetailPage() {
 
                 <Button
                   onClick={handleBooking}
-                  className="w-full bg-black text-white hover:bg-gray-800 rounded-full py-6 text-lg mb-4"
+                  disabled={!checkIn || !checkOut || pricingLoading || (pricingData && !pricingData.available)}
+                  className="w-full bg-black text-white hover:bg-gray-800 rounded-full py-6 text-lg mb-4 disabled:bg-gray-300 disabled:cursor-not-allowed"
                 >
-                  Reserve
+                  {pricingLoading ? 'Checking availability...' : 'Reserve'}
                 </Button>
 
                 <p className="text-center text-sm text-gray-600 mb-4">
                   You won't be charged yet
                 </p>
 
-                {nights > 0 && (
+                {nights > 0 && pricingData && (
                   <div className="space-y-2 pt-4 border-t border-gray-200">
                     <div className="flex justify-between">
-                      <span className="text-gray-700">CHF {basePrice} x {nights} night{nights > 1 ? 's' : ''}</span>
-                      <span className="font-medium">CHF {totalPrice}</span>
+                      <span className="text-gray-700">{currency} {basePrice} x {nights} night{nights > 1 ? 's' : ''}</span>
+                      <span className="font-medium">{currency} {Math.round(totalAccommodation)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-700">Cleaning fee</span>
-                      <span className="font-medium">CHF 75</span>
+                      <span className="font-medium">{currency} {cleaningFee}</span>
                     </div>
+                    {taxAmount > 0 && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Taxes ({taxRate}%)</span>
+                        <span className="font-medium">{currency} {taxAmount}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between pt-2 border-t border-gray-200">
                       <span className="font-medium">Total</span>
-                      <span className="font-medium">CHF {totalPrice + 75}</span>
+                      <span className="font-medium">{currency} {totalPrice}</span>
                     </div>
+                  </div>
+                )}
+
+                {pricingData && !pricingData.available && (
+                  <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-sm text-red-800">
+                      Some dates are not available. Please select different dates.
+                    </p>
                   </div>
                 )}
 
