@@ -463,20 +463,13 @@ export default function PropertyDetailPage() {
                       <span className="text-gray-700">{currency} {basePrice} x {nights} night{nights > 1 ? 's' : ''}</span>
                       <span className="font-medium">{currency} {Math.round(totalAccommodation)}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-700">Cleaning fee</span>
-                      <span className="font-medium">{currency} {cleaningFee}</span>
-                    </div>
-                    {taxAmount > 0 && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Taxes ({taxRate}%)</span>
-                        <span className="font-medium">{currency} {taxAmount}</span>
-                      </div>
-                    )}
                     <div className="flex justify-between pt-2 border-t border-gray-200">
                       <span className="font-medium">Total</span>
-                      <span className="font-medium">{currency} {totalPrice}</span>
+                      <span className="font-medium">{currency} {Math.round(totalAccommodation)}</span>
                     </div>
+                    <p className="text-xs text-gray-500 mt-2">
+                      Service fees and taxes will be added at checkout
+                    </p>
                   </div>
                 )}
 
