@@ -452,17 +452,17 @@ export default function PropertyDetailPage() {
 
                 <Button
                   onClick={handleBooking}
-                  disabled={!checkIn || !checkOut || pricingLoading || (pricingData && !pricingData.available)}
+                  disabled={!checkIn || !checkOut || pricingLoading || !hasPricingData || (showUnavailableWarning)}
                   className="w-full bg-black text-white hover:bg-gray-800 rounded-full py-6 text-lg mb-4 disabled:bg-gray-300 disabled:cursor-not-allowed"
                 >
-                  {pricingLoading ? 'Checking availability...' : 'Reserve'}
+                  {pricingLoading ? 'Checking availability...' : showUnavailableWarning ? 'Dates Not Available' : 'Reserve'}
                 </Button>
 
                 <p className="text-center text-sm text-gray-600 mb-4">
                   You won't be charged yet
                 </p>
 
-                {nights > 0 && pricingData && (
+                {hasPricingData && nights > 0 && basePrice > 0 && (
                   <div className="space-y-2 pt-4 border-t border-gray-200">
                     <div className="flex justify-between">
                       <span className="text-gray-700">{currency} {basePrice} x {nights} night{nights > 1 ? 's' : ''}</span>
@@ -485,18 +485,34 @@ export default function PropertyDetailPage() {
                   </div>
                 )}
 
-                {pricingData && !pricingData.available && (
-                  <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                    <p className="text-sm text-red-800">
-                      Some dates are not available. Please select different dates.
+                {showUnavailableWarning && (
+                  <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-sm text-yellow-800 font-medium">
+                      ⚠️ Selected dates are not available for booking
+                    </p>
+                    <p className="text-xs text-yellow-700 mt-1">
+                      Please select different dates to proceed with your reservation.
                     </p>
                   </div>
                 )}
 
-                <p className="text-sm text-gray-600 mt-4">
-                  <CheckCircle className="w-4 h-4 inline mr-1 text-green-600" />
-                  Free cancellation within 48 hours
-                </p>
+                {pricingData?.noCalendarData && (
+                  <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-sm text-red-800 font-medium">
+                      ❌ Unable to load pricing
+                    </p>
+                    <p className="text-xs text-red-700 mt-1">
+                      Please refresh the page or contact administrator if the issue persists.
+                    </p>
+                  </div>
+                )}
+
+                {!showUnavailableWarning && !pricingData?.noCalendarData && hasPricingData && (
+                  <p className="text-sm text-gray-600 mt-4">
+                    <CheckCircle className="w-4 h-4 inline mr-1 text-green-600" />
+                    Free cancellation within 48 hours
+                  </p>
+                )}
               </div>
             </div>
           </div>
