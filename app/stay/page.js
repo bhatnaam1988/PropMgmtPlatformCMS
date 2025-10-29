@@ -274,63 +274,18 @@ export default function StayPage() {
                 }
                 
                 const showFallbackWarning = pricing?.useFallback;
+                const isUnavailable = nights > 0 && pricing && !pricing.available;
                 
                 return (
-                  <Link key={property.id} href={`/property/${property.id}`}>
-                    <div className="group cursor-pointer">
-                      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
-                        <div className="absolute top-4 right-4 bg-white px-4 py-2 rounded-full text-sm font-medium z-10 shadow-md">
-                          {priceDisplay}
-                        </div>
-                        <img
-                          src={property.photos[0]?.url || '/placeholder.jpg'}
-                          alt={property.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        {/* Carousel dots */}
-                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-1">
-                          {property.photos.slice(0, 5).map((_, i) => (
-                            <div key={i} className="w-2 h-2 rounded-full bg-white/70" />
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <h3 className="text-xl font-medium mb-2">{property.name}</h3>
-                      <p className="text-gray-600 mb-2">
-                        {property.address?.city}, {property.address?.state}
-                      </p>
-                      
-                      <p className="text-sm text-gray-600 mb-2">
-                        {property.description?.substring(0, 100)}...
-                      </p>
-                      
-                      <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                        <span className="flex items-center gap-1">
-                          <UsersIcon className="w-4 h-4" /> Sleeps {property.maximum_capacity}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Bed className="w-4 h-4" /> {property.bedrooms} Bedroom{property.bedrooms > 1 ? 's' : ''}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Bath className="w-4 h-4" /> {property.bathrooms} Bath
-                        </span>
-                      </div>
-                      
-                      {showFallbackWarning && (
-                        <p className="text-xs text-yellow-700 mb-2">
-                          ⚠️ Price subject to confirmation
-                        </p>
-                      )}
-                      
-                      <p className="text-sm text-gray-600">
-                        {property.address?.street || 'Central location'}
-                      </p>
-                      
-                      <Button variant="outline" className="w-full rounded-full mt-4">
-                        View Details
-                      </Button>
-                    </div>
-                  </Link>
+                  <PropertyCard
+                    key={property.id}
+                    property={property}
+                    priceDisplay={priceDisplay}
+                    showFallbackWarning={showFallbackWarning}
+                    isUnavailable={isUnavailable}
+                    filters={filters}
+                    nights={nights}
+                  />
                 );
               })}
             </div>
