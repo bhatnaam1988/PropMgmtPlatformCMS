@@ -11,6 +11,7 @@ import {
   Minus, Plus
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { formatDateLocal } from '@/lib/uplisting';
 
 export default function PropertyDetailPage() {
   const params = useParams();
