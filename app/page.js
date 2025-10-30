@@ -6,6 +6,7 @@ import { ChevronRight, Heart, Home, Users as UsersIcon, Sparkles } from 'lucide-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import SearchBar from '@/components/SearchBar';
+import PropertyCardSimple from '@/components/PropertyCardSimple';
 
 export default function HomePage() {
   const [properties, setProperties] = useState([]);
