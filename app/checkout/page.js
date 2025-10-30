@@ -105,43 +105,66 @@ export default function CheckoutPage() {
 
       console.log('📋 BOOKING DATA TO BE SENT:', bookingData);
 
-      // TODO: Uncomment this when ready to test actual booking creation
-      // const response = await fetch('/api/bookings', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(bookingData)
-      // });
+      // Show confirmation alert with all details including price
+      const confirmBooking = confirm(`
+🧪 FINAL CONFIRMATION BEFORE BOOKING
 
-      // const result = await response.json();
+Property: ${property?.name}
+Location: ${property?.address?.city}, ${property?.address?.state}
 
-      // if (!response.ok) {
-      //   throw new Error(result.error || 'Failed to create booking');
-      // }
+Check-in: ${checkIn}
+Check-out: ${checkOut}
+Nights: ${nights}
 
-      // // Redirect to Uplisting payment page
-      // if (result.paymentUrl) {
-      //   window.location.href = result.paymentUrl;
-      // } else {
-      //   // Fallback: redirect to property page on Uplisting
-      //   window.location.href = property.uplistingUrl;
-      // }
+Guests:
+- ${adults} Adult${adults > 1 ? 's' : ''}
+- ${children} Child${children !== 1 ? 'ren' : ''}
+- ${infants} Infant${infants !== 1 ? 's' : ''}
 
-      // FOR NOW: Show what would be sent
-      alert(`
-🧪 TEST MODE - No booking created yet!
-
-This would create a booking for:
-- Property: ${property?.name}
-- Dates: ${checkIn} to ${checkOut}
-- Guest: ${formData.firstName} ${formData.lastName}
+Guest Details:
+- Name: ${formData.firstName} ${formData.lastName}
 - Email: ${formData.email}
 - Phone: ${formData.phone}
 
-In production, this would redirect to Uplisting payment page.
+PRICE BREAKDOWN:
+- Accommodation: ${currency} ${accommodationTotal}
+- Cleaning Fee: ${currency} ${cleaningFee}
+- Taxes (${taxRate}%): ${currency} ${taxAmount}
+- TOTAL: ${currency} ${grandTotal}
+
+⚠️ This will create a REAL booking in Uplisting!
+Click OK to proceed to payment, or Cancel to abort.
       `);
 
-      // For testing, just show success
-      setError('');
+      if (!confirmBooking) {
+        setSubmitting(false);
+        return;
+      }
+
+      // Create the booking in Uplisting
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to create booking');
+      }
+
+      console.log('✅ BOOKING CREATED:', result);
+
+      // Redirect to Uplisting payment page
+      if (result.paymentUrl) {
+        window.location.href = result.paymentUrl;
+      } else if (result.booking?.data?.attributes?.uplisting_url) {
+        window.location.href = result.booking.data.attributes.uplisting_url;
+      } else {
+        // Fallback: redirect to property page on Uplisting
+        window.location.href = property.uplistingUrl || `https://uplisting.io`;
+      }
       
     } catch (error) {
       console.error('Booking error:', error);
