@@ -97,8 +97,8 @@ export default function PropertyDetailPage() {
     // Navigate to checkout with booking details
     const params = new URLSearchParams({
       propertyId: property.id,
-      checkIn: checkIn.toISOString().split('T')[0],
-      checkOut: checkOut.toISOString().split('T')[0],
+      checkIn: formatDateLocal(checkIn),
+      checkOut: formatDateLocal(checkOut),
       adults: guests.adults.toString(),
       children: guests.children.toString(),
       infants: guests.infants.toString()
