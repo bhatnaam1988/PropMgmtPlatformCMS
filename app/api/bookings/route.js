@@ -10,6 +10,7 @@ export async function POST(request) {
     
     const headers = {
       'Authorization': `Basic ${UPLISTING_API_KEY}`,
+      'X-Uplisting-Client-Id': UPLISTING_CLIENT_ID,
       'Content-Type': 'application/json'
     };
     
