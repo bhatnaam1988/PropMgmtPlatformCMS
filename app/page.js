@@ -95,35 +95,7 @@ export default function HomePage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {properties.slice(0, 3).map((property) => (
-                <div key={property.id} className="group">
-                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
-                    <img
-                      src={property.photos[0]?.url || '/placeholder.jpg'}
-                      alt={property.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <h3 className="text-xl font-medium mb-2">{property.name}</h3>
-                  <p className="text-gray-600 mb-2">
-                    {property.address?.city}, {property.address?.state}
-                  </p>
-                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                    <span className="flex items-center gap-1">
-                      <UsersIcon className="w-4 h-4" /> Sleeps {property.maximum_capacity}
-                    </span>
-                    <span>{property.bedrooms} Bedroom{property.bedrooms > 1 ? 's' : ''}</span>
-                    <span>{property.beds} Bed{property.beds > 1 ? 's' : ''}</span>
-                    <span>{property.bathrooms} Bath</span>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-4">
-                    {property.address?.street || 'Central location'}
-                  </p>
-                  <Link href={`/property/${property.id}`}>
-                    <Button variant="outline" className="w-full rounded-full">
-                      View Details
-                    </Button>
-                  </Link>
-                </div>
+                <PropertyCardSimple key={property.id} property={property} />
               ))}
             </div>
           )}
