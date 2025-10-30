@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Home, MapPin, Calendar, Users as UsersIcon, Bed, Bath, Sliders } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import PropertyCard from '@/components/PropertyCard';
+import { formatDateLocal } from '@/lib/uplisting';
 
 export default function StayPage() {
   const searchParams = useSearchParams();
