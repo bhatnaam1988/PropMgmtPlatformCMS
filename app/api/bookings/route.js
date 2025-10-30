@@ -14,6 +14,12 @@ export async function POST(request) {
       'Content-Type': 'application/json'
     };
     
+    console.log('🔑 Using credentials:', {
+      apiKeyPrefix: UPLISTING_API_KEY?.substring(0, 10) + '...',
+      clientId: UPLISTING_CLIENT_ID,
+      url: UPLISTING_API_URL
+    });
+    
     // Get base URL from environment or construct it
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL;
     
