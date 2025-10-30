@@ -116,10 +116,9 @@ export default function PropertyDetailPage() {
   const totalGuests = guests.adults + guests.children + guests.infants;
   const nights = calculateNights();
   
-  // Use real pricing from Uplisting if available, otherwise use property base rate
-  const propertyBaseRate = property?.base_daily_rate || property?.rates?.find(r => r.type === 'base')?.amount || 150;
-  const basePrice = pricingData?.averageRate > 0 ? pricingData.averageRate : (checkIn && checkOut ? propertyBaseRate : 0);
-  const totalAccommodation = pricingData?.total > 0 ? pricingData.total : (nights * basePrice);
+  // ALWAYS use pricing from Uplisting API - no fallbacks
+  const basePrice = pricingData?.averageRate || 0;
+  const totalAccommodation = pricingData?.total || 0;
   
   const currency = pricingData?.currency || property?.currency || 'CHF';
   
