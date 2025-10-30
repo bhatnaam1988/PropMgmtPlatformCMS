@@ -246,6 +246,18 @@ Click OK to proceed to payment, or Cancel to abort.
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Loading Overlay */}
+      {submitting && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-2xl p-8 max-w-md text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-black mx-auto mb-4"></div>
+            <h3 className="text-xl font-medium mb-2">Processing Your Booking</h3>
+            <p className="text-gray-600">Please wait while we create your reservation...</p>
+            <p className="text-sm text-gray-500 mt-4">Do not close or refresh this page</p>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="container mx-auto px-4">
