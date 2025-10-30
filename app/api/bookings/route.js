@@ -58,7 +58,16 @@ export async function POST(request) {
       body: JSON.stringify(uplistingBooking)
     });
     
-    const data = await response.json();
+    // Handle both JSON and text responses
+    let data;
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      data = await response.json();
+    } else {
+      const textResponse = await response.text();
+      console.error('❌ Non-JSON response from Uplisting:', textResponse);
+      data = { error: textResponse };
+    }
     
     if (!response.ok) {
       console.error('❌ Uplisting API error:', data);
