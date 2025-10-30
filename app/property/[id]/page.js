@@ -70,8 +70,8 @@ export default function PropertyDetailPage() {
     
     setPricingLoading(true);
     try {
-      const from = checkIn.toISOString().split('T')[0];
-      const to = checkOut.toISOString().split('T')[0];
+      const from = formatDateLocal(checkIn);
+      const to = formatDateLocal(checkOut);
       
       const res = await fetch(`/api/availability/${params.id}?from=${from}&to=${to}`);
       const data = await res.json();
