@@ -107,27 +107,45 @@ user_problem_statement: "Complete the booking flow for the vacation rental websi
 backend:
   - task: "Booking API - Create booking with Uplisting"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/app/api/bookings/route.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Enhanced booking API with success/failure redirect URLs, improved error handling, logging, and response structure. Added support for success_url, failure_url, and cancel_url parameters to Uplisting API call."
+      - working: false
+        agent: "testing"
+        comment: "API structure is correct but fails with 401 'client ID does not appear to be valid' error. Fixed authentication from Bearer to Basic (correct for Uplisting API). Issue is with client ID 'cozy-retreats-3' not being authorized for booking creation in Uplisting. Read operations work fine. This is expected in demo environment - would need valid partner client ID from Uplisting support for production."
   
   - task: "Properties API - Fetch single property"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/api/properties/[id]/route.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Existing API route for fetching single property. Used by checkout page. Needs verification that it works correctly."
+      - working: true
+        agent: "testing"
+        comment: "API working correctly. Successfully fetches property details including name, photos (8 photos), address, amenities, fees, and taxes. Tested with property ID 84656 (Sunny Alps View: Central Bliss in Grächen)."
+
+  - task: "Availability API - Fetch pricing and availability"
+    implemented: true
+    working: true
+    file: "/app/app/api/availability/[propertyId]/route.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "API working correctly. Successfully fetches pricing and availability data. Tested with future dates (Nov 29 - Dec 4, 2025): Rate 111 CHF/night, Total 553 CHF for 5 nights, Available: true. Proper error handling for missing date parameters."
 
 frontend:
   - task: "Checkout Page - Complete booking form and submission"
