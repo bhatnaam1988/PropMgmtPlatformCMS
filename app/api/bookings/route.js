@@ -27,17 +27,24 @@ export async function POST(request) {
     const successUrl = `${baseUrl}/booking/success?bookingId={booking_id}&propertyId=${bookingData.propertyId}`;
     const failureUrl = `${baseUrl}/booking/failure?propertyId=${bookingData.propertyId}&checkIn=${bookingData.checkIn}&checkOut=${bookingData.checkOut}&adults=${bookingData.adults}&children=${bookingData.children || 0}&infants=${bookingData.infants || 0}`;
     
-    // Format data for Uplisting API
+    // Format data for Uplisting API - matches documentation structure
     const uplistingBooking = {
       data: {
-        type: 'bookings',
         attributes: {
-          property_id: bookingData.propertyId,
           check_in: bookingData.checkIn,
           check_out: bookingData.checkOut,
           guest_name: bookingData.guestName,
           guest_email: bookingData.guestEmail,
-          guest_phone: bookingData.guestPhone
+          guest_phone: bookingData.guestPhone,
+          number_of_guests: (bookingData.adults || 0) + (bookingData.children || 0) + (bookingData.infants || 0)
+        },
+        relationships: {
+          property: {
+            data: {
+              type: 'properties',
+              id: bookingData.propertyId
+            }
+          }
         }
       }
     };
