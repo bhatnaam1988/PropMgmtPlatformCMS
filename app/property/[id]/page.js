@@ -187,24 +187,35 @@ export default function PropertyDetailPage() {
 
           {/* Image Gallery */}
           <div className="grid grid-cols-4 gap-4 mb-8">
+            {/* Main large image */}
             <div className="col-span-4 md:col-span-3">
               <img
                 src={property.photos[selectedImage]?.url || '/placeholder.jpg'}
                 alt={property.name}
-                className="w-full h-[500px] object-cover rounded-2xl"
+                className="w-full h-[500px] object-cover rounded-2xl cursor-pointer"
+                onClick={() => setSelectedImage(selectedImage)}
               />
             </div>
-            <div className="col-span-4 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4">
-              {property.photos.slice(0, 4).map((photo, index) => (
-                <img
-                  key={index}
-                  src={photo.url}
-                  alt={`${property.name} ${index + 1}`}
-                  className={`w-full h-24 object-cover rounded-lg cursor-pointer ${
-                    selectedImage === index ? 'ring-2 ring-black' : ''
-                  }`}
-                  onClick={() => setSelectedImage(index)}
-                />
+            
+            {/* Thumbnail grid on the right */}
+            <div className="col-span-4 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4 max-h-[500px] overflow-y-auto">
+              {property.photos.slice(0, 8).map((photo, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={photo.url}
+                    alt={`${property.name} ${index + 1}`}
+                    className={`w-full h-24 object-cover rounded-lg cursor-pointer ${
+                      selectedImage === index ? 'ring-2 ring-black' : ''
+                    }`}
+                    onClick={() => setSelectedImage(index)}
+                  />
+                  {/* Show +X photos overlay on last thumbnail if there are more */}
+                  {index === 7 && property.photos.length > 8 && (
+                    <div className="absolute inset-0 bg-black/60 rounded-lg flex items-center justify-center text-white font-medium cursor-pointer">
+                      +{property.photos.length - 8} photos
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>
