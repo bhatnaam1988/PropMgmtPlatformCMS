@@ -58,6 +58,8 @@ export async function POST(request) {
       propertyId: bookingData.propertyId
     });
     
+    console.log('📦 Full booking payload:', JSON.stringify(uplistingBooking, null, 2));
+    
     const response = await fetch(`${UPLISTING_API_URL}/v2/bookings`, {
       method: 'POST',
       headers,
