@@ -77,8 +77,22 @@ export default function CheckoutPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validate terms acceptance
     if (!formData.termsAccepted) {
       setError('Please accept the Terms & Conditions to proceed.');
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    // Validate phone format (basic check)
+    if (formData.phone.length < 10) {
+      setError('Please enter a valid phone number.');
       return;
     }
 
@@ -86,9 +100,6 @@ export default function CheckoutPage() {
     setError('');
 
     try {
-      // ⚠️ IMPORTANT: This will create a REAL booking in Uplisting!
-      // Only proceed if you want to test the actual booking creation
-      
       const bookingData = {
         propertyId,
         checkIn,
@@ -144,14 +155,17 @@ Click OK to proceed to payment, or Cancel to abort.
       // Create the booking in Uplisting
       const response = await fetch('/api/bookings', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify(bookingData)
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to create booking');
+        throw new Error(result.error || result.message || 'Failed to create booking');
       }
 
       console.log('✅ BOOKING CREATED:', result);
@@ -176,9 +190,8 @@ Click OK to proceed to payment, or Cancel to abort.
       }
       
     } catch (error) {
-      console.error('Booking error:', error);
-      setError(error.message || 'Failed to create booking. Please try again.');
-    } finally {
+      console.error('❌ Booking error:', error);
+      setError(error.message || 'Failed to create booking. Please check your connection and try again.');
       setSubmitting(false);
     }
   };
