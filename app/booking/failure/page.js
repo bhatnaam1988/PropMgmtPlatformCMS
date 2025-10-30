@@ -1,29 +1,96 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Home, AlertCircle, RefreshCcw } from 'lucide-react';
+import { Home, XCircle, RefreshCcw, Mail, Phone, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function BookingFailurePage() {
   const searchParams = useSearchParams();
-  const error = searchParams.get('error');
+  const router = useRouter();
+  
+  // Get failure details from URL
+  const errorCode = searchParams.get('error') || searchParams.get('code');
+  const errorMessage = searchParams.get('message');
+  const bookingId = searchParams.get('bookingId') || searchParams.get('id');
   const propertyId = searchParams.get('propertyId');
+  
+  // Get original booking params if available
+  const checkIn = searchParams.get('checkIn');
+  const checkOut = searchParams.get('checkOut');
+  const adults = searchParams.get('adults');
+  const children = searchParams.get('children');
+  const infants = searchParams.get('infants');
+
+  const [isRetrying, setIsRetrying] = useState(false);
 
   useEffect(() => {
     // Track failed booking (for analytics)
-    console.log('❌ Booking failed:', error);
-  }, [error]);
+    console.log('❌ Booking payment failed:', { errorCode, errorMessage, bookingId });
+  }, [errorCode, errorMessage, bookingId]);
 
-  const getErrorMessage = () => {
-    if (error?.includes('payment')) {
-      return 'Your payment could not be processed. Your card may have been declined or there may have been a technical issue.';
+  // Determine the specific error type for better messaging
+  const getErrorDetails = () => {
+    const code = (errorCode || errorMessage || '')?.toLowerCase();
+    
+    if (code.includes('payment') || code.includes('card') || code.includes('declined')) {
+      return {
+        title: 'Payment Failed',
+        message: 'Your payment could not be processed. Please check your payment details and try again.',
+        icon: 'payment'
+      };
+    } else if (code.includes('timeout') || code.includes('expired') || code.includes('session')) {
+      return {
+        title: 'Session Expired',
+        message: 'Your booking session has expired. Please start the booking process again.',
+        icon: 'timeout'
+      };
+    } else if (code.includes('unavailable') || code.includes('availability') || code.includes('booked')) {
+      return {
+        title: 'Property Unavailable',
+        message: 'This property is no longer available for your selected dates. Please choose different dates or another property.',
+        icon: 'unavailable'
+      };
+    } else if (code.includes('cancel') || code.includes('abort')) {
+      return {
+        title: 'Booking Cancelled',
+        message: 'Your booking was cancelled. You can try again when you\'re ready.',
+        icon: 'cancel'
+      };
+    } else {
+      return {
+        title: 'Booking Unsuccessful',
+        message: errorMessage || 'We encountered an issue processing your booking. Please try again or contact support.',
+        icon: 'general'
+      };
     }
-    if (error?.includes('availability')) {
-      return 'The selected dates are no longer available. The property may have been booked by another guest.';
+  };
+
+  const errorDetails = getErrorDetails();
+
+  const handleRetry = () => {
+    setIsRetrying(true);
+    
+    // Reconstruct checkout URL with original parameters
+    if (propertyId && checkIn && checkOut) {
+      const params = new URLSearchParams({
+        propertyId,
+        checkIn,
+        checkOut,
+        adults: adults || '2',
+        children: children || '0',
+        infants: infants || '0'
+      });
+      
+      router.push(`/checkout?${params.toString()}`);
+    } else if (propertyId) {
+      // If we don't have booking params, go back to property page
+      router.push(`/property/${propertyId}`);
+    } else {
+      // Last resort: go to listings
+      router.push('/stay');
     }
-    return 'We encountered an issue processing your booking. Please try again or contact us for assistance.';
   };
 
   return (
