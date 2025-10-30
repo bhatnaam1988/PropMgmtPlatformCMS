@@ -107,7 +107,7 @@ user_problem_statement: "Complete the booking flow for the vacation rental websi
 backend:
   - task: "Booking API - Create booking with Uplisting"
     implemented: true
-    working: false
+    working: true
     file: "/app/app/api/bookings/route.js"
     stuck_count: 1
     priority: "high"
@@ -119,6 +119,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "API structure is correct but fails with 401 'client ID does not appear to be valid' error. Fixed authentication from Bearer to Basic (correct for Uplisting API). Issue is with client ID 'cozy-retreats-3' not being authorized for booking creation in Uplisting. Read operations work fine. This is expected in demo environment - would need valid partner client ID from Uplisting support for production."
+      - working: true
+        agent: "main"
+        comment: "FIXED! Updated client ID to f4fd1410-9636-013e-aeff-2a9672a658e7 and corrected JSON structure to match Uplisting documentation. Key changes: 1) Removed 'type' from data object, 2) Moved property to 'relationships' structure, 3) Used 'number_of_guests' instead of separate counts. Booking creation now works - tested successfully with booking IDs 8402738 and 8402741."
   
   - task: "Properties API - Fetch single property"
     implemented: true
