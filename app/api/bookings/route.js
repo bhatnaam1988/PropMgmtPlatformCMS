@@ -9,7 +9,7 @@ export async function POST(request) {
     const bookingData = await request.json();
     
     const headers = {
-      'Authorization': `Basic ${UPLISTING_API_KEY}`,
+      'Authorization': `Bearer ${UPLISTING_API_KEY}`,
       'Content-Type': 'application/json',
       'X-Uplisting-Client-ID': UPLISTING_CLIENT_ID
     };
