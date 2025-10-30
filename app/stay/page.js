@@ -61,10 +61,10 @@ export default function StayPage() {
         propertyIds
       };
       
-      // Add dates if selected
+      // Add dates if selected - use local timezone formatting
       if (filters.checkIn && filters.checkOut) {
-        body.from = filters.checkIn.toISOString().split('T')[0];
-        body.to = filters.checkOut.toISOString().split('T')[0];
+        body.from = formatDateLocal(filters.checkIn);
+        body.to = formatDateLocal(filters.checkOut);
       }
       
       const res = await fetch('/api/pricing', {
