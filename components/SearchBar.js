@@ -6,6 +6,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Calendar, Users, MapPin, ChevronDown, Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { formatDateLocal } from '@/lib/uplisting';
 
 export default function SearchBar({ className = '' }) {
   const router = useRouter();
@@ -26,8 +27,8 @@ export default function SearchBar({ className = '' }) {
     const params = new URLSearchParams();
     
     if (location) params.set('location', location);
-    if (startDate) params.set('checkIn', startDate.toISOString().split('T')[0]);
-    if (endDate) params.set('checkOut', endDate.toISOString().split('T')[0]);
+    if (startDate) params.set('checkIn', formatDateLocal(startDate));
+    if (endDate) params.set('checkOut', formatDateLocal(endDate));
     params.set('adults', guests.adults.toString());
     params.set('children', guests.children.toString());
     params.set('infants', guests.infants.toString());
