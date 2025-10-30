@@ -66,10 +66,12 @@ export async function POST(request) {
     // Handle both JSON and text responses
     let data;
     const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      data = await response.json();
-    } else {
-      const textResponse = await response.text();
+    const textResponse = await response.text();
+    
+    try {
+      // Try to parse as JSON regardless of content-type
+      data = JSON.parse(textResponse);
+    } catch (e) {
       console.error('❌ Non-JSON response from Uplisting:', textResponse);
       data = { error: textResponse };
     }
