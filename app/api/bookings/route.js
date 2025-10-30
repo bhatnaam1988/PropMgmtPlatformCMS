@@ -10,8 +10,7 @@ export async function POST(request) {
     
     const headers = {
       'Authorization': `Bearer ${UPLISTING_API_KEY}`,
-      'Content-Type': 'application/json',
-      'X-Uplisting-Client-ID': UPLISTING_CLIENT_ID
+      'Content-Type': 'application/json'
     };
     
     // Get base URL from environment or construct it
