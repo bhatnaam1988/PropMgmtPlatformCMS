@@ -35,19 +35,9 @@ export async function POST(request) {
           property_id: bookingData.propertyId,
           check_in: bookingData.checkIn,
           check_out: bookingData.checkOut,
-          adults: bookingData.adults,
-          children: bookingData.children,
-          infants: bookingData.infants,
           guest_name: bookingData.guestName,
           guest_email: bookingData.guestEmail,
-          guest_phone: bookingData.guestPhone,
-          source: 'website',
-          notes: bookingData.notes || '',
-          marketing_consent: bookingData.marketingConsent || false,
-          // Add redirect URLs for Uplisting payment flow
-          success_url: successUrl,
-          failure_url: failureUrl,
-          cancel_url: failureUrl
+          guest_phone: bookingData.guestPhone
         }
       }
     };
