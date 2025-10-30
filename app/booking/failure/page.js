@@ -111,18 +111,36 @@ export default function BookingFailurePage() {
         <div className="max-w-2xl mx-auto text-center">
           {/* Error Icon */}
           <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <AlertCircle className="w-12 h-12 text-red-600" />
+            <XCircle className="w-12 h-12 text-red-600" />
           </div>
 
           {/* Error Message */}
-          <h1 className="text-4xl font-light mb-4">Booking Not Completed</h1>
+          <h1 className="text-4xl font-light mb-4">{errorDetails.title}</h1>
           <p className="text-xl text-gray-600 mb-8">
-            {getErrorMessage()}
+            {errorDetails.message}
           </p>
 
-          {/* Details */}
+          {/* Additional Info if available */}
+          {(errorCode || bookingId) && (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8 text-left">
+              <p className="text-sm text-yellow-800">
+                {bookingId && (
+                  <span className="block mb-1">
+                    <strong>Reference:</strong> {bookingId}
+                  </span>
+                )}
+                {errorCode && (
+                  <span className="block">
+                    <strong>Error Code:</strong> {errorCode}
+                  </span>
+                )}
+              </p>
+            </div>
+          )}
+
+          {/* What to do next */}
           <div className="bg-white rounded-2xl p-8 shadow-sm mb-8 text-left">
-            <h2 className="text-2xl font-light mb-4">What You Can Do</h2>
+            <h2 className="text-2xl font-light mb-6">What You Can Do</h2>
             
             <div className="space-y-4">
               <div className="flex items-start gap-3">
@@ -130,8 +148,41 @@ export default function BookingFailurePage() {
                 <div>
                   <p className="font-medium mb-1">Try Again</p>
                   <p className="text-sm text-gray-600">
-                    You can return to the property page and attempt your booking again. 
-                    Your selections have not been saved.
+                    Check your payment details and try completing your booking again. 
+                    Your selected property and dates may still be available.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-gray-400 mt-1" />
+                <div>
+                  <p className="font-medium mb-1">Contact Support</p>
+                  <p className="text-sm text-gray-600">
+                    Our team is here to help. Contact us and we'll assist you with your booking.
+                  </p>
+                  <div className="mt-2 space-y-1">
+                    <p className="text-sm">
+                      <a href="tel:+15551234567" className="text-blue-600 underline">
+                        +1 (555) 123-4567
+                      </a>
+                    </p>
+                    <p className="text-sm">
+                      <a href="mailto:hello@swissalpinejourney.com" className="text-blue-600 underline">
+                        hello@swissalpinejourney.com
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Mail className="w-5 h-5 text-gray-400 mt-1" />
+                <div>
+                  <p className="font-medium mb-1">Payment Methods</p>
+                  <p className="text-sm text-gray-600">
+                    We accept major credit cards, debit cards, and other payment methods. 
+                    Please ensure your payment method has sufficient funds and is authorized for international transactions.
                   </p>
                 </div>
               </div>
@@ -139,68 +190,56 @@ export default function BookingFailurePage() {
               <div className="flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-gray-400 mt-1" />
                 <div>
-                  <p className="font-medium mb-1">Check Your Payment Method</p>
-                  <p className="text-sm text-gray-600">
-                    Ensure your payment card has sufficient funds and is authorized for online transactions.
-                  </p>
+                  <p className="font-medium mb-1">Common Issues</p>
+                  <ul className="text-sm text-gray-600 list-disc list-inside space-y-1">
+                    <li>Insufficient funds or card limit exceeded</li>
+                    <li>Card not authorized for international payments</li>
+                    <li>Incorrect card details or expired card</li>
+                    <li>Session timeout - try booking again</li>
+                  </ul>
                 </div>
               </div>
-
-              <div className="flex items-start gap-3">
-                <Home className="w-5 h-5 text-gray-400 mt-1" />
-                <div>
-                  <p className="font-medium mb-1">Contact Us</p>
-                  <p className="text-sm text-gray-600">
-                    If you continue to experience issues, please contact our support team. 
-                    We're here to help!
-                  </p>
-                </div>
-              </div>
-
-              {error && (
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <p className="text-sm text-gray-600">
-                    <strong>Error Details:</strong> {error}
-                  </p>
-                </div>
-              )}
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {propertyId ? (
-              <Link href={`/property/${propertyId}`}>
-                <Button className="bg-black text-white hover:bg-gray-800 rounded-full px-8">
-                  Return to Property
-                </Button>
-              </Link>
-            ) : (
-              <Link href="/stay">
-                <Button className="bg-black text-white hover:bg-gray-800 rounded-full px-8">
-                  Browse Properties
-                </Button>
-              </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            {(propertyId || checkIn) && (
+              <Button 
+                onClick={handleRetry}
+                disabled={isRetrying}
+                className="bg-black text-white hover:bg-gray-800 rounded-full px-8"
+              >
+                {isRetrying ? 'Loading...' : 'Try Again'}
+              </Button>
             )}
-            <Link href="/">
+            <Link href="/stay">
               <Button variant="outline" className="rounded-full px-8">
-                Go to Home
+                Browse Properties
+              </Button>
+            </Link>
+            <Link href="/">
+              <Button variant="ghost" className="rounded-full px-8">
+                Return to Home
               </Button>
             </Link>
           </div>
 
           {/* Support Info */}
-          <div className="mt-12 pt-8 border-t border-gray-200">
-            <p className="text-sm text-gray-600">
-              Need immediate assistance?{' '}
-              <a href="mailto:hello@swissalpinejourney.com" className="text-blue-600 underline">
-                Email us
-              </a>
-              {' '}or call{' '}
-              <a href="tel:+15551234567" className="text-blue-600 underline">
-                +1 (555) 123-4567
-              </a>
+          <div className="pt-8 border-t border-gray-200">
+            <p className="text-sm text-gray-600 mb-4">
+              Need immediate assistance? Our support team is available 24/7
             </p>
+            <div className="flex items-center justify-center gap-6">
+              <a href="tel:+15551234567" className="flex items-center gap-2 text-blue-600 hover:underline">
+                <Phone className="w-4 h-4" />
+                <span className="text-sm">+1 (555) 123-4567</span>
+              </a>
+              <a href="mailto:hello@swissalpinejourney.com" className="flex items-center gap-2 text-blue-600 hover:underline">
+                <Mail className="w-4 h-4" />
+                <span className="text-sm">hello@swissalpinejourney.com</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
