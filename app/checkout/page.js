@@ -158,12 +158,21 @@ Click OK to proceed to payment, or Cancel to abort.
 
       // Redirect to Uplisting payment page
       if (result.paymentUrl) {
+        console.log('🔗 Redirecting to Uplisting payment:', result.paymentUrl);
         window.location.href = result.paymentUrl;
       } else if (result.booking?.data?.attributes?.uplisting_url) {
+        console.log('🔗 Redirecting to Uplisting URL:', result.booking.data.attributes.uplisting_url);
         window.location.href = result.booking.data.attributes.uplisting_url;
       } else {
-        // Fallback: redirect to property page on Uplisting
-        window.location.href = property.uplistingUrl || `https://uplisting.io`;
+        // If no payment URL is provided, this might be a booking that doesn't require payment
+        // Redirect to success page
+        console.log('✅ No payment required, redirecting to success');
+        const successParams = new URLSearchParams({
+          bookingId: result.bookingId || result.booking?.data?.id || 'pending',
+          propertyId,
+          property: property?.name || 'Your Booking'
+        });
+        router.push(`/booking/success?${successParams.toString()}`);
       }
       
     } catch (error) {
