@@ -14,6 +14,13 @@ export async function POST(request) {
       'X-Uplisting-Client-ID': UPLISTING_CLIENT_ID
     };
     
+    // Get base URL from environment or construct it
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL;
+    
+    // Construct success and failure redirect URLs with booking parameters
+    const successUrl = `${baseUrl}/booking/success?bookingId={booking_id}&propertyId=${bookingData.propertyId}`;
+    const failureUrl = `${baseUrl}/booking/failure?propertyId=${bookingData.propertyId}&checkIn=${bookingData.checkIn}&checkOut=${bookingData.checkOut}&adults=${bookingData.adults}&children=${bookingData.children || 0}&infants=${bookingData.infants || 0}`;
+    
     // Format data for Uplisting API
     const uplistingBooking = {
       data: {
@@ -30,10 +37,20 @@ export async function POST(request) {
           guest_phone: bookingData.guestPhone,
           source: 'website',
           notes: bookingData.notes || '',
-          marketing_consent: bookingData.marketingConsent || false
+          marketing_consent: bookingData.marketingConsent || false,
+          // Add redirect URLs for Uplisting payment flow
+          success_url: successUrl,
+          failure_url: failureUrl,
+          cancel_url: failureUrl
         }
       }
     };
+    
+    console.log('📤 Creating booking with redirect URLs:', {
+      successUrl,
+      failureUrl,
+      propertyId: bookingData.propertyId
+    });
     
     const response = await fetch(`${UPLISTING_API_URL}/v2/bookings`, {
       method: 'POST',
@@ -44,23 +61,26 @@ export async function POST(request) {
     const data = await response.json();
     
     if (!response.ok) {
-      console.error('Uplisting API error:', data);
+      console.error('❌ Uplisting API error:', data);
       return NextResponse.json(
         { error: 'Failed to create booking', details: data },
         { status: response.status }
       );
     }
     
+    console.log('✅ Booking created successfully:', data.data?.id);
+    
     // Return booking details including payment link
     return NextResponse.json({
       success: true,
       booking: data,
+      bookingId: data.data?.id,
       // Uplisting provides a payment link in the response
       paymentUrl: data.data?.attributes?.payment_url || data.data?.attributes?.uplisting_url
     });
     
   } catch (error) {
-    console.error('Error creating booking:', error);
+    console.error('❌ Error creating booking:', error);
     return NextResponse.json(
       { error: 'Internal server error', message: error.message },
       { status: 500 }
