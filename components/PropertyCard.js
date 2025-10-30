@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Users, Bed, Bath } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { formatDateLocal } from '@/lib/uplisting';
 
 export default function PropertyCard({ property, priceDisplay, showFallbackWarning, isUnavailable, filters, nights }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -27,8 +28,8 @@ export default function PropertyCard({ property, priceDisplay, showFallbackWarni
   // Build URL with filters
   const buildPropertyUrl = () => {
     const params = new URLSearchParams();
-    if (filters.checkIn) params.set('checkIn', filters.checkIn.toISOString().split('T')[0]);
-    if (filters.checkOut) params.set('checkOut', filters.checkOut.toISOString().split('T')[0]);
+    if (filters.checkIn) params.set('checkIn', formatDateLocal(filters.checkIn));
+    if (filters.checkOut) params.set('checkOut', formatDateLocal(filters.checkOut));
     params.set('adults', filters.adults.toString());
     params.set('children', filters.children.toString());
     params.set('infants', filters.infants.toString());
