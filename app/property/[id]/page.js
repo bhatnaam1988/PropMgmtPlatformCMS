@@ -469,9 +469,19 @@ export default function PropertyDetailPage() {
                 {hasPricingData && nights > 0 && basePrice > 0 && (
                   <div className="space-y-2 pt-4 border-t border-gray-200">
                     <div className="flex justify-between">
-                      <span className="text-gray-700">{currency} {basePrice} x {nights} night{nights > 1 ? 's' : ''}</span>
+                      <span className="text-gray-700">
+                        {currency} {basePrice} x {pricingData.totalNights} night{pricingData.totalNights > 1 ? 's' : ''}
+                        {pricingData.totalNights !== nights && (
+                          <span className="text-xs text-yellow-700 ml-1">({nights} nights selected)</span>
+                        )}
+                      </span>
                       <span className="font-medium">{currency} {Math.round(totalAccommodation)}</span>
                     </div>
+                    {pricingData.totalNights !== nights && (
+                      <p className="text-xs text-yellow-700">
+                        ⚠️ Rate data only available for {pricingData.totalNights} of {nights} nights
+                      </p>
+                    )}
                     <div className="flex justify-between pt-2 border-t border-gray-200">
                       <span className="font-medium">Total</span>
                       <span className="font-medium">{currency} {Math.round(totalAccommodation)}</span>
