@@ -52,11 +52,11 @@ export default function PropertyCardSimple({ property }) {
         )}
 
         {/* Carousel Dots */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-1">
-          {property.photos.slice(0, 5).map((_, i) => (
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-1 max-w-[90%] overflow-x-auto px-2">
+          {property.photos.map((_, i) => (
             <div 
               key={i} 
-              className={`w-2 h-2 rounded-full ${i === currentImageIndex ? 'bg-white' : 'bg-white/50'}`}
+              className={`w-2 h-2 rounded-full flex-shrink-0 ${i === currentImageIndex ? 'bg-white' : 'bg-white/50'}`}
             />
           ))}
         </div>
