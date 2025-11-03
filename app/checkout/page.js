@@ -3,10 +3,16 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import { Home, ArrowLeft, Calendar, Users, MapPin, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
+import StripePaymentForm from './components/StripePaymentForm';
+
+// Initialize Stripe
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function CheckoutPage() {
   const searchParams = useSearchParams();
@@ -23,8 +29,13 @@ export default function CheckoutPage() {
   const [property, setProperty] = useState(null);
   const [pricing, setPricing] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  
+  // Payment Intent state
+  const [clientSecret, setClientSecret] = useState('');
+  const [paymentIntentId, setPaymentIntentId] = useState('');
+  const [bookingId, setBookingId] = useState('');
+  const [creatingPaymentIntent, setCreatingPaymentIntent] = useState(false);
 
   // Form data
   const [formData, setFormData] = useState({
@@ -35,6 +46,9 @@ export default function CheckoutPage() {
     marketingConsent: false,
     termsAccepted: false
   });
+
+  // Step management
+  const [currentStep, setCurrentStep] = useState(1); // 1: Guest Details, 2: Payment
 
   useEffect(() => {
     if (propertyId && checkIn && checkOut) {
