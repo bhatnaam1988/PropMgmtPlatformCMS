@@ -518,20 +518,59 @@ export default function CheckoutPage() {
                   <span className="font-medium">{currency} {accommodationTotal}</span>
                 </div>
 
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-700">Cleaning fee</span>
-                  <span className="font-medium">{currency} {cleaningFee}</span>
-                </div>
+                {cleaningFee > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-700">Cleaning fee</span>
+                    <span className="font-medium">{currency} {cleaningFee}</span>
+                  </div>
+                )}
+
+                {calculatedPricing?.extraGuestFee > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-700">
+                      Extra guest fee
+                      <span className="text-xs text-gray-500 block">
+                        ({calculatedPricing.guests} guests)
+                      </span>
+                    </span>
+                    <span className="font-medium">{currency} {calculatedPricing.extraGuestFee}</span>
+                  </div>
+                )}
 
                 <div className="flex justify-between text-sm border-t border-gray-100 pt-2">
                   <span className="text-gray-700">Subtotal</span>
                   <span className="font-medium">{currency} {subtotal}</span>
                 </div>
 
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-700">VAT ({VAT_RATE}%)</span>
-                  <span className="font-medium">{currency} {vatAmount}</span>
-                </div>
+                {/* Dynamic Tax Breakdown */}
+                {calculatedPricing?.taxes && calculatedPricing.taxes.length > 0 ? (
+                  calculatedPricing.taxes.map((tax, index) => (
+                    <div key={index} className="flex justify-between text-sm">
+                      <span className="text-gray-700">
+                        {tax.name}
+                        {tax.type === 'percentage' && ` (${tax.rate}%)`}
+                        {tax.type === 'per_person_per_night' && (
+                          <span className="text-xs text-gray-500 block">
+                            ({tax.guests} guests × {tax.nights} nights × {currency} {tax.rate})
+                          </span>
+                        )}
+                        {tax.type === 'per_night' && (
+                          <span className="text-xs text-gray-500 block">
+                            ({tax.nights} nights × {currency} {tax.rate})
+                          </span>
+                        )}
+                      </span>
+                      <span className="font-medium">{currency} {tax.amount}</span>
+                    </div>
+                  ))
+                ) : (
+                  totalTax > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-700">Taxes</span>
+                      <span className="font-medium">{currency} {totalTax}</span>
+                    </div>
+                  )
+                )}
 
                 <div className="flex justify-between pt-3 border-t border-gray-200">
                   <span className="font-medium text-lg">Total</span>
