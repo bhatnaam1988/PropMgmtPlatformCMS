@@ -432,27 +432,6 @@ export default function CheckoutPage() {
             )}
 
             {/* Cancellation Policy (always visible) */}
-                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                    <p className="text-sm text-red-700">{error}</p>
-                  </div>
-                )}
-
-                {/* Submit Button */}
-                <Button
-                  type="submit"
-                  disabled={submitting || !formData.termsAccepted}
-                  className="w-full bg-black text-white hover:bg-gray-800 rounded-full py-6 text-lg disabled:bg-gray-300"
-                >
-                  {submitting ? 'Processing...' : `Confirm and Pay ${currency} ${grandTotal}`}
-                </Button>
-
-                <p className="text-xs text-gray-500 text-center">
-                  You will be redirected to Uplisting's secure payment page
-                </p>
-              </form>
-            </div>
-
-            {/* Cancellation Policy */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 className="text-xl font-light mb-4">Cancellation Policy</h2>
               <div className="flex items-start gap-3">
