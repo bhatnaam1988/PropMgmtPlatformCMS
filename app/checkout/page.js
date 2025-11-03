@@ -235,12 +235,12 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Loading Overlay */}
-      {submitting && (
+      {creatingPaymentIntent && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
           <div className="bg-white rounded-2xl p-8 max-w-md text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-black mx-auto mb-4"></div>
-            <h3 className="text-xl font-medium mb-2">Processing Your Booking</h3>
-            <p className="text-gray-600">Please wait while we create your reservation...</p>
+            <h3 className="text-xl font-medium mb-2">Initializing Payment</h3>
+            <p className="text-gray-600">Please wait while we prepare your secure payment...</p>
             <p className="text-sm text-gray-500 mt-4">Do not close or refresh this page</p>
           </div>
         </div>
@@ -265,15 +265,34 @@ export default function CheckoutPage() {
 
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-light mb-8">Complete Your Booking</h1>
+        
+        {/* Progress Steps */}
+        <div className="mb-8 flex items-center justify-center gap-4">
+          <div className={`flex items-center gap-2 ${currentStep >= 1 ? 'text-black' : 'text-gray-400'}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 1 ? 'bg-black text-white' : 'bg-gray-300'}`}>
+              {currentStep > 1 ? '✓' : '1'}
+            </div>
+            <span className="font-medium">Guest Details</span>
+          </div>
+          <div className="w-16 h-0.5 bg-gray-300"></div>
+          <div className={`flex items-center gap-2 ${currentStep >= 2 ? 'text-black' : 'text-gray-400'}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 2 ? 'bg-black text-white' : 'bg-gray-300'}`}>
+              2
+            </div>
+            <span className="font-medium">Payment</span>
+          </div>
+        </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Column - Form */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Contact Information */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h2 className="text-2xl font-light mb-6">Contact Information</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
+            
+            {/* Step 1: Guest Details */}
+            {currentStep === 1 && (
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <h2 className="text-2xl font-light mb-6">Contact Information</h2>
+                
+                <form onSubmit={handleGuestDetailsSubmit} className="space-y-4">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
