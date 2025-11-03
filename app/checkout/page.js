@@ -221,15 +221,32 @@ export default function CheckoutPage() {
   
   // Get cleaning fee from property
   const cleaningFee = property?.fees?.find(f => 
-    f.attributes?.name?.toLowerCase().includes('cleaning')
-  )?.attributes?.amount || 50;
+    f.attributes?.label === 'cleaning_fee' && f.attributes?.enabled === true
+  )?.attributes?.amount || 0;
   
-  // Use Swiss VAT rate (7.7%) - same as backend configuration
-  const VAT_RATE = 7.7;
+  // Calculate pricing using the new calculator with property fees and taxes
+  let calculatedPricing = null;
+  if (property && accommodationTotal > 0) {
+    try {
+      calculatedPricing = calculateBookingPrice({
+        accommodationTotal,
+        cleaningFee,
+        nights,
+        adults,
+        children,
+        infants,
+        propertyFees: property.fees || [],
+        propertyTaxes: property.taxes || []
+      });
+    } catch (error) {
+      console.error('Error calculating pricing:', error);
+    }
+  }
   
-  const subtotal = accommodationTotal + cleaningFee;
-  const vatAmount = Math.round(subtotal * (VAT_RATE / 100));
-  const grandTotal = subtotal + vatAmount;
+  // Use calculated values or fallback
+  const subtotal = calculatedPricing?.subtotal || (accommodationTotal + cleaningFee);
+  const totalTax = calculatedPricing?.totalTax || 0;
+  const grandTotal = calculatedPricing?.grandTotal || subtotal;
   const totalGuests = adults + children + infants;
 
   return (
