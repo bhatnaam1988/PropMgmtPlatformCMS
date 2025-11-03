@@ -30,6 +30,7 @@ export default function CheckoutPage() {
   const [pricing, setPricing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [calculatedPricing, setCalculatedPricing] = useState(null);
   
   // Payment Intent state
   const [clientSecret, setClientSecret] = useState('');
