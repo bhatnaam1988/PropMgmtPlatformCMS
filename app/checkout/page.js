@@ -387,6 +387,59 @@ export default function CheckoutPage() {
                 {/* Submit Button */}
                 <Button
                   type="submit"
+                  disabled={creatingPaymentIntent || !formData.termsAccepted}
+                  className="w-full bg-black text-white hover:bg-gray-800 rounded-full py-6 text-lg disabled:bg-gray-300"
+                >
+                  {creatingPaymentIntent ? 'Loading...' : 'Continue to Payment'}
+                </Button>
+              </form>
+            </div>
+            )}
+
+            {/* Step 2: Payment with Stripe */}
+            {currentStep === 2 && clientSecret && (
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="mb-6 flex items-center justify-between">
+                  <h2 className="text-2xl font-light">Payment</h2>
+                  <button
+                    onClick={() => setCurrentStep(1)}
+                    className="text-sm text-gray-600 hover:text-black flex items-center gap-1"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    Edit Details
+                  </button>
+                </div>
+
+                {/* Guest Info Summary */}
+                <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-700">
+                    <strong>Booking for:</strong> {formData.firstName} {formData.lastName}
+                  </p>
+                  <p className="text-sm text-gray-600">{formData.email}</p>
+                </div>
+
+                <Elements stripe={stripePromise} options={{ clientSecret }}>
+                  <StripePaymentForm
+                    amount={grandTotal}
+                    currency={currency}
+                    onSuccess={handlePaymentSuccess}
+                    onError={handlePaymentError}
+                    guestName={`${formData.firstName} ${formData.lastName}`}
+                    guestEmail={formData.email}
+                  />
+                </Elements>
+              </div>
+            )}
+
+            {/* Cancellation Policy (always visible) */}
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-sm text-red-700">{error}</p>
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <Button
+                  type="submit"
                   disabled={submitting || !formData.termsAccepted}
                   className="w-full bg-black text-white hover:bg-gray-800 rounded-full py-6 text-lg disabled:bg-gray-300"
                 >
