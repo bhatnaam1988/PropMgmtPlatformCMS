@@ -88,7 +88,7 @@ export default function CheckoutPage() {
     return diffDays;
   };
 
-  const handleSubmit = async (e) => {
+  const handleGuestDetailsSubmit = async (e) => {
     e.preventDefault();
     
     // Validate terms acceptance
@@ -110,104 +110,78 @@ export default function CheckoutPage() {
       return;
     }
 
-    setSubmitting(true);
     setError('');
+    setCreatingPaymentIntent(true);
 
     try {
-      const bookingData = {
-        propertyId,
-        checkIn,
-        checkOut,
-        adults,
-        children,
-        infants,
-        guestName: `${formData.firstName} ${formData.lastName}`,
-        guestEmail: formData.email,
-        guestPhone: formData.phone,
-        marketingConsent: formData.marketingConsent,
-        notes: `Booking from Swiss Alpine Journey website. Adults: ${adults}, Children: ${children}, Infants: ${infants}`
-      };
-
-      console.log('📋 BOOKING DATA TO BE SENT:', bookingData);
-
-      // Show confirmation alert with all details including price
-      const confirmBooking = confirm(`
-🧪 FINAL CONFIRMATION BEFORE BOOKING
-
-Property: ${property?.name}
-Location: ${property?.address?.city}, ${property?.address?.state}
-
-Check-in: ${checkIn}
-Check-out: ${checkOut}
-Nights: ${nights}
-
-Guests:
-- ${adults} Adult${adults > 1 ? 's' : ''}
-- ${children} Child${children !== 1 ? 'ren' : ''}
-- ${infants} Infant${infants !== 1 ? 's' : ''}
-
-Guest Details:
-- Name: ${formData.firstName} ${formData.lastName}
-- Email: ${formData.email}
-- Phone: ${formData.phone}
-
-PRICE BREAKDOWN:
-- Accommodation: ${currency} ${accommodationTotal}
-- Cleaning Fee: ${currency} ${cleaningFee}
-- Taxes (${taxRate}%): ${currency} ${taxAmount}
-- TOTAL: ${currency} ${grandTotal}
-
-⚠️ This will create a REAL booking in Uplisting!
-Click OK to proceed to payment, or Cancel to abort.
-      `);
-
-      if (!confirmBooking) {
-        setSubmitting(false);
-        return;
-      }
-
-      // Create the booking in Uplisting
-      const response = await fetch('/api/bookings', {
+      // Create Payment Intent
+      const response = await fetch('/api/stripe/create-payment-intent', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
         },
-        body: JSON.stringify(bookingData)
+        body: JSON.stringify({
+          propertyId,
+          checkIn,
+          checkOut,
+          adults,
+          children,
+          infants,
+          guestName: `${formData.firstName} ${formData.lastName}`,
+          guestEmail: formData.email,
+          guestPhone: formData.phone,
+          accommodationTotal: pricing?.total || 0,
+          cleaningFee: property?.fees?.find(f => 
+            f.attributes?.name?.toLowerCase().includes('cleaning')
+          )?.attributes?.amount || 50,
+          marketingConsent: formData.marketingConsent,
+        }),
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || result.message || 'Failed to create booking');
+        throw new Error(result.error || result.message || 'Failed to initialize payment');
       }
 
-      console.log('✅ BOOKING CREATED:', result);
+      console.log('✅ Payment Intent created:', result.paymentIntentId);
 
-      // Redirect to Uplisting payment page
-      if (result.paymentUrl) {
-        console.log('🔗 Redirecting to Uplisting payment:', result.paymentUrl);
-        window.location.href = result.paymentUrl;
-      } else if (result.booking?.data?.attributes?.uplisting_url) {
-        console.log('🔗 Redirecting to Uplisting URL:', result.booking.data.attributes.uplisting_url);
-        window.location.href = result.booking.data.attributes.uplisting_url;
-      } else {
-        // If no payment URL is provided, this might be a booking that doesn't require payment
-        // Redirect to success page
-        console.log('✅ No payment required, redirecting to success');
-        const successParams = new URLSearchParams({
-          bookingId: result.bookingId || result.booking?.data?.id || 'pending',
-          propertyId,
-          property: property?.name || 'Your Booking'
-        });
-        router.push(`/booking/success?${successParams.toString()}`);
-      }
-      
+      // Store client secret and booking ID
+      setClientSecret(result.clientSecret);
+      setPaymentIntentId(result.paymentIntentId);
+      setBookingId(result.bookingId);
+
+      // Move to payment step
+      setCurrentStep(2);
+
     } catch (error) {
-      console.error('❌ Booking error:', error);
-      setError(error.message || 'Failed to create booking. Please check your connection and try again.');
-      setSubmitting(false);
+      console.error('❌ Payment initialization error:', error);
+      setError(error.message || 'Failed to initialize payment. Please try again.');
+    } finally {
+      setCreatingPaymentIntent(false);
     }
+  };
+
+  const handlePaymentSuccess = (paymentIntent) => {
+    console.log('🎉 Payment successful:', paymentIntent.id);
+    
+    // Redirect to success page
+    const successParams = new URLSearchParams({
+      bookingId,
+      paymentIntentId: paymentIntent.id,
+      propertyId,
+      property: property?.name || 'Your Booking'
+    });
+    
+    router.push(`/booking/success?${successParams.toString()}`);
+  };
+
+  const handlePaymentError = (error) => {
+    console.error('💳 Payment error:', error);
+    setError(error.message || 'Payment failed. Please try again.');
+    
+    // Optionally redirect to failure page
+    // router.push(`/booking/failure?error=${encodeURIComponent(error.message)}`);
   };
 
   const handleInputChange = (e) => {
