@@ -222,14 +222,12 @@ export default function CheckoutPage() {
     f.attributes?.name?.toLowerCase().includes('cleaning')
   )?.attributes?.amount || 50;
   
-  // Get tax rate
-  const taxRate = property?.taxes?.reduce((sum, tax) => 
-    sum + (parseFloat(tax.attributes?.percentage) || 0), 0
-  ) || 0;
+  // Use Swiss VAT rate (7.7%) - same as backend configuration
+  const VAT_RATE = 7.7;
   
   const subtotal = accommodationTotal + cleaningFee;
-  const taxAmount = Math.round(subtotal * (taxRate / 100));
-  const grandTotal = subtotal + taxAmount;
+  const vatAmount = Math.round(subtotal * (VAT_RATE / 100));
+  const grandTotal = subtotal + vatAmount;
   const totalGuests = adults + children + infants;
 
   return (
