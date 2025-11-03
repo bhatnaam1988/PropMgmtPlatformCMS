@@ -42,11 +42,41 @@ export async function POST(request) {
 
     const nights = dateValidation.nights;
 
-    // Calculate pricing with VAT
+    // Fetch property data to get fees and taxes
+    const propertyResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/properties/${propertyId}`,
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+
+    if (!propertyResponse.ok) {
+      throw new Error('Failed to fetch property data');
+    }
+
+    const { property } = await propertyResponse.json();
+
+    if (!property) {
+      return NextResponse.json(
+        { error: 'Property not found' },
+        { status: 404 }
+      );
+    }
+
+    console.log('📋 Property data fetched:', {
+      id: property.id,
+      fees: property.fees?.length || 0,
+      taxes: property.taxes?.length || 0
+    });
+
+    // Calculate pricing with property fees and taxes
     const pricing = calculateBookingPrice({
       accommodationTotal,
       cleaningFee: cleaningFee || 0,
       nights,
+      adults: adults || 2,
+      children: children || 0,
+      infants: infants || 0,
+      propertyFees: property.fees || [],
+      propertyTaxes: property.taxes || []
     });
 
     console.log('💰 Calculated pricing:', pricing);
@@ -71,16 +101,17 @@ export async function POST(request) {
           propertyId,
           checkIn,
           checkOut,
-          adults: adults?.toString() || '2',
-          children: children?.toString() || '0',
-          infants: infants?.toString() || '0',
+          adults: (adults || 2).toString(),
+          children: (children || 0).toString(),
+          infants: (infants || 0).toString(),
           guestEmail,
           guestName,
           nights: nights.toString(),
           accommodationTotal: pricing.accommodationTotal.toString(),
           cleaningFee: pricing.cleaningFee.toString(),
-          vatAmount: pricing.vatAmount.toString(),
-          vatRate: pricing.vatRate.toString(),
+          extraGuestFee: pricing.extraGuestFee.toString(),
+          totalTax: pricing.totalTax.toString(),
+          taxBreakdown: JSON.stringify(pricing.taxes),
           grandTotal: pricing.grandTotal.toString(),
           currency: pricing.currency,
         },
@@ -109,8 +140,9 @@ export async function POST(request) {
       currency: pricing.currency,
       accommodationTotal: pricing.accommodationTotal,
       cleaningFee: pricing.cleaningFee,
-      vatAmount: pricing.vatAmount,
-      vatRate: pricing.vatRate,
+      extraGuestFee: pricing.extraGuestFee,
+      totalTax: pricing.totalTax,
+      taxBreakdown: pricing.taxes,
       grandTotal: pricing.grandTotal,
       paymentStatus: 'pending',
       bookingStatus: 'pending_payment',
@@ -127,6 +159,15 @@ export async function POST(request) {
       bookingId: booking.bookingId,
       amount: pricing.grandTotal,
       currency: pricing.currency,
+      pricing: {
+        accommodationTotal: pricing.accommodationTotal,
+        cleaningFee: pricing.cleaningFee,
+        extraGuestFee: pricing.extraGuestFee,
+        subtotal: pricing.subtotal,
+        taxes: pricing.taxes,
+        totalTax: pricing.totalTax,
+        grandTotal: pricing.grandTotal
+      }
     });
 
   } catch (error) {
