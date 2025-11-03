@@ -504,12 +504,15 @@ export default function CheckoutPage() {
                   <span className="font-medium">{currency} {cleaningFee}</span>
                 </div>
 
-                {taxAmount > 0 && (
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-700">Taxes ({taxRate}%)</span>
-                    <span className="font-medium">{currency} {taxAmount}</span>
-                  </div>
-                )}
+                <div className="flex justify-between text-sm border-t border-gray-100 pt-2">
+                  <span className="text-gray-700">Subtotal</span>
+                  <span className="font-medium">{currency} {subtotal}</span>
+                </div>
+
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-700">VAT ({VAT_RATE}%)</span>
+                  <span className="font-medium">{currency} {vatAmount}</span>
+                </div>
 
                 <div className="flex justify-between pt-3 border-t border-gray-200">
                   <span className="font-medium text-lg">Total</span>
