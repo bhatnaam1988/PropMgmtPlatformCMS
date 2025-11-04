@@ -123,6 +123,20 @@ export default function PropertyCard({ property, priceDisplay, showFallbackWarni
           </div>
         </div>
 
+        {/* Constraint Badges */}
+        <div className="flex flex-wrap gap-2 mb-3">
+          {constraintBadges.map((badge, index) => (
+            <div 
+              key={index}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium border border-blue-200"
+              title={badge.tooltip}
+            >
+              <badge.icon className="w-3.5 h-3.5" />
+              <span>{badge.text}</span>
+            </div>
+          ))}
+        </div>
+
         {/* Unavailable Message */}
         {isUnavailable && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-3">
@@ -152,6 +166,20 @@ export default function PropertyCard({ property, priceDisplay, showFallbackWarni
             <Bath className="w-4 h-4" /> {property.bathrooms} Bath
           </span>
         </div>
+        
+        {/* Extra Guest Fee Info */}
+        {extraGuestFee && (
+          <p className="text-xs text-gray-600 mb-2 flex items-center gap-1">
+            <Users className="w-3 h-3" />
+            Extra guest fee: CHF {extraGuestFee.attributes.amount} per guest after {extraGuestFee.attributes.guests_included}
+          </p>
+        )}
+        
+        {/* Check-in/Check-out Times */}
+        <p className="text-xs text-gray-500 mb-3 flex items-center gap-1">
+          <Clock className="w-3 h-3" />
+          Check-in: {checkInTime}:00 | Check-out: {checkOutTime}:00
+        </p>
 
         {showFallbackWarning && (
           <p className="text-xs text-yellow-700 mb-2">
