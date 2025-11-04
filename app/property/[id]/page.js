@@ -568,6 +568,44 @@ export default function PropertyDetailPage() {
                   </div>
                 )}
 
+                {/* Property Constraints Info */}
+                {property && (
+                  <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h3 className="font-medium text-blue-900 mb-3 flex items-center gap-2">
+                      <Info className="w-4 h-4" />
+                      Booking Requirements
+                    </h3>
+                    <div className="space-y-2 text-sm text-blue-800">
+                      {pricingData?.calendar?.days?.[0]?.minimum_length_of_stay > 1 && (
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4" />
+                          <span>Minimum stay: {pricingData.calendar.days[0].minimum_length_of_stay} nights</span>
+                        </div>
+                      )}
+                      
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4" />
+                        <span>Maximum guests: {property.maximum_capacity || 10}</span>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4" />
+                        <span>Check-in: {property.check_in_time || 15}:00 | Check-out: {property.check_out_time || 11}:00</span>
+                      </div>
+                      
+                      {property.fees?.find(f => f.attributes?.label === 'extra_guest_charge' && f.attributes?.enabled) && (
+                        <div className="flex items-start gap-2">
+                          <Info className="w-4 h-4 mt-0.5" />
+                          <span>
+                            Extra guest fee: CHF {property.fees.find(f => f.attributes?.label === 'extra_guest_charge').attributes.amount} 
+                            {' '}per guest beyond {property.fees.find(f => f.attributes?.label === 'extra_guest_charge').attributes.guests_included}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 {showUnavailableWarning && (
                   <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                     <p className="text-sm text-yellow-800 font-medium">
