@@ -8,10 +8,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { 
   Home, ChevronLeft, MapPin, Users, Bed, Bath, Star, 
   Wifi, PawPrint, Tv, Coffee, Wind, CheckCircle, Calendar,
-  Minus, Plus
+  Minus, Plus, AlertCircle, Info, Clock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatDateLocal } from '@/lib/uplisting';
+import { validateBooking, getPropertyConstraints } from '@/lib/booking-validation';
 
 export default function PropertyDetailPage() {
   const params = useParams();
@@ -23,6 +24,8 @@ export default function PropertyDetailPage() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [pricingLoading, setPricingLoading] = useState(false);
   const [pricingData, setPricingData] = useState(null);
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [validationWarnings, setValidationWarnings] = useState([]);
   
   // Initialize booking widget state from URL params if available
   const [checkIn, setCheckIn] = useState(
