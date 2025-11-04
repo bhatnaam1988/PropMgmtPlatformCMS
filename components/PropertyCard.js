@@ -2,12 +2,53 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Users, Bed, Bath } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Users, Bed, Bath, Calendar, Clock, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatDateLocal } from '@/lib/uplisting';
 
 export default function PropertyCard({ property, priceDisplay, showFallbackWarning, isUnavailable, filters, nights }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Extract constraint information
+  const minStay = property.minimum_length_of_stay || 1;
+  const maxCapacity = property.maximum_capacity || 10;
+  const checkInTime = property.check_in_time || 15;
+  const checkOutTime = property.check_out_time || 11;
+  
+  // Find cleaning fee
+  const cleaningFee = property.fees?.find(
+    f => f.attributes?.label === 'cleaning_fee' && f.attributes?.enabled
+  )?.attributes?.amount || 0;
+  
+  // Find extra guest fee
+  const extraGuestFee = property.fees?.find(
+    f => f.attributes?.label === 'extra_guest_charge' && f.attributes?.enabled
+  );
+  
+  // Calculate constraint badges to show (max 3 for clean display)
+  const constraintBadges = [];
+  
+  if (minStay > 1) {
+    constraintBadges.push({
+      icon: Calendar,
+      text: `Min ${minStay} nights`,
+      tooltip: `Minimum stay requirement: ${minStay} nights`
+    });
+  }
+  
+  constraintBadges.push({
+    icon: Users,
+    text: `Max ${maxCapacity} guests`,
+    tooltip: `Maximum capacity: ${maxCapacity} guests`
+  });
+  
+  if (cleaningFee > 0) {
+    constraintBadges.push({
+      icon: Sparkles,
+      text: `CHF ${cleaningFee} cleaning`,
+      tooltip: `One-time cleaning fee: CHF ${cleaningFee}`
+    });
+  }
 
   const handlePrevImage = (e) => {
     e.preventDefault();
