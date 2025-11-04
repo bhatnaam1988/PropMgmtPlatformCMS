@@ -348,6 +348,38 @@ export default function PropertyDetailPage() {
             {/* Right Column - Booking Widget */}
             <div className="lg:col-span-1">
               <div className="sticky top-28 border border-gray-200 rounded-2xl p-6 shadow-lg">
+                
+                {/* Validation Errors */}
+                {validationErrors.length > 0 && (
+                  <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <div className="flex items-start gap-2">
+                      <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="font-medium text-red-900 mb-2">Cannot proceed with booking:</p>
+                        <ul className="space-y-1">
+                          {validationErrors.map((error, index) => (
+                            <li key={index} className="text-sm text-red-700">• {error.message}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Validation Warnings */}
+                {validationWarnings.length > 0 && validationErrors.length === 0 && (
+                  <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <div className="flex items-start gap-2">
+                      <Info className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        {validationWarnings.map((warning, index) => (
+                          <p key={index} className="text-sm text-yellow-700">{warning.message}</p>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="mb-6">
                   <div className="flex items-baseline gap-2">
                     {pricingLoading ? (
