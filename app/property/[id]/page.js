@@ -97,6 +97,35 @@ export default function PropertyDetailPage() {
       return;
     }
     
+    // Clear previous validation messages
+    setValidationErrors([]);
+    setValidationWarnings([]);
+    
+    // Validate booking against property constraints
+    const validation = validateBooking({
+      property,
+      checkIn: formatDateLocal(checkIn),
+      checkOut: formatDateLocal(checkOut),
+      adults: guests.adults,
+      children: guests.children,
+      infants: guests.infants,
+      availabilityData: pricingData
+    });
+    
+    // If there are errors, show them and don't proceed
+    if (!validation.valid) {
+      setValidationErrors(validation.errors);
+      setValidationWarnings(validation.warnings);
+      // Scroll to top to show errors
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    
+    // If there are only warnings (no errors), set them but continue
+    if (validation.warnings.length > 0) {
+      setValidationWarnings(validation.warnings);
+    }
+    
     // Navigate to checkout with booking details
     const params = new URLSearchParams({
       propertyId: property.id,
