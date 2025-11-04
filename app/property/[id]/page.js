@@ -296,6 +296,82 @@ export default function PropertyDetailPage() {
                 </p>
               </div>
 
+              {/* Fees & Taxes */}
+              {(property.fees?.length > 0 || property.taxes?.length > 0) && (
+                <div className="mb-8 pb-8 border-b border-gray-200">
+                  <h2 className="text-2xl font-light mb-4">Fees & Taxes</h2>
+                  <div className="space-y-3">
+                    {/* Fees */}
+                    {property.fees?.filter(fee => fee.attributes?.enabled).map((fee, index) => {
+                      const attrs = fee.attributes;
+                      let feeDescription = '';
+                      
+                      switch (attrs.label) {
+                        case 'cleaning_fee':
+                          feeDescription = `One-time cleaning fee: CHF ${attrs.amount}`;
+                          break;
+                        case 'extra_guest_charge':
+                          feeDescription = `Extra guest fee: CHF ${attrs.amount} per guest beyond ${attrs.guests_included}`;
+                          break;
+                        case 'pet_fee':
+                          feeDescription = `Pet fee: CHF ${attrs.amount}`;
+                          break;
+                        default:
+                          feeDescription = `${attrs.name || attrs.label}: CHF ${attrs.amount}`;
+                      }
+                      
+                      return (
+                        <div key={index} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                          <Sparkles className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-medium text-gray-900">{attrs.name || attrs.label}</p>
+                            <p className="text-sm text-gray-600">{feeDescription}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                    
+                    {/* Taxes */}
+                    {property.taxes?.filter(tax => tax.attributes?.amount > 0).map((tax, index) => {
+                      const attrs = tax.attributes;
+                      let taxDescription = '';
+                      
+                      switch (attrs.label) {
+                        case 'per_booking_percentage':
+                          taxDescription = `${attrs.amount}% of booking subtotal`;
+                          break;
+                        case 'per_booking_amount':
+                          taxDescription = `CHF ${attrs.amount} per booking`;
+                          break;
+                        case 'per_night':
+                          taxDescription = `CHF ${attrs.amount} per night`;
+                          break;
+                        case 'per_person_per_night':
+                          taxDescription = `CHF ${attrs.amount} per guest per night (tourist tax)`;
+                          break;
+                        default:
+                          taxDescription = attrs.type === 'percentage' 
+                            ? `${attrs.amount}% tax` 
+                            : `CHF ${attrs.amount}`;
+                      }
+                      
+                      return (
+                        <div key={`tax-${index}`} className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
+                          <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-medium text-gray-900">{attrs.name || attrs.label}</p>
+                            <p className="text-sm text-gray-600">{taxDescription}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <p className="text-xs text-gray-500 mt-4">
+                    All fees and taxes will be calculated and displayed at checkout based on your booking details.
+                  </p>
+                </div>
+              )}
+
               {/* Sleeping Arrangements */}
               <div className="mb-8 pb-8 border-b border-gray-200">
                 <h2 className="text-2xl font-light mb-4">Where you'll sleep</h2>
