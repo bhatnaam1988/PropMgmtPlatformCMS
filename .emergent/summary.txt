@@ -1,76 +1,68 @@
 <analysis>
-The AI engineer successfully initiated and developed a vacation rental website using Next.js and integrated the Uplisting API for property data and booking. The project started with thorough analysis of Figma designs and provided SOW documents. Key development phases included setting up core UI with Shadcn/Tailwind, integrating Uplisting for properties and calendar data, and implementing complex pricing logic based on user feedback. Critical UI/UX issues like z-index conflicts, date handling (timezone), and image carousels were identified and resolved iteratively. The engineer meticulously addressed user requests for dynamic pricing, filter retention across pages, and comprehensive image galleries. The current state involves the development of the checkout and booking flow, with initial setup for success and failure pages after Uplisting payment. The engineer demonstrated strong problem-solving skills, particularly in debugging Uplisting API discrepancies and refining date calculations.
+The AI engineer successfully built a vacation rental website using Next.js and Uplisting API. Initially, the focus was on core UI, Uplisting property/calendar integration, and fixing UI/UX issues. The booking flow was established, including success/failure pages. A significant pivot occurred when the user requested a full Stripe prepaid checkout, replacing Uplisting's payment. This involved designing a robust Stripe integration with Payment Intents, webhooks, retry logic, and compliance. After implementing the Stripe backend and frontend, the user requested a major refactor to leverage all Uplisting property attributes (pricing, fees, constraints) across the site. The engineer completed Phase 1 (pricing calculator rewrite) and Phase 2 (booking validation) of this refactor, and is now moving to Phase 3 (display improvements).
 </analysis>
 
 <product_requirements>
-The goal is to build a vacation rental website from Figma designs and SOW using Next.js and Sanity CMS. The site must be in English for MVP and utilize Uplisting API for property listings, availability, pricing, and Stripe payments (via Uplisting).
-Key features include:
-- A responsive homepage with a hero search bar (location, dates, guests) navigating to the Stay page with filters applied.
-- A Stay/Listings page displaying properties with advanced filters (location, dates, guests, bedrooms, amenities).
-- A Property Detail page with an image gallery, detailed property information, a booking widget showing dynamic pricing, and a Reserve button.
-- Pricing strategy: display monthly average when no dates selected, sum of nightly rates for selected dates, and a CHF 300 fallback with disclaimer for API failures. Pricing must be fetched from Uplisting API, including cleaning fees and taxes (to be shown at checkout).
-- UI/UX requirements: Clean, minimalist design with card-based layouts, consistent header/footer, functional image carousels on property cards and a comprehensive gallery on detail pages, all inputs must be editable and usable.
-- Functional requirements: Filter retention across homepage, Stay page, and Property Detail page, correct date calculations accounting for timezones, and disabling booking for unavailable dates.
-- Booking flow: Checkout page with contact/payment info, full price breakdown, terms agreement, and redirection to Uplisting for payment. Handling for Uplisting payment success/failure.
-- Integration: Uplisting API Key , X-Uplisting-Client-ID . Sanity CMS to manage all content (images, text, pages, navigation).
+The goal is to build a responsive vacation rental website using Next.js and Sanity CMS, integrating the Uplisting API for property listings, availability, and pricing. Key features include a homepage with a search bar leading to a listings page, a property detail page with dynamic pricing, and a booking flow. Initially, Uplisting was to handle payments, but this was replaced by a requirement for a complete Stripe prepaid checkout flow using Payment Intents and Payment Elements. This Stripe flow must be user-friendly, GDPR-compliant for EU users, support CHF currency, include configurable VAT (initially manual 7.7%), and trigger Uplisting booking via webhooks with retry logic and admin alerts for failures. Subsequently, a major refactor was initiated to fully integrate Uplisting's comprehensive property attributes (base rates, taxes, extra guest fees, discounts, availability constraints like min/max nights/guests) across the website, for display on listings, use in calculations, and enforcement of booking rules.
 </product_requirements>
 
 <key_technical_concepts>
-- **Next.js**: Full-stack framework (App Router, API routes, server/client components).
-- **Uplisting API**: Third-party integration for property data, availability, pricing, and booking.
-- **Sanity CMS**: Content management system for dynamic content.
-- **Tailwind CSS & Shadcn UI**: Styling and UI component library.
-- **React DatePicker**: Frontend date selection component.
-- **MongoDB**: Database (configured but not directly used for application data in trajectory).
-- **URL Parameters**: State management for filters and booking details.
-- **Date/Timezone Handling**: Critical for accurate booking calculations.
-- **Z-index Management**: For proper UI layering.
+- **Next.js**: App Router, API routes, server/client components.
+- **Uplisting API**: Property data, availability, pricing, booking.
+- **Stripe API**: Payment Intents, Payment Element, Webhooks, SCA.
+- **Tailwind CSS & Shadcn UI**: Styling and UI components.
+- **MongoDB**: Booking persistence, custom data models.
+- **URL Parameters**: State management.
+- **Date/Timezone Handling**: Accurate booking calculations.
+- **Idempotency**: Preventing duplicate operations (Stripe, Uplisting).
+- **Retry Logic**: Handling transient API failures.
+- **Environment Variables**: Secure configuration.
+- **Manual VAT Calculation**: Static 7.7% rate.
 </key_technical_concepts>
 
 <code_architecture>
-The application follows a Next.js App Router structure with a clear separation of frontend pages, API routes for backend logic, and shared components/utilities.
+The application follows a Next.js App Router structure with distinct frontend pages, API routes, and shared components/utilities.
 
 **Directory Structure:**
 
 
-- ****: Contains helper functions for interacting with the Uplisting API, encapsulating API key usage and base URL. Important for centralizing all Uplisting data fetching. Created during initial Uplisting integration.
-- ****: Configuration for the Sanity CMS studio. This file will define content schemas. Created as part of Sanity setup.
-- ****: Handles  requests to fetch all available properties from Uplisting. Important for displaying listings on the Stay and Home pages. Created.
-- ****: Handles  requests to create bookings in Uplisting using the Client ID and Uplisting payment link. Essential for the final booking process. Created.
-- ****: Handles  requests to fetch pricing for multiple properties simultaneously. Used for optimizing pricing display on listing pages. Created.
-- ****: Fetches calendar and availability data for a specific property from Uplisting. Critical for dynamic pricing and availability checks. Modified to correctly parse Uplisting's  field and handle  states.
-- ****: The homepage of the application. Integrates the  and  components to showcase listings and initiate searches. Modified to correctly use  and pass URL parameters.
-- ****: The main property listings page. Features advanced filters, displays  components, and manages URL parameters for filtering. Heavily refactored for z-index fixes, date picker integration, and dynamic pricing display.
-- ****: The detailed view for individual properties. Displays a comprehensive image gallery, property details, amenities, and a booking widget. Modified to show all available images, display Uplisting-fetched pricing without avg, and remove cleaning fee from breakdown on this page. Also retains URL filters.
-- ****: A reusable component for location, date, and guest selection, central to the search functionality. Updated to ensure correct date formatting and navigation with URL parameters.
-- ****: Displays individual property details on the Stay page. Includes an image carousel with navigation arrows, dynamic pricing, and property specifications. Created and updated to show all photos with navigation.
-- ****: A lighter version of  used on the homepage. Created and updated to include image carousel.
-- ****: Provides utility functions, notably  to correctly handle date conversions and avoid timezone issues. Created.
-- ****: Global CSS file. Modified to import  styles and apply z-index overrides for UI elements like the date picker.
-- ****: The checkout form page where users input contact information, review booking summary, and proceed to payment. Created and in active development.
-- ****: A page to be displayed after a successful booking and payment via Uplisting. Created.
-- ****: A page to be displayed after a failed booking or payment. This file is currently being created.
+-   ****: Helper for Uplisting API.
+-   ****: Creates Uplisting bookings. Modified multiple times to fix API payload, headers (Client ID), and error handling.
+-   ****: Fetches individual property details from Uplisting.
+-   ****: The main checkout form. Heavily modified for Stripe Payment Element integration, form validation, error handling, loading states, and displaying detailed pricing (accommodation, cleaning, taxes, fees).
+-   ****: Enhanced with better error handling and retry guidance.
+-   ****: Property detail page. Modified to validate booking parameters against Uplisting constraints and display relevant errors/warnings.
+-   ****: New. Encapsulates Stripe SDK initialization on the server-side with secret key.
+-   ****: New. Centralized Stripe configuration (publishable key, currency, tax mode) for both client and server use.
+-   ****: Rewritten. Now dynamically calculates full booking price, including accommodation, cleaning fees, extra guest fees, and various taxes, based on comprehensive Uplisting property data. It handles manual VAT calculation.
+-   ****: New. Provides a utility function for retrying asynchronous operations with exponential backoff, used for Uplisting API calls in webhooks.
+-   ****: New. Manages persistence of booking records in MongoDB after successful payment.
+-   ****: New. Utility to validate booking parameters (dates, guests, nights) against Uplisting-defined property constraints.
+-   ****: New. API endpoint to create a Stripe Payment Intent, returning the client secret to the frontend. It uses the .
+-   ****: New. Handles Stripe webhook events (, ). Verifies signature, calls Uplisting booking API (with retry logic), and stores booking in MongoDB.
+-   ****: New. Client component responsible for rendering the Stripe Payment Element and handling its submission.
+-   ****: Centralized configuration for Uplisting, Stripe (API keys, webhook secret, currency), manual VAT, retry settings, and admin email.
 </code_architecture>
 
 <pending_tasks>
-- **Checkout & Booking:** Implement redirect handling for Uplisting payment success/failure, and display booking confirmation pages.
-- **Sanity CMS Integration:** Set up Sanity Studio with full content schemas for all site content (pages, blog, settings) and integrate into the app to make content configurable.
-- **Content Pages:** Build About, Behind the Scenes, Cleaning Services, Rental Management Services, and Explore/Location pages.
-- **SEO Implementation:** Add metadata, sitemap.xml, robots.txt, and Schema.org markup.
-- **Blog Scaffolding & Legal Pages:** Create basic blog pages and legal content (Privacy Policy, Terms & Conditions, GDPR).
-- **Admin Features:** Basic admin dashboard for property image uploads.
+- **Sanity CMS Integration**: Set up Sanity Studio with content schemas for site settings, pages, navigation, blog, etc., and integrate into the app. (De-prioritized by user for Stripe)
+- **Stripe Webhook Secret Configuration**: User needs to configure the webhook endpoint in Stripe Dashboard and provide the  secret. (Provided, implementation complete)
+- **Admin Alert Email Service**: Integration of a real email service for admin alerts (currently logs to console).
+- **Property Display Improvements**: Add constraint badges to property cards. (Next step in current refactor)
+- **Property Detail Page Enhancements**: Display daily rate breakdowns on property details.
+- **Stay Page Enhancements**: Update property cards to show constraint badges and potentially more dynamic pricing.
 </pending_tasks>
 
 <current_work>
-The AI engineer is currently focused on completing the entire booking flow, specifically addressing the checkout and post-payment stages.
-- The  has been created and includes forms for contact and payment information, booking summary, marketing consent, and terms agreement.
-- The property detail page () has been updated to pass all necessary booking data to the checkout page via URL parameters.
-- An alert is currently displayed on the checkout page with booking data, which the user explicitly requested to include the final booking price.
-- The user has given explicit instruction to proceed with real booking creation, redirect to Uplisting for payment, and handle both success and failure redirects.
-- The  has just been created to manage successful payment outcomes.
-- The next immediate task is to create the corresponding failure page.
+The AI engineer is currently engaged in a major refactor to fully integrate comprehensive Uplisting property attributes into the website's functionality and display. This initiative aims to utilize rich data from Uplisting (like base rates, taxes, extra guest prices, fees, discounts, and availability constraints such as minimum nights or maximum guests) that was previously underutilized.
+
+Specifically, the work is progressing through phases:
+- **Phase 1: Pricing Calculator Rewrite**: This has been completed. The  utility was entirely rewritten to leverage the full suite of property-specific fees and taxes from Uplisting. This updated calculator is now used by the  for accurate payment intent creation and by the  to display a detailed price breakdown. The checkout page was extensively modified to reflect accommodation, cleaning fees, extra guest fees, booking taxes (percentage-based), and tourist taxes (per guest per night), ensuring a transparent pricing summary for the user. Initial compilation errors related to  and client-side Stripe config imports were debugged and fixed.
+- **Phase 2: Booking Validation**: This has also been completed. A new utility, , was created to enforce booking constraints directly from Uplisting's property data (e.g., minimum nights, maximum guests). The  (property detail page) was updated to integrate this validation. The  function now performs these checks before navigation, and the UI displays validation errors/warnings and property constraints prominently near the booking widget.
+
+The system is now more robust in handling dynamic pricing and booking rules dictated by Uplisting property data.
 </current_work>
 
 <optional_next_step>
-Create the  to handle payment failures from Uplisting.
+Proceed with Phase 3: Display Improvements, starting with adding constraint badges to property cards.
 </optional_next_step>

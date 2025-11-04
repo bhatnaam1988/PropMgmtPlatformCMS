@@ -78,7 +78,7 @@ Total = CHF 284
 
 ### **Step 1: Go to any property**
 ```
-https://cozy-retreats-3.preview.emergentagent.com/property/84656
+https://alpine-booking-1.preview.emergentagent.com/property/84656
 ```
 
 ### **Step 2: Select dates and click Reserve**
