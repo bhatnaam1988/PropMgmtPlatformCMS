@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { 
   Home, ChevronLeft, MapPin, Users, Bed, Bath, Star, 
   Wifi, PawPrint, Tv, Coffee, Wind, CheckCircle, Calendar,
-  Minus, Plus, AlertCircle, Info, Clock
+  Minus, Plus, AlertCircle, Info, Clock, Sparkles
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatDateLocal } from '@/lib/uplisting';
