@@ -544,6 +544,34 @@ export default function PropertyDetailPage() {
 
                 {hasPricingData && nights > 0 && basePrice > 0 && (
                   <div className="space-y-2 pt-4 border-t border-gray-200">
+                    {/* Daily Rate Breakdown */}
+                    {pricingData?.calendar?.days && pricingData.calendar.days.length > 0 && pricingData.calendar.days.length <= 14 && (
+                      <div className="mb-4">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">Daily Rate Breakdown</h4>
+                        <div className="max-h-32 overflow-y-auto space-y-1 text-xs">
+                          {pricingData.calendar.days.map((day, index) => {
+                            const dayRate = parseFloat(day.day_rate || day.rate || 0);
+                            const dayDate = new Date(day.date);
+                            const dayName = dayDate.toLocaleDateString('en-US', { weekday: 'short' });
+                            const dayMonth = dayDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                            
+                            return (
+                              <div key={index} className="flex justify-between items-center py-1">
+                                <span className="text-gray-600">
+                                  {dayName}, {dayMonth}
+                                  {!day.available && <span className="text-red-600 ml-1">(unavailable)</span>}
+                                </span>
+                                <span className={`font-medium ${!day.available ? 'text-gray-400' : 'text-gray-700'}`}>
+                                  {currency} {Math.round(dayRate)}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div className="border-t border-gray-200 mt-2 pt-2"></div>
+                      </div>
+                    )}
+                    
                     <div className="flex justify-between">
                       <span className="text-gray-700">
                         {currency} {basePrice} x {pricingData.totalNights} night{pricingData.totalNights > 1 ? 's' : ''}
