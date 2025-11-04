@@ -634,6 +634,44 @@ export default function PropertyDetailPage() {
                   </div>
                 )}
 
+                {/* Fees & Taxes */}
+                {property && (property.fees?.length > 0 || property.taxes?.length > 0) && (
+                  <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                    <h3 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
+                      <Sparkles className="w-4 h-4" />
+                      Fees & Taxes
+                    </h3>
+                    <div className="space-y-2 text-sm text-gray-700">
+                      {/* Cleaning Fee */}
+                      {property.fees?.find(f => f.attributes?.label === 'cleaning_fee' && f.attributes?.enabled) && (
+                        <div className="flex items-start gap-2">
+                          <span className="font-medium">Cleaning Fee:</span>
+                          <span>CHF {property.fees.find(f => f.attributes?.label === 'cleaning_fee').attributes.amount}</span>
+                        </div>
+                      )}
+                      
+                      {/* VAT */}
+                      {property.taxes?.find(t => t.attributes?.label === 'per_booking_percentage' && t.attributes?.amount > 0) && (
+                        <div className="flex items-start gap-2">
+                          <span className="font-medium">VAT:</span>
+                          <span>{property.taxes.find(t => t.attributes?.label === 'per_booking_percentage').attributes.amount}%</span>
+                        </div>
+                      )}
+                      
+                      {/* Tourist Tax */}
+                      {property.taxes?.find(t => t.attributes?.label === 'per_person_per_night' && t.attributes?.amount > 0) && (
+                        <div className="flex items-start gap-2">
+                          <span className="font-medium">Tourist Tax:</span>
+                          <span>CHF {property.taxes.find(t => t.attributes?.label === 'per_person_per_night').attributes.amount} per guest per night</span>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-500 mt-3">
+                      All fees and taxes will be calculated at checkout.
+                    </p>
+                  </div>
+                )}
+
                 {showUnavailableWarning && (
                   <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                     <p className="text-sm text-yellow-800 font-medium">
