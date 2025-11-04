@@ -187,10 +187,6 @@ export default function PropertyCard({ property, priceDisplay, showFallbackWarni
           </p>
         )}
 
-        <p className="text-sm text-gray-600">
-          {property.address?.street || 'Central location'}
-        </p>
-
         <Button 
           variant="outline" 
           className="w-full rounded-full mt-4"
