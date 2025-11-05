@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { AlertCircle, Lock } from 'lucide-react';
 
 export default function StripePaymentForm({ 
