@@ -26,7 +26,7 @@ export default function StayPage() {
     children: parseInt(searchParams.get('children') || '0'),
     infants: parseInt(searchParams.get('infants') || '0'),
     bedrooms: 'any',
-    amenities: 'any'
+    amenities: [] // Changed to array for multi-select
   });
 
   useEffect(() => {
