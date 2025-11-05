@@ -134,15 +134,18 @@ backend:
 
   - task: "Properties API - Single property details"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/api/properties/[id]/route.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "API endpoint to fetch single property details from Uplisting including full fee and tax information. Needs testing with valid property IDs."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Property ID 84656 returns complete details. Property 'Sunny Alps View: Central Bliss' includes 2 fees, 4 taxes, and constraint information (maximum_capacity). All required fields present for pricing calculations."
 
   - task: "Availability API - Property availability & pricing"
     implemented: true
