@@ -119,15 +119,18 @@ backend:
 
   - task: "Properties API - List all properties"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/api/properties/route.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "API endpoint to fetch all properties from Uplisting. Returns property list with all attributes including fees, taxes, constraints. Needs comprehensive testing."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: API returns 3 properties with complete data structure. All properties include fees and taxes information. Response format correct with 'properties' array. Property IDs 84656, 174947 confirmed available for testing."
 
   - task: "Properties API - Single property details"
     implemented: true
