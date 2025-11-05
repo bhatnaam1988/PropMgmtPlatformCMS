@@ -156,8 +156,23 @@ code {
   z-index: 9999 !important;
 }
 
-/* Ensure select dropdowns appear above images */
+.react-datepicker__portal {
+  z-index: 9999 !important;
+}
+
+.react-datepicker {
+  z-index: 9999 !important;
+}
+
+/* Ensure select dropdowns appear above other elements */
 select {
   position: relative;
-  z-index: 50;
+  background-color: white;
+  cursor: pointer;
+}
+
+/* Fix for select dropdown options appearing properly */
+select option {
+  background-color: white;
+  color: black;
 }
