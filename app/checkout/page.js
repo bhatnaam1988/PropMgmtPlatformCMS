@@ -445,6 +445,9 @@ export default function CheckoutPage() {
                     guestName={`${formData.firstName} ${formData.lastName}`}
                     guestEmail={formData.email}
                     cardholderName={formData.cardholderName}
+                    onCardholderNameChange={(name) => 
+                      setFormData(prev => ({ ...prev, cardholderName: name }))
+                    }
                   />
                 </Elements>
               </div>
