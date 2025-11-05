@@ -368,24 +368,6 @@ export default function CheckoutPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Name on Card *
-                  </label>
-                  <Input
-                    type="text"
-                    name="cardholderName"
-                    value={formData.cardholderName}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full"
-                    placeholder="As shown on your card"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Enter the name exactly as it appears on your credit or debit card
-                  </p>
-                </div>
-
                 {/* Marketing Consent */}
                 <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
                   <Checkbox
