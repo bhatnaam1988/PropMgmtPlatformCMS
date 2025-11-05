@@ -179,15 +179,18 @@ backend:
 
   - task: "Stripe Create Payment Intent API"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/api/stripe/create-payment-intent/route.js"
     stuck_count: 0
     priority: "critical"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Creates Stripe Payment Intent for booking. Calculates full price using pricing-calculator including accommodation, cleaning fees, extra guest fees, taxes. Returns client secret for frontend. Critical for payment flow."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: CRITICAL API WORKING. Payment Intent created successfully with 1743 CHF grand total including 2 tax calculations. Returns clientSecret, paymentIntentId, bookingId. Pricing breakdown complete with accommodation, cleaning, taxes. MongoDB booking record created. Ready for production payments."
 
   - task: "Stripe Webhook Handler"
     implemented: true
