@@ -214,18 +214,54 @@ backend:
         comment: "Calculates complete booking price with accommodation, cleaning fees, extra guest fees, percentage taxes, per-night taxes, tourist taxes. Critical business logic needs thorough testing."
 
 frontend:
-  - task: "Checkout Page - Complete booking form and submission"
+  - task: "Homepage - Property showcase"
     implemented: true
     working: "NA"
-    file: "/app/app/checkout/page.js"
+    file: "/app/app/page.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Main landing page with hero section and property showcase. Needs testing for responsiveness and navigation."
+
+  - task: "Stay Page - Property listings with filters"
+    implemented: true
+    working: "NA"
+    file: "/app/app/stay/page.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Enhanced checkout page with improved form validation (email regex, phone length), better error handling, loading overlay during submission, improved redirect logic for success/failure, and optimized user feedback."
-  
+        comment: "Property listings page with search filters (location, dates, guests, bedrooms). Shows property cards with constraint badges, pricing, and availability. Needs comprehensive testing."
+
+  - task: "Property Detail Page - Full property information"
+    implemented: true
+    working: "NA"
+    file: "/app/app/property/[id]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Detailed property page with image gallery, amenities, booking widget, constraint display, fees & taxes section, booking validation. Critical page needs thorough testing."
+
+  - task: "Checkout Page - Payment and booking form"
+    implemented: true
+    working: "NA"
+    file: "/app/app/checkout/page.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Complete checkout page with Stripe Payment Element integration, guest information form, detailed pricing breakdown, form validation, error handling. Critical for booking flow."
+
   - task: "Booking Success Page"
     implemented: true
     working: "NA"
@@ -236,8 +272,8 @@ frontend:
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Success page already existed. Displays booking confirmation, next steps, email notification info, and contact details. Accepts bookingId and property name as URL parameters."
-  
+        comment: "Success confirmation page after booking. Displays booking details and next steps."
+
   - task: "Booking Failure Page"
     implemented: true
     working: "NA"
@@ -248,7 +284,19 @@ frontend:
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Completely rewrote failure page following hospitality industry best practices. Added intelligent error detection (payment, timeout, unavailable, cancel), retry functionality with original booking params, comprehensive support info, common issues list, and better UX with contact options."
+        comment: "Failure page with error handling, retry options, and support information."
+
+  - task: "Property Cards Component - Display improvements"
+    implemented: true
+    working: "NA"
+    file: "/app/components/PropertyCard.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Property card component with constraint badges (max guests, cleaning fee), extra guest fee info, check-in/out times. Needs visual and functional testing."
 
 metadata:
   created_by: "main_agent"
