@@ -105,50 +105,113 @@
 user_problem_statement: "Production readiness for Swiss Alpine Journey vacation rental website. Complete email alert system with Resend for webhook failures. Comprehensive backend and frontend testing to ensure all APIs, payment flows, and booking processes work correctly before deployment."
 
 backend:
-  - task: "Booking API - Create booking with Uplisting"
+  - task: "Email Alert System - Resend Integration"
     implemented: true
     working: true
-    file: "/app/app/api/bookings/route.js"
-    stuck_count: 1
+    file: "/app/lib/email/index.js, /app/lib/webhooks/alertFailure.js"
+    stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
-      - working: "NA"
-        agent: "main"
-        comment: "Enhanced booking API with success/failure redirect URLs, improved error handling, logging, and response structure. Added support for success_url, failure_url, and cancel_url parameters to Uplisting API call."
-      - working: false
-        agent: "testing"
-        comment: "API structure is correct but fails with 401 'client ID does not appear to be valid' error. Fixed authentication from Bearer to Basic (correct for Uplisting API). Issue is with client ID 'cozy-retreats-3' not being authorized for booking creation in Uplisting. Read operations work fine. This is expected in demo environment - would need valid partner client ID from Uplisting support for production."
       - working: true
         agent: "main"
-        comment: "FIXED! Updated client ID to f4fd1410-9636-013e-aeff-2a9672a658e7 and corrected JSON structure to match Uplisting documentation. Key changes: 1) Removed 'type' from data object, 2) Moved property to 'relationships' structure, 3) Used 'number_of_guests' instead of separate counts. Booking creation now works - tested successfully with booking IDs 8402738 and 8402741."
-  
-  - task: "Properties API - Fetch single property"
+        comment: "Implemented complete email alert system with Resend. Created configurable email service with provider abstraction layer. Test emails sent successfully to aman.bhatnagar11@gmail.com. Message IDs: ba7cac17-60f4-4f4a-b862-96794090199d, a1b85980-cf2d-42a3-b5c8-dfe84afba06b. System ready for production webhook failure alerts."
+
+  - task: "Properties API - List all properties"
     implemented: true
-    working: true
+    working: "NA"
+    file: "/app/app/api/properties/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "API endpoint to fetch all properties from Uplisting. Returns property list with all attributes including fees, taxes, constraints. Needs comprehensive testing."
+
+  - task: "Properties API - Single property details"
+    implemented: true
+    working: "NA"
     file: "/app/app/api/properties/[id]/route.js"
     stuck_count: 0
-    priority: "medium"
-    needs_retesting: false
+    priority: "high"
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Existing API route for fetching single property. Used by checkout page. Needs verification that it works correctly."
-      - working: true
-        agent: "testing"
-        comment: "API working correctly. Successfully fetches property details including name, photos (8 photos), address, amenities, fees, and taxes. Tested with property ID 84656 (Sunny Alps View: Central Bliss in Grächen)."
+        comment: "API endpoint to fetch single property details from Uplisting including full fee and tax information. Needs testing with valid property IDs."
 
-  - task: "Availability API - Fetch pricing and availability"
+  - task: "Availability API - Property availability & pricing"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/app/api/availability/[propertyId]/route.js"
     stuck_count: 0
-    priority: "medium"
-    needs_retesting: false
+    priority: "high"
+    needs_retesting: true
     status_history:
-      - working: true
-        agent: "testing"
-        comment: "API working correctly. Successfully fetches pricing and availability data. Tested with future dates (Nov 29 - Dec 4, 2025): Rate 111 CHF/night, Total 553 CHF for 5 nights, Available: true. Proper error handling for missing date parameters."
+      - working: "NA"
+        agent: "main"
+        comment: "API endpoint to check property availability and pricing for specific date ranges. Returns calendar data with daily rates, availability status, minimum stay requirements."
+
+  - task: "Pricing Calculator API"
+    implemented: true
+    working: "NA"
+    file: "/app/app/api/pricing/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "API endpoint to calculate pricing for multiple properties. Uses comprehensive pricing calculator with all Uplisting fees and taxes. Needs testing with various property IDs and date ranges."
+
+  - task: "Stripe Create Payment Intent API"
+    implemented: true
+    working: "NA"
+    file: "/app/app/api/stripe/create-payment-intent/route.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Creates Stripe Payment Intent for booking. Calculates full price using pricing-calculator including accommodation, cleaning fees, extra guest fees, taxes. Returns client secret for frontend. Critical for payment flow."
+
+  - task: "Stripe Webhook Handler"
+    implemented: true
+    working: "NA"
+    file: "/app/app/api/stripe/webhook/route.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Handles Stripe webhook events (payment_intent.succeeded, payment_intent.payment_failed). Creates booking in Uplisting after successful payment with retry logic. Sends email alerts on failure. Critical for booking completion."
+
+  - task: "Booking Validation Utilities"
+    implemented: true
+    working: "NA"
+    file: "/app/lib/booking-validation.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Validates booking parameters against property constraints (min/max nights, max guests, closed dates). Needs testing with various property configurations and edge cases."
+
+  - task: "Pricing Calculator Utilities"
+    implemented: true
+    working: "NA"
+    file: "/app/lib/pricing-calculator.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Calculates complete booking price with accommodation, cleaning fees, extra guest fees, percentage taxes, per-night taxes, tourist taxes. Critical business logic needs thorough testing."
 
 frontend:
   - task: "Checkout Page - Complete booking form and submission"
