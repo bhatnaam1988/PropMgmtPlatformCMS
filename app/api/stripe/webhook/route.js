@@ -137,15 +137,24 @@ async function processSuccessfulPayment(paymentIntent) {
     // All retry attempts failed
     console.error(`💥 Failed to create Uplisting booking after retries:`, error);
 
-    // Send admin alert
-    sendAdminAlert('Urgent: Booking Creation Failed After Payment', {
+    // Send critical admin alert via email
+    await alertUplistingBookingFailure({
       paymentIntentId,
-      bookingId: booking.bookingId,
-      propertyId: booking.propertyId,
-      guestEmail: booking.guestEmail,
-      amount: `${booking.currency} ${booking.grandTotal}`,
+      amount: paymentIntent.amount,
+      bookingDetails: {
+        propertyId: booking.propertyId,
+        checkIn: booking.checkIn,
+        checkOut: booking.checkOut,
+        adults: booking.adults || 0,
+        children: booking.children || 0,
+        infants: booking.infants || 0,
+        firstName: booking.firstName || '',
+        lastName: booking.lastName || '',
+        email: booking.guestEmail,
+        phone: booking.guestPhone || '',
+      },
       error: error.message,
-      action: 'Manual booking creation required',
+      retryCount: 2,
     });
 
     // Mark for manual review
