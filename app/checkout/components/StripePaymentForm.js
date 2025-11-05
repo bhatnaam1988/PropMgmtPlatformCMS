@@ -12,6 +12,7 @@ export default function StripePaymentForm({
   onError,
   guestName,
   guestEmail,
+  cardholderName,
 }) {
   const stripe = useStripe();
   const elements = useElements();
