@@ -27,12 +27,12 @@ export function LocationSelect({ value, onChange }) {
       <label className="text-sm font-medium text-gray-700 mb-2 block">Location</label>
       <div className="relative">
         <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-        <Select value={value} onValueChange={onChange}>
+        <Select value={value || "all"} onValueChange={(val) => onChange(val === "all" ? "" : val)}>
           <SelectTrigger className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-white">
             <SelectValue placeholder="All locations" />
           </SelectTrigger>
           <SelectContent className="z-[9999]">
-            <SelectItem value="">All locations</SelectItem>
+            <SelectItem value="all">All locations</SelectItem>
             <SelectItem value="Grächen">Grächen, Wallis</SelectItem>
           </SelectContent>
         </Select>
