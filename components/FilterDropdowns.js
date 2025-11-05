@@ -75,7 +75,7 @@ export function GuestsSelect({ value, onChange }) {
       <div className="relative">
         <UsersIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
         <Select value={value.toString()} onValueChange={(val) => onChange(parseInt(val))}>
-          <SelectTrigger className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-white">
+          <SelectTrigger className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white">
             <SelectValue placeholder="Select guests" />
           </SelectTrigger>
           <SelectContent className="z-[9999]">
