@@ -3,12 +3,17 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { Home, MapPin, Calendar, Users as UsersIcon, Bed, Bath, Sliders } from 'lucide-react';
+import { Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import PropertyCard from '@/components/PropertyCard';
 import { formatDateLocal } from '@/lib/uplisting';
+import {
+  LocationSelect,
+  DateRangePicker,
+  GuestsSelect,
+  BedroomsSelect,
+  AmenitiesMultiSelect
+} from '@/components/FilterDropdowns';
 
 export default function StayPage() {
   const searchParams = useSearchParams();
