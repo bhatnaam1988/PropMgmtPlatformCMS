@@ -55,7 +55,7 @@ export function DateRangePicker({ checkIn, checkOut, onChange }) {
           endDate={checkOut}
           selectsRange
           placeholderText="Select dates"
-          className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
+          className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
           dateFormat="MMM dd"
           minDate={new Date()}
           popperClassName="react-datepicker-popper"
