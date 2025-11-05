@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import stripe from '@/lib/stripe-client';
-import { retryWithBackoff, sendAdminAlert } from '@/lib/retry-utils';
+import { retryWithBackoff } from '@/lib/retry-utils';
+import { alertUplistingBookingFailure } from '@/lib/webhooks/alertFailure';
 import {
   findBookingByPaymentIntent,
   updateBookingStatus,
