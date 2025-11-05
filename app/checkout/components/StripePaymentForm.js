@@ -14,6 +14,7 @@ export default function StripePaymentForm({
   guestName,
   guestEmail,
   cardholderName,
+  onCardholderNameChange,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -21,6 +22,7 @@ export default function StripePaymentForm({
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [paymentReady, setPaymentReady] = useState(false);
+  const [localCardholderName, setLocalCardholderName] = useState(cardholderName || '');
 
   useEffect(() => {
     if (!elements) return;
