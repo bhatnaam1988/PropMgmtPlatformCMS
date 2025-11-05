@@ -90,9 +90,17 @@ export default function StripePaymentForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Cardholder Name */}
+      {/* Payment Details Section with Name on Card */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <div className="mb-4">
+        <div className="mb-6">
+          <h3 className="text-lg font-medium mb-2">Payment Details</h3>
+          <p className="text-sm text-gray-600">
+            Enter your card details to complete the booking
+          </p>
+        </div>
+
+        {/* Name on Card - Above Payment Element */}
+        <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Name on Card *
           </label>
@@ -113,17 +121,8 @@ export default function StripePaymentForm({
             Enter the name exactly as it appears on your credit or debit card
           </p>
         </div>
-      </div>
 
-      {/* Payment Element */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <div className="mb-4">
-          <h3 className="text-lg font-medium mb-2">Payment Details</h3>
-          <p className="text-sm text-gray-600">
-            Enter your card details to complete the booking
-          </p>
-        </div>
-        
+        {/* Stripe Payment Element - Card Number, Expiry, CVC */}
         <PaymentElement 
           options={{
             layout: 'tabs',
