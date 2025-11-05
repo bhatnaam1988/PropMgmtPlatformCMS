@@ -49,7 +49,7 @@ export default function StripePaymentForm({
           return_url: `${window.location.origin}/booking/success`,
           payment_method_data: {
             billing_details: {
-              name: guestName,
+              name: cardholderName || guestName,
               email: guestEmail,
             },
           },
