@@ -151,7 +151,7 @@ export function AmenitiesMultiSelect({ value, onChange }) {
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full pl-10 pr-4 py-3 h-auto border border-gray-200 rounded-lg bg-white justify-start font-normal hover:bg-white hover:border-gray-300"
+            className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white justify-start font-normal hover:bg-white hover:border-gray-300"
           >
             <Sliders className="absolute left-3 w-5 h-5 text-gray-400" />
             <span className={cn(
