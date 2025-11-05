@@ -164,15 +164,18 @@ backend:
 
   - task: "Pricing Calculator API"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/api/pricing/route.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "API endpoint to calculate pricing for multiple properties. Uses comprehensive pricing calculator with all Uplisting fees and taxes. Needs testing with various property IDs and date ranges."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Pricing Calculator API successfully processes multiple properties (84656, 174947). Returns structured results with pricing data for each property. Handles bulk pricing calculations correctly."
 
   - task: "Stripe Create Payment Intent API"
     implemented: true
