@@ -90,6 +90,31 @@ export default function StripePaymentForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Cardholder Name */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Name on Card *
+          </label>
+          <Input
+            type="text"
+            value={localCardholderName}
+            onChange={(e) => {
+              setLocalCardholderName(e.target.value);
+              if (onCardholderNameChange) {
+                onCardholderNameChange(e.target.value);
+              }
+            }}
+            required
+            className="w-full"
+            placeholder="As shown on your card"
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Enter the name exactly as it appears on your credit or debit card
+          </p>
+        </div>
+      </div>
+
       {/* Payment Element */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <div className="mb-4">
