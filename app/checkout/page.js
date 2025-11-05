@@ -462,6 +462,7 @@ export default function CheckoutPage() {
                     onError={handlePaymentError}
                     guestName={`${formData.firstName} ${formData.lastName}`}
                     guestEmail={formData.email}
+                    cardholderName={formData.cardholderName}
                   />
                 </Elements>
               </div>
