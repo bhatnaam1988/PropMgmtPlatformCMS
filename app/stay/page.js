@@ -126,8 +126,8 @@ export default function StayPage() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
-            <Link href="/" className="flex items-center space-x-2">
+          <div className="flex items-center justify-center h-20">
+            <Link href="/" className="absolute left-4 flex items-center space-x-2">
               <Home className="w-6 h-6" />
               <span className="text-xl font-light">Swiss Alpine Journey</span>
             </Link>
