@@ -159,7 +159,7 @@ export default function StripePaymentForm({
       {/* Submit Button */}
       <Button
         type="submit"
-        disabled={!stripe || !paymentReady || isProcessing}
+        disabled={!stripe || !paymentReady || isProcessing || !localCardholderName.trim()}
         className="w-full bg-black text-white hover:bg-gray-800 rounded-full py-6 text-lg disabled:bg-gray-300 disabled:cursor-not-allowed"
       >
         {isProcessing ? (
