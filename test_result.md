@@ -224,15 +224,18 @@ backend:
 
   - task: "Pricing Calculator Utilities"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/lib/pricing-calculator.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Calculates complete booking price with accommodation, cleaning fees, extra guest fees, percentage taxes, per-night taxes, tourist taxes. Critical business logic needs thorough testing."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Pricing calculator utilities working perfectly. Test calculation: 300 CHF accommodation + 50 CHF cleaning = 350 CHF subtotal + 16 CHF taxes = 366 CHF grand total. All fee types (accommodation, cleaning, extra guest, percentage taxes, per-night taxes) calculated correctly."
 
 frontend:
   - task: "Homepage - Property showcase"
