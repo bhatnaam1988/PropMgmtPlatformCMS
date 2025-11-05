@@ -306,13 +306,15 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Booking API - Create booking with Uplisting"
-    - "Checkout Page - Complete booking form and submission"
-    - "Booking Success Page"
-    - "Booking Failure Page"
+    - "Email Alert System - Resend Integration"
+    - "Stripe Create Payment Intent API"
+    - "Stripe Webhook Handler"
+    - "Properties API - List all properties"
+    - "Checkout Page - Payment and booking form"
+    - "Property Detail Page - Full property information"
   stuck_tasks: []
-  test_all: false
-  test_priority: "high_first"
+  test_all: true
+  test_priority: "critical_first"
 
 agent_communication:
   - agent: "main"
