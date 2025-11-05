@@ -44,6 +44,7 @@ export default function CheckoutPage() {
     lastName: '',
     email: '',
     phone: '',
+    cardholderName: '',
     marketingConsent: false,
     termsAccepted: false
   });
