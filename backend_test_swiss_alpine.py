@@ -290,7 +290,7 @@ def test_email_alert_system():
     print("🔍 Testing Email Alert System...")
     
     try:
-        response = requests.post(f"{API_BASE}/test-email", timeout=30)
+        response = requests.get(f"{API_BASE}/test-email", timeout=30)
         
         if response.status_code == 200:
             data = response.json()
