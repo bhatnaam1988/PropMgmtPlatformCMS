@@ -149,15 +149,18 @@ backend:
 
   - task: "Availability API - Property availability & pricing"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/api/availability/[propertyId]/route.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "API endpoint to check property availability and pricing for specific date ranges. Returns calendar data with daily rates, availability status, minimum stay requirements."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Availability API working correctly. Test dates 2025-12-05 to 2025-12-10 return 120 CHF/night rate, 601 CHF total for 5 nights, property available. Calendar and pricing data structure complete."
 
   - task: "Pricing Calculator API"
     implemented: true
