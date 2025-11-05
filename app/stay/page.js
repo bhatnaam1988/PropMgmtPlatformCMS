@@ -153,17 +153,16 @@ export default function StayPage() {
           </p>
 
           {/* Filters - Fixed z-index */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-12 relative z-50">
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-12 relative z-40">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-              <div className="relative">
+              <div className="relative z-30">
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Location</label>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style={{ zIndex: 1 }} />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white relative z-50"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
                     value={filters.location}
                     onChange={(e) => setFilters({...filters, location: e.target.value})}
-                    style={{ position: 'relative', zIndex: 50 }}
                   >
                     <option value="">All locations</option>
                     <option value="Grächen">Grächen, Wallis</option>
@@ -171,10 +170,10 @@ export default function StayPage() {
                 </div>
               </div>
               
-              <div className="relative">
+              <div className="relative z-[100]">
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Dates</label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
+                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style={{ zIndex: 1 }} />
                   <DatePicker
                     selected={filters.checkIn}
                     onChange={(dates) => {
@@ -185,24 +184,24 @@ export default function StayPage() {
                     endDate={filters.checkOut}
                     selectsRange
                     placeholderText="Select dates"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
                     dateFormat="MMM dd"
                     minDate={new Date()}
-                    popperClassName="z-[9999]"
+                    popperClassName="react-datepicker-popper"
+                    popperPlacement="bottom-start"
                     wrapperClassName="w-full"
                   />
                 </div>
               </div>
               
-              <div className="relative">
+              <div className="relative z-20">
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Guests</label>
                 <div className="relative">
-                  <UsersIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
+                  <UsersIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style={{ zIndex: 1 }} />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white relative z-50"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
                     value={totalGuests}
                     onChange={(e) => setFilters({...filters, adults: parseInt(e.target.value), children: 0, infants: 0})}
-                    style={{ position: 'relative', zIndex: 50 }}
                   >
                     <option value="1">1 guest</option>
                     <option value="2">2 guests</option>
@@ -213,15 +212,14 @@ export default function StayPage() {
                 </div>
               </div>
               
-              <div className="relative">
+              <div className="relative z-20">
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Bedrooms</label>
                 <div className="relative">
-                  <Bed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
+                  <Bed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style={{ zIndex: 1 }} />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white relative z-50"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
                     value={filters.bedrooms}
                     onChange={(e) => setFilters({...filters, bedrooms: e.target.value})}
-                    style={{ position: 'relative', zIndex: 50 }}
                   >
                     <option value="any">Any</option>
                     <option value="1">1+</option>
@@ -231,15 +229,14 @@ export default function StayPage() {
                 </div>
               </div>
               
-              <div className="relative">
+              <div className="relative z-20">
                 <label className="text-sm font-medium text-gray-700 mb-2 block">Amenities</label>
                 <div className="relative">
-                  <Sliders className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
+                  <Sliders className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style={{ zIndex: 1 }} />
                   <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white relative z-50"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
                     value={filters.amenities}
                     onChange={(e) => setFilters({...filters, amenities: e.target.value})}
-                    style={{ position: 'relative', zIndex: 50 }}
                   >
                     <option value="any">Any</option>
                     <option value="parking">Parking</option>
