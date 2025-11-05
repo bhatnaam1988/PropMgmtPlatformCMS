@@ -157,99 +157,37 @@ export default function StayPage() {
             and proximity to the best of local life – from mountain adventures to peaceful relaxation.
           </p>
 
-          {/* Filters - Fixed z-index */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-12 relative z-40">
+          {/* Filters - Custom Shadcn Components */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-12">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-              <div className="relative z-30">
-                <label className="text-sm font-medium text-gray-700 mb-2 block">Location</label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style={{ zIndex: 1 }} />
-                  <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
-                    value={filters.location}
-                    onChange={(e) => setFilters({...filters, location: e.target.value})}
-                  >
-                    <option value="">All locations</option>
-                    <option value="Grächen">Grächen, Wallis</option>
-                  </select>
-                </div>
-              </div>
+              <LocationSelect
+                value={filters.location}
+                onChange={(value) => setFilters({...filters, location: value})}
+              />
               
-              <div className="relative z-[100]">
-                <label className="text-sm font-medium text-gray-700 mb-2 block">Dates</label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style={{ zIndex: 1 }} />
-                  <DatePicker
-                    selected={filters.checkIn}
-                    onChange={(dates) => {
-                      const [start, end] = dates;
-                      setFilters({...filters, checkIn: start, checkOut: end});
-                    }}
-                    startDate={filters.checkIn}
-                    endDate={filters.checkOut}
-                    selectsRange
-                    placeholderText="Select dates"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
-                    dateFormat="MMM dd"
-                    minDate={new Date()}
-                    popperClassName="react-datepicker-popper"
-                    popperPlacement="bottom-start"
-                    wrapperClassName="w-full"
-                  />
-                </div>
-              </div>
+              <DateRangePicker
+                checkIn={filters.checkIn}
+                checkOut={filters.checkOut}
+                onChange={(dates) => {
+                  const [start, end] = dates;
+                  setFilters({...filters, checkIn: start, checkOut: end});
+                }}
+              />
               
-              <div className="relative z-20">
-                <label className="text-sm font-medium text-gray-700 mb-2 block">Guests</label>
-                <div className="relative">
-                  <UsersIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style={{ zIndex: 1 }} />
-                  <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
-                    value={totalGuests}
-                    onChange={(e) => setFilters({...filters, adults: parseInt(e.target.value), children: 0, infants: 0})}
-                  >
-                    <option value="1">1 guest</option>
-                    <option value="2">2 guests</option>
-                    <option value="3">3 guests</option>
-                    <option value="4">4 guests</option>
-                    <option value="5">5+ guests</option>
-                  </select>
-                </div>
-              </div>
+              <GuestsSelect
+                value={totalGuests}
+                onChange={(value) => setFilters({...filters, adults: value, children: 0, infants: 0})}
+              />
               
-              <div className="relative z-20">
-                <label className="text-sm font-medium text-gray-700 mb-2 block">Bedrooms</label>
-                <div className="relative">
-                  <Bed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style={{ zIndex: 1 }} />
-                  <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
-                    value={filters.bedrooms}
-                    onChange={(e) => setFilters({...filters, bedrooms: e.target.value})}
-                  >
-                    <option value="any">Any</option>
-                    <option value="1">1+</option>
-                    <option value="2">2+</option>
-                    <option value="3">3+</option>
-                  </select>
-                </div>
-              </div>
+              <BedroomsSelect
+                value={filters.bedrooms}
+                onChange={(value) => setFilters({...filters, bedrooms: value})}
+              />
               
-              <div className="relative z-20">
-                <label className="text-sm font-medium text-gray-700 mb-2 block">Amenities</label>
-                <div className="relative">
-                  <Sliders className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style={{ zIndex: 1 }} />
-                  <select 
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg appearance-none bg-white cursor-pointer hover:border-gray-300 focus:border-black focus:outline-none transition-colors"
-                    value={filters.amenities}
-                    onChange={(e) => setFilters({...filters, amenities: e.target.value})}
-                  >
-                    <option value="any">Any</option>
-                    <option value="parking">Parking</option>
-                    <option value="kitchen">Kitchen</option>
-                    <option value="wifi">WiFi</option>
-                  </select>
-                </div>
-              </div>
+              <AmenitiesMultiSelect
+                value={filters.amenities}
+                onChange={(value) => setFilters({...filters, amenities: value})}
+              />
             </div>
           </div>
 
