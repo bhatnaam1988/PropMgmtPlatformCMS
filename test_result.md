@@ -209,15 +209,18 @@ backend:
 
   - task: "Booking Validation Utilities"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/lib/booking-validation.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Validates booking parameters against property constraints (min/max nights, max guests, closed dates). Needs testing with various property configurations and edge cases."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Booking validation working correctly. Invalid booking data (past dates, invalid guest count, empty fields) properly rejected with HTTP 400. Validation logic integrated into payment intent creation prevents invalid bookings."
 
   - task: "Pricing Calculator Utilities"
     implemented: true
