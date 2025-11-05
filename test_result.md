@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Complete the booking flow for the vacation rental website including checkout, payment redirect to Uplisting, and success/failure pages. Optimize all aspects for performance and user experience following hospitality industry best practices."
+user_problem_statement: "Production readiness for Swiss Alpine Journey vacation rental website. Complete email alert system with Resend for webhook failures. Comprehensive backend and frontend testing to ensure all APIs, payment flows, and booking processes work correctly before deployment."
 
 backend:
   - task: "Booking API - Create booking with Uplisting"
