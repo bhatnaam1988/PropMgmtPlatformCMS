@@ -53,7 +53,8 @@ export default function HomePage() {
               <Link href="/about" className="text-gray-700 hover:text-black transition-colors">About</Link>
             </nav>
             
-            <Link href="/stay">
+            {/* Plan Your Journey button - Hidden for now, may use later */}
+            <Link href="/stay" className="hidden">
               <Button className="bg-black text-white hover:bg-gray-800 rounded-full px-6">
                 Plan Your Journey
               </Button>
