@@ -15,14 +15,18 @@ export default function PropertyCard({ property, priceDisplay, showFallbackWarni
   const checkInTime = property.check_in_time || 15;
   const checkOutTime = property.check_out_time || 11;
   
-  // Find cleaning fee
+  // Find cleaning fee - match by property ID to get correct fee
   const cleaningFee = property.fees?.find(
-    f => f.attributes?.label === 'cleaning_fee' && f.attributes?.enabled
+    f => f.attributes?.label === 'cleaning_fee' && 
+         f.attributes?.enabled && 
+         f.id?.startsWith(property.id)
   )?.attributes?.amount || 0;
   
-  // Find extra guest fee
+  // Find extra guest fee - match by property ID
   const extraGuestFee = property.fees?.find(
-    f => f.attributes?.label === 'extra_guest_charge' && f.attributes?.enabled
+    f => f.attributes?.label === 'extra_guest_charge' && 
+         f.attributes?.enabled &&
+         f.id?.startsWith(property.id)
   );
   
   // Calculate constraint badges to show (max 3 for clean display)
