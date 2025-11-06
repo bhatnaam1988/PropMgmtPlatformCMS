@@ -35,16 +35,18 @@ export function Header() {
   return (
     <header className="bg-white border-b border-border sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center h-16">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo - Left Aligned */}
+          <Link
+            href="/"
+            className="text-foreground hover:text-primary transition-colors flex items-center gap-1.5 hidden md:flex"
+          >
+            <Home className="h-4 w-4" />
+            Swiss Alpine Journey
+          </Link>
+
           {/* Desktop Navigation - Centered */}
-          <nav className="hidden md:flex items-center gap-6">
-            <Link
-              href="/"
-              className="text-foreground hover:text-primary transition-colors flex items-center gap-1.5"
-            >
-              <Home className="h-4 w-4" />
-              Swiss Alpine Journey
-            </Link>
+          <nav className="hidden md:flex items-center gap-6 absolute left-1/2 transform -translate-x-1/2">
             <Link
               href="/stay"
               className="text-foreground hover:text-primary transition-colors"
@@ -98,14 +100,26 @@ export function Header() {
             </DropdownMenu>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 absolute left-4"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          {/* Right side spacer for balance */}
+          <div className="hidden md:block w-[200px]"></div>
+
+          {/* Mobile Menu Button and Logo */}
+          <div className="flex md:hidden items-center justify-between w-full">
+            <button
+              className="p-2"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+            <Link
+              href="/"
+              className="text-foreground hover:text-primary transition-colors flex items-center gap-1.5"
+            >
+              <Home className="h-4 w-4" />
+              Swiss Alpine Journey
+            </Link>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
