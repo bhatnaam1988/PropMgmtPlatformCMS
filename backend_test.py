@@ -207,7 +207,7 @@ def test_stripe_payment_intent(property_id):
         "guestPhone": "+41791234567",
         "accommodationTotal": 600,
         "cleaningFee": 150,
-        "marketingConsent": false
+        "marketingConsent": False
     }
     
     try:
