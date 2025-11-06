@@ -50,7 +50,24 @@ export default function StayPage() {
     try {
       const res = await fetch('/api/properties');
       const data = await res.json();
-      setProperties(data.properties || []);
+      const props = data.properties || [];
+      setProperties(props);
+      
+      // Extract unique amenities from all properties
+      const amenitiesSet = new Set();
+      props.forEach(property => {
+        if (property.amenities && Array.isArray(property.amenities)) {
+          property.amenities.forEach(amenity => {
+            if (amenity.name) {
+              amenitiesSet.add(amenity.name);
+            }
+          });
+        }
+      });
+      
+      // Convert to sorted array
+      const uniqueAmenities = Array.from(amenitiesSet).sort();
+      setAvailableAmenities(uniqueAmenities);
     } catch (error) {
       console.error('Error fetching properties:', error);
     } finally {
