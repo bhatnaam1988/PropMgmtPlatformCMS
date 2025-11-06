@@ -240,6 +240,54 @@ backend:
         agent: "testing"
         comment: "✅ TESTED: Pricing calculator utilities working perfectly. Test calculation: 300 CHF accommodation + 50 CHF cleaning = 350 CHF subtotal + 16 CHF taxes = 366 CHF grand total. All fee types (accommodation, cleaning, extra guest, percentage taxes, per-night taxes) calculated correctly."
 
+  - task: "Contact Form API - Form submission with email & database"
+    implemented: true
+    working: true
+    file: "/app/app/api/forms/contact/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Contact form API working perfectly. Valid submission (Sarah Johnson, Guest inquiry) stored in MongoDB with ID 690cd84588f10981c0fcb27c. Email sent successfully to admin (aman.bhatnagar11@gmail.com) with message ID c454e572-dcc4-4f06-a4db-f50b09e98c1b. Validation correctly rejects missing required fields with HTTP 400."
+
+  - task: "Cleaning Services API - Service request with email & database"
+    implemented: true
+    working: true
+    file: "/app/app/api/forms/cleaning-services/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Cleaning services API working perfectly. Valid request (Michael Weber, Deep Cleaning) stored in MongoDB with ID 690cd84688f10981c0fcb27d. Email sent successfully to admin with message ID 3bc368d5-a5c9-4779-99c0-e081cd1b98b8. Validation correctly rejects missing required fields with HTTP 400."
+
+  - task: "Rental Services API - Property inquiry with email & database"
+    implemented: true
+    working: true
+    file: "/app/app/api/forms/rental-services/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Rental services API working perfectly. Valid inquiry (Anna Müller, 3-bedroom apartment) stored in MongoDB with ID 690cd84688f10981c0fcb27e. Email sent successfully to admin with message ID 4383a62e-5abc-4a7e-92f1-eae1f86bc3ae. Validation correctly rejects missing required fields with HTTP 400."
+
+  - task: "Jobs Application API - Job application with email & database"
+    implemented: true
+    working: true
+    file: "/app/app/api/forms/jobs/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Jobs application API working perfectly. Valid application (David Thompson, Guest Services Coordinator) stored in MongoDB with ID 690cd84788f10981c0fcb27f. Email sent successfully to admin with detailed resume and cover letter. Validation correctly rejects missing required fields with HTTP 400."
+
 frontend:
   - task: "Homepage - Property showcase"
     implemented: true
