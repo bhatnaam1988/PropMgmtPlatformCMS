@@ -96,7 +96,7 @@ export default function HomePage() {
                 why we chose this car-free Alpine gem as the perfect location for your Swiss
                 mountain getaway.
               </p>
-              <Link href="/explore/grachen">
+              <Link href="/explore/graechen">
                 <Button className="bg-black text-white hover:bg-gray-800 rounded-full px-8">
                   Explore Grächen <ChevronRight className="w-4 h-4 ml-2" />
                 </Button>
