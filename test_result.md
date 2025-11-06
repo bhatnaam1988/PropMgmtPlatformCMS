@@ -492,12 +492,15 @@ frontend:
 
 metadata:
   created_by: "main_agent"
-  version: "1.2"
-  test_sequence: 3
+  version: "1.3"
+  test_sequence: 4
   run_ui: false
   backend_testing_complete: true
   backend_test_date: "2025-01-05"
   backend_test_results: "9/9 passed"
+  backend_regression_testing_complete: true
+  backend_regression_test_date: "2025-01-05"
+  backend_regression_test_results: "8/8 passed"
   frontend_testing_complete: true
   frontend_test_date: "2025-01-05"
   frontend_test_results: "7/7 passed"
