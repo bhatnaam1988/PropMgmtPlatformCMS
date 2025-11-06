@@ -20,18 +20,36 @@ export default function Jobs() {
     coverLetter: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success('Application submitted! We\'ll review your application and be in touch soon.');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      position: '',
-      location: '',
-      resume: '',
-      coverLetter: ''
-    });
+    
+    try {
+      const response = await fetch('/api/forms/jobs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success('Application submitted! We\'ll review your application and be in touch soon.');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          position: '',
+          location: '',
+          resume: '',
+          coverLetter: ''
+        });
+      } else {
+        toast.error(data.error || 'Failed to submit application. Please try again.');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast.error('Failed to submit application. Please try again.');
+    }
   };
 
   const values = [
