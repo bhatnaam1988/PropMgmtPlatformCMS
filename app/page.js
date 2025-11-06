@@ -168,55 +168,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-100 py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-12">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Home className="w-6 h-6" />
-                <span className="text-xl font-light">Swiss Alpine Journey</span>
-              </div>
-              <p className="text-gray-600 text-sm mb-4">
-                Where authentic stays meet modern comfort and local adventure.
-                Discover perfectly located homes for your next adventure.
-              </p>
-              <p className="text-gray-600 text-sm">@swissalpinejourney</p>
-            </div>
-            
-            <div>
-              <h3 className="font-medium mb-4">Services</h3>
-              <ul className="space-y-2 text-gray-600 text-sm">
-                <li><Link href="/services/cleaning" className="hover:text-black">Cleaning Services</Link></li>
-                <li><Link href="/services/rental" className="hover:text-black">Rental Management</Link></li>
-                <li><Link href="/about" className="hover:text-black">Careers</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-medium mb-4">Contact</h3>
-              <ul className="space-y-2 text-gray-600 text-sm">
-                <li>+1 (555) 123-4567</li>
-                <li>hello@swissalpinejourney.com</li>
-                <li>Available worldwide</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-medium mb-4">Legal</h3>
-              <ul className="space-y-2 text-gray-600 text-sm">
-                <li><Link href="/privacy" className="hover:text-black">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="hover:text-black">Terms & Conditions</Link></li>
-                <li><Link href="/gdpr" className="hover:text-black">GDPR Information</Link></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-300 mt-12 pt-8 text-center text-gray-600 text-sm">
-            © 2024 Swiss Alpine Journey. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
