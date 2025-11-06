@@ -21,6 +21,7 @@ export default function StayPage() {
   const [loading, setLoading] = useState(true);
   const [pricingData, setPricingData] = useState({});
   const [pricingLoading, setPricingLoading] = useState(false);
+  const [availableAmenities, setAvailableAmenities] = useState([]);
   
   // Initialize filters from URL params
   const [filters, setFilters] = useState({
