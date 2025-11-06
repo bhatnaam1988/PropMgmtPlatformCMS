@@ -20,18 +20,36 @@ export default function RentalServices() {
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success('Inquiry submitted! Our team will contact you within 48 hours.');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      propertyAddress: '',
-      propertyType: '',
-      bedrooms: '',
-      message: ''
-    });
+    
+    try {
+      const response = await fetch('/api/forms/rental-services', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success('Inquiry submitted! Our team will contact you within 48 hours.');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          propertyAddress: '',
+          propertyType: '',
+          bedrooms: '',
+          message: ''
+        });
+      } else {
+        toast.error(data.error || 'Failed to submit inquiry. Please try again.');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast.error('Failed to submit inquiry. Please try again.');
+    }
   };
 
   const services = [
