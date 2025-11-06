@@ -34,7 +34,7 @@ curl http://localhost:3000/api/validate-env | jq '.'
     "resend_api": "✅ Configured",
     "admin_email": "✅ aman.bhatnagar11@gmail.com",
     "mongodb": "✅ Connected",
-    "base_url": "✅ https://alpine-booking-1.preview.emergentagent.com"
+    "base_url": "✅ https://swisslodge-app.preview.emergentagent.com"
   },
   "summary": {
     "total_checks": 9,
@@ -63,7 +63,7 @@ curl http://localhost:3000/api/validate-env | jq '.'
 ### Client ID is Session Name
 ```bash
 # Fix in .env.local:
-UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7
+UPLISTING_CLIENT_ID=swisslodge-app
 
 # Restart:
 sudo supervisorctl restart nextjs
