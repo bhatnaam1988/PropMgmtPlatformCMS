@@ -127,6 +127,19 @@ export default function StayPage() {
       return false;
     }
     
+    // Filter by amenities - property must have ALL selected amenities
+    if (filters.amenities && filters.amenities.length > 0) {
+      const propertyAmenities = (property.amenities || []).map(a => 
+        a.name.toLowerCase().replace(/\s+/g, '_')
+      );
+      
+      const hasAllAmenities = filters.amenities.every(selectedAmenity => 
+        propertyAmenities.includes(selectedAmenity)
+      );
+      
+      if (!hasAllAmenities) return false;
+    }
+    
     return true;
   });
 
