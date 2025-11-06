@@ -400,20 +400,25 @@ def test_booking_validation():
         return False
 
 def main():
-    """Run all backend API tests"""
-    print("🚀 Starting Backend API Tests for Cozy Retreats Booking Flow")
-    print("=" * 70)
+    """Run all backend API regression tests"""
+    print("🚀 Starting Backend API Regression Tests - Phase 1 New Pages Integration")
+    print("=" * 80)
+    print("Testing 8 critical backend APIs to ensure no regression after new page integration")
+    print("=" * 80)
     print()
     
     test_results = {
         'properties_list': False,
         'single_property': False,
         'availability': False,
-        'booking_creation': False,
+        'pricing_calculator': False,
+        'stripe_payment_intent': False,
+        'stripe_webhook': False,
+        'email_alert_system': False,
         'booking_validation': False
     }
     
-    # Test 1: Get properties list
+    # Test 1: Properties API - List all properties
     property_id, properties = test_properties_list()
     test_results['properties_list'] = property_id is not None
     
@@ -421,46 +426,69 @@ def main():
         print("❌ Cannot continue testing without a valid property ID")
         return test_results
     
-    # Test 2: Get single property details
+    # Extract property IDs for bulk testing
+    property_ids = [prop.get('id') for prop in properties if prop.get('id')]
+    
+    # Test 2: Single Property API - Property details
     success, property_data = test_single_property(property_id)
     test_results['single_property'] = success
     
-    # Test 3: Get availability and pricing
+    # Test 3: Availability API - Property availability & pricing
     success, availability_data = test_availability(property_id)
     test_results['availability'] = success
     
-    # Test 4: Test booking validation (error handling)
+    # Test 4: Pricing Calculator API - Bulk pricing calculations
+    success, pricing_data = test_pricing_calculator(property_ids)
+    test_results['pricing_calculator'] = success
+    
+    # Test 5: Stripe Create Payment Intent API
+    success, payment_data = test_stripe_payment_intent(property_id)
+    test_results['stripe_payment_intent'] = success
+    
+    # Test 6: Stripe Webhook Handler (security test)
+    test_results['stripe_webhook'] = test_stripe_webhook()
+    
+    # Test 7: Email Alert System
+    success, email_data = test_email_alert_system()
+    test_results['email_alert_system'] = success
+    
+    # Test 8: Booking Validation API
     test_results['booking_validation'] = test_booking_validation()
     
-    # Test 5: Create booking (WARNING: Creates real booking!)
-    print("⚠️  IMPORTANT: The next test creates a REAL booking in Uplisting!")
-    print("   This booking should be cancelled manually if created successfully.")
-    print("   Proceeding in 3 seconds...")
-    import time
-    time.sleep(3)
-    
-    success, booking_data = test_booking_creation(property_id)
-    test_results['booking_creation'] = success
-    
     # Summary
-    print("=" * 70)
-    print("📊 TEST SUMMARY")
-    print("=" * 70)
+    print("=" * 80)
+    print("📊 BACKEND REGRESSION TEST SUMMARY")
+    print("=" * 80)
     
     passed = sum(test_results.values())
     total = len(test_results)
     
+    # Map test names to API descriptions
+    api_descriptions = {
+        'properties_list': 'Properties API - GET /api/properties',
+        'single_property': 'Single Property API - GET /api/properties/[id]',
+        'availability': 'Availability API - GET /api/availability/[propertyId]',
+        'pricing_calculator': 'Pricing Calculator API - POST /api/pricing',
+        'stripe_payment_intent': 'Stripe Create Payment Intent - POST /api/stripe/create-payment-intent',
+        'stripe_webhook': 'Stripe Webhook Handler - POST /api/stripe/webhook',
+        'email_alert_system': 'Email Alert System - GET /api/test-email',
+        'booking_validation': 'Booking Validation API - POST /api/bookings'
+    }
+    
     for test_name, result in test_results.items():
         status = "✅ PASS" if result else "❌ FAIL"
-        print(f"{status} {test_name.replace('_', ' ').title()}")
+        description = api_descriptions.get(test_name, test_name.replace('_', ' ').title())
+        print(f"{status} {description}")
     
     print()
-    print(f"Overall Result: {passed}/{total} tests passed")
+    print(f"Overall Result: {passed}/{total} backend APIs passed regression testing")
     
     if passed == total:
-        print("🎉 All backend APIs are working correctly!")
+        print("🎉 ALL BACKEND APIS PASSED REGRESSION TESTING!")
+        print("✅ No regression detected after new page integration")
     else:
-        print("⚠️  Some backend APIs have issues that need attention.")
+        print("⚠️  REGRESSION DETECTED: Some backend APIs have issues")
+        print("🔧 These APIs need attention before deployment")
     
     return test_results
 
