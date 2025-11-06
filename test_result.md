@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Production readiness for Swiss Alpine Journey vacation rental website. Complete email alert system with Resend for webhook failures. Comprehensive backend and frontend testing to ensure all APIs, payment flows, and booking processes work correctly before deployment."
+user_problem_statement: "Phase 1: Integrate new pages from Figma design export into Next.js application - About, Contact, Legal, Jobs, Cleaning Services, Rental Services, Travel Tips, Behind the Scenes, Other Locations, Grächen location pages. Add Header and Footer components with proper navigation. Test all new pages for functionality and proper display."
 
 backend:
   - task: "Email Alert System - Resend Integration"
