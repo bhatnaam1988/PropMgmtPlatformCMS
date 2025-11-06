@@ -115,16 +115,22 @@ export function BedroomsSelect({ value, onChange }) {
 }
 
 // Multi-select Amenities
-export function AmenitiesMultiSelect({ value, onChange }) {
+export function AmenitiesMultiSelect({ value, onChange, availableAmenities = [] }) {
   const [open, setOpen] = useState(false);
   
-  const amenitiesOptions = [
-    { value: 'parking', label: 'Parking' },
-    { value: 'kitchen', label: 'Kitchen' },
-    { value: 'wifi', label: 'WiFi' },
-    { value: 'balcony', label: 'Balcony' },
-    { value: 'washer', label: 'Washer' },
-  ];
+  // Use provided amenities or fallback to default list
+  const amenitiesOptions = availableAmenities.length > 0 
+    ? availableAmenities.map(amenity => ({
+        value: amenity.toLowerCase().replace(/\s+/g, '_'),
+        label: amenity
+      }))
+    : [
+        { value: 'parking', label: 'Parking' },
+        { value: 'kitchen', label: 'Kitchen' },
+        { value: 'wifi', label: 'WiFi' },
+        { value: 'balcony', label: 'Balcony' },
+        { value: 'washer', label: 'Washer' },
+      ];
 
   const toggleAmenity = (amenity) => {
     const newValue = value.includes(amenity)
