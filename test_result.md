@@ -346,6 +346,150 @@ frontend:
         agent: "testing"
         comment: "✅ TESTED: Property cards display all Phase 3 improvements correctly. Constraint badges visible (6 total): 'Max X guests', 'CHF X cleaning', minimum stay requirements. Extra guest fee information displayed. Check-in/out times shown (16:00 | 9:00). Property unavailability warnings work for invalid dates. Image carousel with navigation arrows and dots functional. 'View Details' button navigation works with filter parameters."
 
+  - task: "About Page - Company story and values"
+    implemented: true
+    working: "NA"
+    file: "/app/app/about/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "New About page created from Figma design with company story, values, stats, and why choose us sections. Needs testing for proper display, responsive layout, and navigation."
+
+  - task: "Contact Page - Inquiry form and contact info"
+    implemented: true
+    working: "NA"
+    file: "/app/app/contact/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Contact page with inquiry form, inquiry type selector, contact information display. Form has validation. Needs testing for form submission, validation, and display."
+
+  - task: "Legal Page - Terms, Privacy, GDPR with anchor links"
+    implemented: true
+    working: "NA"
+    file: "/app/app/legal/page.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Legal page with Terms & Conditions, Privacy Policy, and GDPR information sections. Has quick navigation cards and anchor link navigation. Needs testing for scroll behavior, anchor links, and content display."
+
+  - task: "Jobs/Careers Page - Listings and application"
+    implemented: true
+    working: "NA"
+    file: "/app/app/jobs/page.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Jobs page with company values, open positions display, and application form (resume/cover letter). Needs testing for form functionality and display."
+
+  - task: "Cleaning Services Page - Service info and request form"
+    implemented: true
+    working: "NA"
+    file: "/app/app/cleaning-services/page.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Cleaning services page with service descriptions, benefits, and service request form. Needs testing for form submission, validation, and responsive display."
+
+  - task: "Rental Services Page - Service info and inquiry"
+    implemented: true
+    working: "NA"
+    file: "/app/app/rental-services/page.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Rental services page with listing optimization, cleaning coordination info, and property inquiry form. Needs testing for form functionality and display."
+
+  - task: "Travel Tips Page - Comprehensive travel advice"
+    implemented: true
+    working: "NA"
+    file: "/app/app/explore/travel-tips/page.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Travel Tips page with extensive tips organized by 7 categories (hiking, winter sports, packing, photography, dining, safety, best times). Includes quick tips, money-saving tips, and sustainability section. Needs testing for content display, responsive layout, and card organization."
+
+  - task: "Behind the Scenes Page - Company culture and process"
+    implemented: true
+    working: "NA"
+    file: "/app/app/explore/behind-the-scenes/page.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Behind the Scenes page with company story, values grid, team info, preparation process, quality standards checklist, and community involvement. Includes CTAs to listings and contact. Needs testing for content display, CTAs, and responsive layout."
+
+  - task: "Other Locations Page - Swiss Alpine destinations"
+    implemented: true
+    working: "NA"
+    file: "/app/app/explore/other-locations/page.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Other Locations page displaying 5 Swiss Alpine destinations (Zermatt, Saas-Fee, Crans-Montana, Verbier, Leukerbad) with cards, images, highlights, and learn more links. Includes Grächen CTA card and activities overview. Needs testing for card display, hover effects, and navigation."
+
+  - task: "Grächen Location Page - Detailed village information"
+    implemented: true
+    working: "NA"
+    file: "/app/app/explore/graechen/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Grächen location detail page with hero image, village highlights (4 cards), year-round activities (winter & summer sections), practical information (3 sections), Matterhorn views, local culture info, and multiple CTAs. Needs testing for content display, responsive layout, and CTAs."
+
+  - task: "Header Component - Global navigation with dropdowns"
+    implemented: true
+    working: "NA"
+    file: "/app/components/Header.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Global header with centered navigation and dropdown menus for Explore (4 items), Services (2 items), and About (3 items) sections. Mobile responsive hamburger menu. Sticky positioning. Needs testing for all navigation links, dropdown functionality, mobile menu, and sticky behavior."
+
+  - task: "Footer Component - Global footer with links and info"
+    implemented: true
+    working: "NA"
+    file: "/app/components/Footer.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Global footer with brand section (logo, tagline, Instagram link), services links (3 items), contact info (phone, email, location), and legal links (3 items). 5-column responsive grid layout. Needs testing for all footer links, responsive display, and external links."
+
 metadata:
   created_by: "main_agent"
   version: "1.2"
