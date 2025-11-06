@@ -504,15 +504,21 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Email Alert System - Resend Integration"
-    - "Stripe Create Payment Intent API"
-    - "Stripe Webhook Handler"
-    - "Properties API - List all properties"
-    - "Checkout Page - Payment and booking form"
-    - "Property Detail Page - Full property information"
+    - "Header Component - Global navigation with dropdowns"
+    - "Footer Component - Global footer with links and info"
+    - "About Page - Company story and values"
+    - "Contact Page - Inquiry form and contact info"
+    - "Grächen Location Page - Detailed village information"
+    - "Travel Tips Page - Comprehensive travel advice"
+    - "Legal Page - Terms, Privacy, GDPR with anchor links"
+    - "Jobs/Careers Page - Listings and application"
+    - "Cleaning Services Page - Service info and request form"
+    - "Rental Services Page - Service info and inquiry"
+    - "Behind the Scenes Page - Company culture and process"
+    - "Other Locations Page - Swiss Alpine destinations"
   stuck_tasks: []
-  test_all: true
-  test_priority: "critical_first"
+  test_all: false
+  test_priority: "new_pages_first"
 
 agent_communication:
   - agent: "main"
