@@ -139,77 +139,229 @@ def test_availability(property_id):
         print_test_result("Availability API", False, f"Exception: {str(e)}")
         return False, None
 
-def test_booking_creation(property_id):
-    """Test POST /api/bookings - Create booking with Uplisting"""
-    print(f"🔍 Testing Booking Creation API for property ID: {property_id}...")
-    print("⚠️  WARNING: This creates a REAL booking in Uplisting!")
+def test_pricing_calculator(property_ids):
+    """Test POST /api/pricing - Calculate pricing for multiple properties"""
+    print("🔍 Testing Pricing Calculator API...")
     
     # Use future dates for testing
-    check_in = (datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d')
-    check_out = (datetime.now() + timedelta(days=65)).strftime('%Y-%m-%d')
+    check_in = (datetime.now() + timedelta(days=30)).strftime('%Y-%m-%d')
+    check_out = (datetime.now() + timedelta(days=35)).strftime('%Y-%m-%d')
     
-    booking_data = {
+    pricing_data = {
+        "propertyIds": property_ids[:2],  # Test with first 2 properties
+        "from": check_in,
+        "to": check_out
+    }
+    
+    try:
+        response = requests.post(
+            f"{API_BASE}/pricing",
+            json=pricing_data,
+            headers={'Content-Type': 'application/json'},
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            if 'results' in data and len(data['results']) > 0:
+                results_count = len(data['results'])
+                first_result = data['results'][0]
+                property_id = first_result.get('propertyId')
+                pricing = first_result.get('pricing', {})
+                avg_rate = pricing.get('averageRate', 0)
+                
+                print_test_result(
+                    "Pricing Calculator API", 
+                    True, 
+                    f"Processed {results_count} properties. Property {property_id}: {avg_rate} CHF/night"
+                )
+                return True, data
+            else:
+                print_test_result("Pricing Calculator API", False, "No results in response")
+                return False, None
+        else:
+            print_test_result("Pricing Calculator API", False, f"HTTP {response.status_code}: {response.text}")
+            return False, None
+            
+    except Exception as e:
+        print_test_result("Pricing Calculator API", False, f"Exception: {str(e)}")
+        return False, None
+
+def test_stripe_payment_intent(property_id):
+    """Test POST /api/stripe/create-payment-intent - Create Stripe Payment Intent"""
+    print(f"🔍 Testing Stripe Create Payment Intent API for property ID: {property_id}...")
+    
+    # Use future dates for testing
+    check_in = (datetime.now() + timedelta(days=30)).strftime('%Y-%m-%d')
+    check_out = (datetime.now() + timedelta(days=35)).strftime('%Y-%m-%d')
+    
+    payment_data = {
         "propertyId": property_id,
         "checkIn": check_in,
         "checkOut": check_out,
         "adults": 2,
         "children": 0,
         "infants": 0,
-        "guestName": "Test User API",
-        "guestEmail": "test.api@example.com",
+        "guestName": "Emma Thompson",
+        "guestEmail": "emma.thompson@example.com",
         "guestPhone": "+41791234567",
-        "marketingConsent": False,
-        "notes": "Test booking from automated API testing - Please cancel if created"
+        "accommodationTotal": 600,
+        "cleaningFee": 150,
+        "marketingConsent": false
     }
     
     try:
         response = requests.post(
-            f"{API_BASE}/bookings",
-            json=booking_data,
+            f"{API_BASE}/stripe/create-payment-intent",
+            json=payment_data,
             headers={'Content-Type': 'application/json'},
-            timeout=60  # Longer timeout for booking creation
+            timeout=30
         )
         
         if response.status_code == 200:
             data = response.json()
-            if data.get('success') and 'booking' in data:
+            required_fields = ['clientSecret', 'paymentIntentId', 'bookingId', 'amount', 'pricing']
+            missing_fields = [field for field in required_fields if field not in data]
+            
+            if not missing_fields:
+                amount = data.get('amount', 0)
                 booking_id = data.get('bookingId')
-                payment_url = data.get('paymentUrl')
-                
-                # Check if redirect URLs are properly formatted
-                success_url_check = f"{BASE_URL}/booking/success" in str(data)
-                failure_url_check = f"{BASE_URL}/booking/failure" in str(data)
+                pricing = data.get('pricing', {})
+                grand_total = pricing.get('grandTotal', 0)
                 
                 print_test_result(
-                    "Booking Creation API", 
+                    "Stripe Create Payment Intent API", 
                     True, 
-                    f"Booking ID: {booking_id}, Payment URL: {'Present' if payment_url else 'Missing'}, Redirect URLs configured: {success_url_check or failure_url_check}"
+                    f"Payment Intent created. Booking ID: {booking_id}, Amount: {amount} CHF, Grand Total: {grand_total} CHF"
                 )
-                
-                # Additional check for payment URL format
-                if payment_url and ('uplisting' in payment_url.lower() or 'http' in payment_url):
-                    print("   ✅ Payment URL appears valid")
-                else:
-                    print("   ⚠️  Payment URL may be invalid or missing")
-                
                 return True, data
             else:
-                print_test_result("Booking Creation API", False, f"Invalid response structure: {data}")
+                print_test_result("Stripe Create Payment Intent API", False, f"Missing fields: {missing_fields}")
                 return False, None
         else:
-            error_details = response.text
-            try:
-                error_json = response.json()
-                error_details = error_json.get('error', error_details)
-            except:
-                pass
-            
-            print_test_result("Booking Creation API", False, f"HTTP {response.status_code}: {error_details}")
+            print_test_result("Stripe Create Payment Intent API", False, f"HTTP {response.status_code}: {response.text}")
             return False, None
             
     except Exception as e:
-        print_test_result("Booking Creation API", False, f"Exception: {str(e)}")
+        print_test_result("Stripe Create Payment Intent API", False, f"Exception: {str(e)}")
         return False, None
+
+def test_stripe_webhook():
+    """Test POST /api/stripe/webhook - Stripe Webhook Handler (security test)"""
+    print("🔍 Testing Stripe Webhook Handler (security validation)...")
+    
+    # Test webhook without signature (should fail)
+    webhook_data = {
+        "type": "payment_intent.succeeded",
+        "data": {
+            "object": {
+                "id": "pi_test_123456789",
+                "amount": 50000,
+                "currency": "chf"
+            }
+        }
+    }
+    
+    try:
+        response = requests.post(
+            f"{API_BASE}/stripe/webhook",
+            json=webhook_data,
+            headers={'Content-Type': 'application/json'},
+            timeout=30
+        )
+        
+        # Should return 400 for missing signature
+        if response.status_code == 400:
+            error_data = response.json() if response.headers.get('content-type', '').startswith('application/json') else response.text
+            print_test_result(
+                "Stripe Webhook Handler", 
+                True, 
+                f"Correctly rejected webhook without signature: HTTP {response.status_code}"
+            )
+            return True
+        else:
+            print_test_result("Stripe Webhook Handler", False, f"Should have returned 400 for missing signature, got {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print_test_result("Stripe Webhook Handler", False, f"Exception: {str(e)}")
+        return False
+
+def test_email_alert_system():
+    """Test GET /api/test-email - Email Alert System"""
+    print("🔍 Testing Email Alert System...")
+    
+    try:
+        response = requests.get(f"{API_BASE}/test-email", timeout=30)
+        
+        if response.status_code == 200:
+            data = response.json()
+            if data.get('success') and 'results' in data:
+                results = data.get('results', {})
+                simple_alert = results.get('simpleAlert', {})
+                booking_failure_alert = results.get('bookingFailureAlert', {})
+                recipient = data.get('recipient')
+                
+                # Check if both email types were sent
+                simple_success = simple_alert.get('success', False) or 'messageId' in simple_alert
+                booking_success = booking_failure_alert.get('success', False) or 'messageId' in booking_failure_alert
+                
+                print_test_result(
+                    "Email Alert System", 
+                    True, 
+                    f"Test emails sent successfully. Simple alert: {'✅' if simple_success else '❌'}, Booking failure alert: {'✅' if booking_success else '❌'}, Recipient: {recipient}"
+                )
+                return True, data
+            else:
+                print_test_result("Email Alert System", False, f"Invalid response structure: {data}")
+                return False, None
+        else:
+            print_test_result("Email Alert System", False, f"HTTP {response.status_code}: {response.text}")
+            return False, None
+            
+    except Exception as e:
+        print_test_result("Email Alert System", False, f"Exception: {str(e)}")
+        return False, None
+
+def test_booking_validation():
+    """Test booking validation with invalid data"""
+    print("🔍 Testing Booking Validation (via Payment Intent with invalid data)...")
+    
+    # Test with invalid booking data
+    invalid_data = {
+        "propertyId": "invalid-id",
+        "checkIn": "2023-01-01",  # Past date
+        "checkOut": "2023-01-02",
+        "adults": 0,  # Invalid guest count
+        "guestName": "",  # Empty name
+        "guestEmail": "invalid-email",  # Invalid email
+        "accommodationTotal": -100  # Negative amount
+    }
+    
+    try:
+        response = requests.post(
+            f"{API_BASE}/stripe/create-payment-intent",
+            json=invalid_data,
+            headers={'Content-Type': 'application/json'},
+            timeout=30
+        )
+        
+        # Should return an error (400)
+        if response.status_code == 400:
+            error_data = response.json() if response.headers.get('content-type', '').startswith('application/json') else response.text
+            print_test_result(
+                "Booking Validation API", 
+                True, 
+                f"Correctly rejected invalid booking data: HTTP {response.status_code}"
+            )
+            return True
+        else:
+            print_test_result("Booking Validation API", False, f"Should have returned 400 for invalid data, got {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print_test_result("Booking Validation API", False, f"Exception: {str(e)}")
+        return False
 
 def test_booking_validation():
     """Test booking API with invalid data to check error handling"""
