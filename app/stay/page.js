@@ -123,33 +123,7 @@ export default function StayPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center h-20">
-            <Link href="/" className="absolute left-4 flex items-center space-x-2">
-              <Home className="w-6 h-6" />
-              <span className="text-xl font-light">Swiss Alpine Journey</span>
-            </Link>
-            
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/stay" className="text-black font-medium">Stay</Link>
-              <Link href="/explore" className="text-gray-700 hover:text-black">Explore</Link>
-              <Link href="/services" className="text-gray-700 hover:text-black">Services</Link>
-              <Link href="/about" className="text-gray-700 hover:text-black">About</Link>
-            </nav>
-            
-            {/* Plan Your Journey button - Hidden for now, may use later */}
-            <Link href="/stay" className="hidden">
-              <Button className="bg-black text-white hover:bg-gray-800 rounded-full px-6">
-                Plan Your Journey
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <div className="pt-32 pb-20 px-4">
+      <div className="pt-8 pb-20 px-4">
         <div className="container mx-auto">
           <h1 className="text-4xl font-light mb-4">Book your Stay</h1>
           <p className="text-gray-600 mb-12">
