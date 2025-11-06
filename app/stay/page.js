@@ -179,6 +179,7 @@ export default function StayPage() {
               <AmenitiesMultiSelect
                 value={filters.amenities}
                 onChange={(value) => setFilters({...filters, amenities: value})}
+                availableAmenities={availableAmenities}
               />
             </div>
           </div>
