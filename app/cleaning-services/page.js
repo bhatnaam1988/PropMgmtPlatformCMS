@@ -19,17 +19,35 @@ export default function CleaningServices() {
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success('Request submitted! We\'ll contact you within 24 hours.');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      propertyAddress: '',
-      serviceType: '',
-      message: ''
-    });
+    
+    try {
+      const response = await fetch('/api/forms/cleaning-services', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success('Request submitted! We\'ll contact you within 24 hours.');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          propertyAddress: '',
+          serviceType: '',
+          message: ''
+        });
+      } else {
+        toast.error(data.error || 'Failed to submit request. Please try again.');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast.error('Failed to submit request. Please try again.');
+    }
   };
 
   const services = [
