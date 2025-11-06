@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Backend API Testing for Cozy Retreats Booking Flow
-Tests the complete booking flow backend APIs
+Backend API Regression Testing - Phase 1 New Pages Integration
+Tests all 8 critical backend APIs to ensure no regression after new page integration
 """
 
 import requests
