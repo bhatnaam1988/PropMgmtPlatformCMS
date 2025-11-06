@@ -363,135 +363,168 @@ frontend:
 
   - task: "Contact Page - Inquiry form and contact info"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/contact/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Contact page with inquiry form, inquiry type selector, contact information display. Form has validation. Needs testing for form submission, validation, and display."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Contact page 'Get in Touch' displays correctly with single header/footer. Contact info section shows phone (+41 27 956 XX XX), email (info@swissalpinejourney.com), response time (24 hours). Contact form functional with inquiry type dropdown (Guest, Property Owner/Partner, Other), name/email/phone/subject/message fields. Form validation working. All form fields accept input correctly."
 
   - task: "Legal Page - Terms, Privacy, GDPR with anchor links"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/legal/page.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Legal page with Terms & Conditions, Privacy Policy, and GDPR information sections. Has quick navigation cards and anchor link navigation. Needs testing for scroll behavior, anchor links, and content display."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Legal page 'Legal Information' displays correctly with single header/footer. Quick navigation cards for Terms & Conditions, Privacy Policy, GDPR Information with 'Read Terms', 'Read Policy', 'Learn More' buttons. All three main sections (#terms, #privacy, #gdpr) are present and visible. Anchor link navigation functional. Content properly structured with detailed legal information."
 
   - task: "Jobs/Careers Page - Listings and application"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/jobs/page.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Jobs page with company values, open positions display, and application form (resume/cover letter). Needs testing for form functionality and display."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Jobs page 'Join Our Team' displays correctly with single header/footer. Company values section shows 3 cards (Passion for Quality, Team Collaboration, Room to Grow). Current Openings section displays 3 positions: Guest Services Coordinator (Remote), Marketing Specialist (Remote), Housekeeping (Grächen). Application form functional with all fields (name, email, phone, position, location, resume, cover letter). Form submission triggers success toast notification."
 
   - task: "Cleaning Services Page - Service info and request form"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/cleaning-services/page.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Cleaning services page with service descriptions, benefits, and service request form. Needs testing for form submission, validation, and responsive display."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Cleaning Services page displays correctly with single header/footer. Service information, benefits, and request form present. Page loads without errors and maintains consistent layout with global header/footer components."
 
   - task: "Rental Services Page - Service info and inquiry"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/rental-services/page.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Rental services page with listing optimization, cleaning coordination info, and property inquiry form. Needs testing for form functionality and display."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Rental Services page displays correctly with single header/footer. Service information and inquiry form present. Page loads without errors and maintains consistent layout with global header/footer components."
 
   - task: "Travel Tips Page - Comprehensive travel advice"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/explore/travel-tips/page.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Travel Tips page with extensive tips organized by 7 categories (hiking, winter sports, packing, photography, dining, safety, best times). Includes quick tips, money-saving tips, and sustainability section. Needs testing for content display, responsive layout, and card organization."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Travel Tips page displays correctly with single header/footer. 'Hiking & Outdoor' categories section visible, indicating proper content organization. Page loads without errors and maintains consistent layout with global header/footer components."
 
   - task: "Behind the Scenes Page - Company culture and process"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/explore/behind-the-scenes/page.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Behind the Scenes page with company story, values grid, team info, preparation process, quality standards checklist, and community involvement. Includes CTAs to listings and contact. Needs testing for content display, CTAs, and responsive layout."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Behind the Scenes page displays correctly with single header/footer. Company culture and process content present. Page loads without errors and maintains consistent layout with global header/footer components."
 
   - task: "Other Locations Page - Swiss Alpine destinations"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/explore/other-locations/page.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Other Locations page displaying 5 Swiss Alpine destinations (Zermatt, Saas-Fee, Crans-Montana, Verbier, Leukerbad) with cards, images, highlights, and learn more links. Includes Grächen CTA card and activities overview. Needs testing for card display, hover effects, and navigation."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Other Locations page displays correctly with single header/footer. Location cards visible including Zermatt card, indicating proper display of Swiss Alpine destinations. Page loads without errors and maintains consistent layout with global header/footer components."
 
   - task: "Grächen Location Page - Detailed village information"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/explore/graechen/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Grächen location detail page with hero image, village highlights (4 cards), year-round activities (winter & summer sections), practical information (3 sections), Matterhorn views, local culture info, and multiple CTAs. Needs testing for content display, responsive layout, and CTAs."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Grächen page 'Grächen' displays correctly with single header/footer. Village Highlights section with 4 cards (Car-Free Village, Family-Friendly Skiing, Sunny Location, Authentic Alpine Life) visible. Year-Round Activities section with winter and summer activities present. Page loads without errors and maintains consistent layout with global header/footer components."
 
   - task: "Header Component - Global navigation with dropdowns"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/components/Header.js"
     stuck_count: 0
     priority: "critical"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Global header with centered navigation and dropdown menus for Explore (4 items), Services (2 items), and About (3 items) sections. Mobile responsive hamburger menu. Sticky positioning. Needs testing for all navigation links, dropdown functionality, mobile menu, and sticky behavior."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Header component displays correctly on ALL pages with single header (no duplicates). Navigation links present: Explore, Services, About, Stay. Mobile menu button visible and functional - opens/closes properly. Dropdown menus contain correct navigation items. Sticky positioning working. Header consistent across all 13 tested pages (homepage, 10 new pages, stay, property detail)."
 
   - task: "Footer Component - Global footer with links and info"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/components/Footer.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Global footer with brand section (logo, tagline, Instagram link), services links (3 items), contact info (phone, email, location), and legal links (3 items). 5-column responsive grid layout. Needs testing for all footer links, responsive display, and external links."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Footer component displays correctly on ALL pages with single footer (no duplicates). Footer links present and functional: Cleaning Services, Careers, Privacy Policy. Brand section with Swiss Alpine Journey logo and tagline visible. Contact info and legal links properly structured. Footer consistent across all 13 tested pages. No duplicate footers detected anywhere."
 
 metadata:
   created_by: "main_agent"
