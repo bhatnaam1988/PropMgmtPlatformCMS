@@ -115,11 +115,11 @@ export default function Contact() {
             <Card>
               <CardContent className="p-6">
                 <h2 className="mb-6">Send a Message</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4" aria-label="Contact form">
                   <div>
-                    <Label htmlFor="inquiryType">Inquiry Type *</Label>
+                    <Label htmlFor="inquiryType">Inquiry Type <span className="text-red-500" aria-label="required">*</span></Label>
                     <Select value={formData.inquiryType} onValueChange={handleInquiryTypeChange} required>
-                      <SelectTrigger id="inquiryType">
+                      <SelectTrigger id="inquiryType" aria-required="true">
                         <SelectValue placeholder="Select inquiry type" />
                       </SelectTrigger>
                       <SelectContent>
