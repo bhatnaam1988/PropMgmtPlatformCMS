@@ -1,9 +1,6 @@
+'use client';
+
 import Link from 'next/link';
-import { getPageMetadata } from '@/lib/metadata';
-
-export const metadata = getPageMetadata('about');
-
-export default function About() {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, Award, Users, Star } from 'lucide-react';
