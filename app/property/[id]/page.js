@@ -209,14 +209,21 @@ export default function PropertyDetailPage() {
             Back to listings
           </Link>
 
-          {/* Image Gallery */}
+          {/* Image Gallery - Optimized */}
           <div className="grid grid-cols-4 gap-4 mb-8">
             {/* Main large image */}
-            <div className="col-span-4 md:col-span-3">
-              <img
-                src={property.photos[selectedImage]?.url || '/placeholder.jpg'}
-                alt={property.name}
-                className="w-full h-[500px] object-cover rounded-2xl cursor-pointer"
+            <div className="col-span-4 md:col-span-3 relative h-[500px] rounded-2xl overflow-hidden cursor-pointer">
+              <Image
+                src={optimizeUplistingImage(
+                  property.photos[selectedImage]?.url || '/placeholder.jpg',
+                  IMAGE_SIZES.DETAIL_HERO
+                )}
+                alt={`${property.name} - Main photo`}
+                fill
+                className="object-cover"
+                sizes={getImageSizes('detail')}
+                priority
+                quality={80}
                 onClick={() => setSelectedImage(selectedImage)}
               />
             </div>
@@ -224,13 +231,16 @@ export default function PropertyDetailPage() {
             {/* Thumbnail grid on the right */}
             <div className="col-span-4 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4 max-h-[500px] overflow-y-auto">
               {property.photos.slice(0, 8).map((photo, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={photo.url}
-                    alt={`${property.name} ${index + 1}`}
-                    className={`w-full h-24 object-cover rounded-lg cursor-pointer ${
+                <div key={index} className="relative h-24 rounded-lg overflow-hidden">
+                  <Image
+                    src={optimizeUplistingImage(photo.url, IMAGE_SIZES.THUMBNAIL)}
+                    alt={`${property.name} - Photo ${index + 1}`}
+                    fill
+                    className={`object-cover cursor-pointer ${
                       selectedImage === index ? 'ring-2 ring-black' : ''
                     }`}
+                    sizes={getImageSizes('thumbnail')}
+                    quality={70}
                     onClick={() => setSelectedImage(index)}
                   />
                   {/* Show +X photos overlay on last thumbnail if there are more */}
