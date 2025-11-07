@@ -118,12 +118,24 @@ export function BedroomsSelect({ value, onChange }) {
 export function AmenitiesMultiSelect({ value, onChange, availableAmenities = [] }) {
   const [open, setOpen] = useState(false);
   
-  // Use provided amenities or fallback to default list
-  const amenitiesOptions = availableAmenities.length > 0 
-    ? availableAmenities.map(amenity => ({
-        value: amenity.toLowerCase().replace(/\s+/g, '_'),
-        label: amenity
-      }))
+  // Create unique amenities list and remove duplicates
+  const uniqueAmenitiesMap = new Map();
+  
+  if (availableAmenities.length > 0) {
+    availableAmenities.forEach(amenity => {
+      const valueKey = amenity.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_');
+      // Only add if not already in map (prevents duplicates)
+      if (!uniqueAmenitiesMap.has(valueKey)) {
+        uniqueAmenitiesMap.set(valueKey, amenity);
+      }
+    });
+  }
+  
+  // Convert map to sorted array of options
+  const amenitiesOptions = uniqueAmenitiesMap.size > 0
+    ? Array.from(uniqueAmenitiesMap.entries())
+        .map(([valueKey, label]) => ({ value: valueKey, label }))
+        .sort((a, b) => a.label.localeCompare(b.label))
     : [
         { value: 'parking', label: 'Parking' },
         { value: 'kitchen', label: 'Kitchen' },
@@ -167,7 +179,7 @@ export function AmenitiesMultiSelect({ value, onChange, availableAmenities = [] 
             </span>
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[240px] p-3 z-[9999]" align="start">
+        <PopoverContent className="w-[280px] p-3 z-[9999]" align="start">
           <div className="space-y-2">
             <div className="flex items-center justify-between mb-2">
               <p className="text-sm font-medium">Select Amenities</p>
@@ -182,28 +194,31 @@ export function AmenitiesMultiSelect({ value, onChange, availableAmenities = [] 
                 </Button>
               )}
             </div>
-            {amenitiesOptions.map((option) => (
-              <div
-                key={option.value}
-                className="flex items-center space-x-2 hover:bg-gray-50 p-2 rounded cursor-pointer"
-                onClick={() => toggleAmenity(option.value)}
-              >
-                <Checkbox
-                  id={option.value}
-                  checked={value.includes(option.value)}
-                  onCheckedChange={() => toggleAmenity(option.value)}
-                />
-                <label
-                  htmlFor={option.value}
-                  className="text-sm cursor-pointer flex-1"
+            {/* Scrollable container with max height - shows ~8 items initially */}
+            <div className="max-h-[320px] overflow-y-auto pr-2 space-y-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+              {amenitiesOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className="flex items-center space-x-2 hover:bg-gray-50 p-2 rounded cursor-pointer"
+                  onClick={() => toggleAmenity(option.value)}
                 >
-                  {option.label}
-                </label>
-                {value.includes(option.value) && (
-                  <Check className="w-4 h-4 text-blue-600" />
-                )}
-              </div>
-            ))}
+                  <Checkbox
+                    id={option.value}
+                    checked={value.includes(option.value)}
+                    onCheckedChange={() => toggleAmenity(option.value)}
+                  />
+                  <label
+                    htmlFor={option.value}
+                    className="text-sm cursor-pointer flex-1"
+                  >
+                    {option.label}
+                  </label>
+                  {value.includes(option.value) && (
+                    <Check className="w-4 h-4 text-blue-600" />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </PopoverContent>
       </Popover>
