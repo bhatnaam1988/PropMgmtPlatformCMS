@@ -20,6 +20,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* Preconnect to critical external domains for performance */}
+        <link rel="preconnect" href="https://cdn.filestackcontent.com" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://cdn.filestackcontent.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <MultipleStructuredData schemas={globalSchemas} />
       </head>
       <body>
