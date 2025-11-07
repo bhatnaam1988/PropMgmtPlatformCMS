@@ -1,7 +1,15 @@
 const nextConfig = {
   output: 'standalone',
   images: {
-    unoptimized: true,
+    unoptimized: false, // Enable image optimization for performance
+    formats: ['image/avif', 'image/webp'], // Modern image formats
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    domains: [
+      'images.unsplash.com',
+      'cdn.filestackcontent.com', // Uplisting property images
+    ],
+    minimumCacheTTL: 60,
   },
   experimental: {
     // Remove if not using Server Components
