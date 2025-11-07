@@ -197,9 +197,9 @@ export function AmenitiesMultiSelect({ value, onChange, availableAmenities = [] 
             aria-haspopup="listbox"
             className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white justify-start font-normal hover:bg-white hover:border-gray-300"
           >
-            <Sliders className="absolute left-3 w-5 h-5 text-gray-400" aria-hidden="true" />
+            <Sliders className="absolute left-3 w-5 h-5 text-gray-600" aria-hidden="true" />
             <span className={cn(
-              value.length === 0 ? 'text-gray-500' : 'text-gray-900'
+              value.length === 0 ? 'text-gray-600' : 'text-gray-900'
             )}>
               {displayValue()}
             </span>
