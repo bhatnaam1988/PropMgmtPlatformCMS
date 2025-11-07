@@ -33,35 +33,39 @@ export function Header() {
   ];
 
   return (
-    <header className="bg-white border-b border-border sticky top-0 z-50">
+    <header className="bg-white border-b border-border sticky top-0 z-50" role="banner">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo - Left Aligned */}
           <Link
             href="/"
-            className="text-foreground hover:text-primary transition-colors flex items-center gap-1.5 hidden md:flex"
+            className="text-foreground hover:text-primary transition-colors flex items-center gap-1.5 hidden md:flex focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+            aria-label="Swiss Alpine Journey - Home"
           >
-            <Home className="h-4 w-4" />
-            Swiss Alpine Journey
+            <Home className="h-4 w-4" aria-hidden="true" />
+            <span>Swiss Alpine Journey</span>
           </Link>
 
           {/* Desktop Navigation - Centered */}
-          <nav className="hidden md:flex items-center gap-6 absolute left-1/2 transform -translate-x-1/2">
+          <nav className="hidden md:flex items-center gap-6 absolute left-1/2 transform -translate-x-1/2" aria-label="Main navigation">
             <Link
               href="/stay"
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
             >
               Stay
             </Link>
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-foreground hover:text-primary transition-colors">
+              <DropdownMenuTrigger 
+                className="flex items-center gap-1 text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
+                aria-label="Explore menu"
+              >
                 Explore
-                <ChevronDown className="h-4 w-4" />
+                <ChevronDown className="h-4 w-4" aria-hidden="true" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent role="menu" aria-label="Explore submenu">
                 {exploreItems.map((item) => (
-                  <DropdownMenuItem key={item.href} asChild>
-                    <Link href={item.href} className="w-full">
+                  <DropdownMenuItem key={item.href} asChild role="none">
+                    <Link href={item.href} className="w-full" role="menuitem">
                       {item.label}
                     </Link>
                   </DropdownMenuItem>
@@ -69,14 +73,17 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-foreground hover:text-primary transition-colors">
+              <DropdownMenuTrigger 
+                className="flex items-center gap-1 text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
+                aria-label="Services menu"
+              >
                 Services
-                <ChevronDown className="h-4 w-4" />
+                <ChevronDown className="h-4 w-4" aria-hidden="true" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent role="menu" aria-label="Services submenu">
                 {servicesItems.map((item) => (
-                  <DropdownMenuItem key={item.href} asChild>
-                    <Link href={item.href} className="w-full">
+                  <DropdownMenuItem key={item.href} asChild role="none">
+                    <Link href={item.href} className="w-full" role="menuitem">
                       {item.label}
                     </Link>
                   </DropdownMenuItem>
@@ -84,14 +91,17 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-foreground hover:text-primary transition-colors">
+              <DropdownMenuTrigger 
+                className="flex items-center gap-1 text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
+                aria-label="About menu"
+              >
                 About
-                <ChevronDown className="h-4 w-4" />
+                <ChevronDown className="h-4 w-4" aria-hidden="true" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent role="menu" aria-label="About submenu">
                 {aboutItems.map((item) => (
-                  <DropdownMenuItem key={item.href} asChild>
-                    <Link href={item.href} className="w-full">
+                  <DropdownMenuItem key={item.href} asChild role="none">
+                    <Link href={item.href} className="w-full" role="menuitem">
                       {item.label}
                     </Link>
                   </DropdownMenuItem>
@@ -101,23 +111,26 @@ export function Header() {
           </nav>
 
           {/* Right side spacer for balance */}
-          <div className="hidden md:block w-[200px]"></div>
+          <div className="hidden md:block w-[200px]" aria-hidden="true"></div>
 
           {/* Mobile Menu Button and Logo */}
           <div className="flex md:hidden items-center justify-between w-full">
             <button
-              className="p-2"
+              className="p-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
             </button>
             <Link
               href="/"
-              className="text-foreground hover:text-primary transition-colors flex items-center gap-1.5"
+              className="text-foreground hover:text-primary transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+              aria-label="Swiss Alpine Journey - Home"
             >
-              <Home className="h-4 w-4" />
-              Swiss Alpine Journey
+              <Home className="h-4 w-4" aria-hidden="true" />
+              <span>Swiss Alpine Journey</span>
             </Link>
           </div>
         </div>
