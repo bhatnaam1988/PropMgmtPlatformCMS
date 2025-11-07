@@ -1,15 +1,19 @@
 const nextConfig = {
   output: 'standalone',
   images: {
-    unoptimized: false, // Enable image optimization for performance
-    formats: ['image/avif', 'image/webp'], // Modern image formats
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    domains: [
-      'images.unsplash.com',
-      'cdn.filestackcontent.com', // Uplisting property images
+    unoptimized: true, // Keep unoptimized since Filestack handles transformations
+    // Using Filestack's built-in CDN transformations for property images
+    // This avoids Next.js server-side processing delay on first request
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.filestackcontent.com',
+      },
     ],
-    minimumCacheTTL: 60,
   },
   experimental: {
     // Remove if not using Server Components
