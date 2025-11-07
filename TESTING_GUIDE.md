@@ -12,9 +12,9 @@
 
 ### **Step 1: Navigate to Property Page**
 
-1. Go to: https://swisslodge-app.preview.emergentagent.com
+1. Go to: https://alpine-journeys-2.preview.emergentagent.com
 2. Click on any property to view details
-3. Or directly visit: https://swisslodge-app.preview.emergentagent.com/property/84656
+3. Or directly visit: https://alpine-journeys-2.preview.emergentagent.com/property/84656
 
 ---
 

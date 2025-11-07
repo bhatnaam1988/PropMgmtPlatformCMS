@@ -8,7 +8,7 @@ import requests
 import json
 
 # Configuration
-BASE_URL = "https://swisslodge-app.preview.emergentagent.com"
+BASE_URL = "https://alpine-journeys-2.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
 
 def test_email_service():
