@@ -13,6 +13,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { formatDateLocal } from '@/lib/uplisting';
 import { validateBooking, getPropertyConstraints } from '@/lib/booking-validation';
+import { MultipleStructuredData } from '@/components/StructuredData';
+import { getPropertySchema, getVacationRentalSchema, getBreadcrumbSchema } from '@/lib/schemas';
 
 export default function PropertyDetailPage() {
   const params = useParams();
