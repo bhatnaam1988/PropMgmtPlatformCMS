@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { 
@@ -15,6 +16,7 @@ import { formatDateLocal } from '@/lib/uplisting';
 import { validateBooking, getPropertyConstraints } from '@/lib/booking-validation';
 import { MultipleStructuredData } from '@/components/StructuredData';
 import { getPropertySchema, getVacationRentalSchema, getBreadcrumbSchema } from '@/lib/schemas';
+import { optimizeUplistingImage, IMAGE_SIZES, getImageSizes } from '@/lib/image-optimizer';
 
 export default function PropertyDetailPage() {
   const params = useParams();
