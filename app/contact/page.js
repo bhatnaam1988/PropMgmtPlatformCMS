@@ -132,18 +132,19 @@ export default function Contact() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="name">Name *</Label>
+                      <Label htmlFor="name">Name <span className="text-red-500" aria-label="required">*</span></Label>
                       <Input
                         id="name"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
                         required
+                        aria-required="true"
                         placeholder="Your name"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="email">Email *</Label>
+                      <Label htmlFor="email">Email <span className="text-red-500" aria-label="required">*</span></Label>
                       <Input
                         id="email"
                         name="email"
@@ -151,6 +152,7 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         required
+                        aria-required="true"
                         placeholder="your@email.com"
                       />
                     </div>
@@ -158,7 +160,7 @@ export default function Contact() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="phone">Phone</Label>
+                      <Label htmlFor="phone">Phone <span className="text-muted-foreground text-sm">(optional)</span></Label>
                       <Input
                         id="phone"
                         name="phone"
@@ -166,32 +168,38 @@ export default function Contact() {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+41 XX XXX XX XX"
+                        aria-describedby="phone-hint"
                       />
+                      <p id="phone-hint" className="sr-only">Enter your phone number with country code</p>
                     </div>
                     <div>
-                      <Label htmlFor="subject">Subject *</Label>
+                      <Label htmlFor="subject">Subject <span className="text-red-500" aria-label="required">*</span></Label>
                       <Input
                         id="subject"
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
                         required
+                        aria-required="true"
                         placeholder="How can we help?"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <Label htmlFor="message">Message *</Label>
+                    <Label htmlFor="message">Message <span className="text-red-500" aria-label="required">*</span></Label>
                     <Textarea
                       id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
                       required
+                      aria-required="true"
                       rows={6}
                       placeholder="Tell us about your inquiry..."
+                      aria-describedby="message-hint"
                     />
+                    <p id="message-hint" className="sr-only">Provide details about your inquiry to help us assist you better</p>
                   </div>
 
                   <Button type="submit" size="lg" className="w-full md:w-auto">
