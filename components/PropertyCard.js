@@ -93,11 +93,17 @@ export default function PropertyCard({ property, priceDisplay, showFallbackWarni
             {priceDisplay}
           </div>
 
-          {/* Property Image */}
-          <img
-            src={property.photos[currentImageIndex]?.url || property.photos[0]?.url || '/placeholder.jpg'}
-            alt={property.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          {/* Property Image - Optimized with Next.js Image */}
+          <Image
+            src={optimizeUplistingImage(
+              property.photos[currentImageIndex]?.url || property.photos[0]?.url || '/placeholder.jpg',
+              IMAGE_SIZES.CARD
+            )}
+            alt={`${property.name} - Photo ${currentImageIndex + 1}`}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes={getImageSizes('card')}
+            quality={75}
           />
 
           {/* Navigation Arrows */}
