@@ -41,73 +41,89 @@ export function Footer() {
           </div>
 
           {/* Services Links */}
-          <div className="min-w-0">
-            <h3 className="font-medium mb-4">Services</h3>
-            <div className="space-y-2">
-              <Link 
-                href="/cleaning-services" 
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                Cleaning Services
-              </Link>
-              <Link 
-                href="/rental-services" 
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                Rental Management
-              </Link>
-              <Link 
-                href="/jobs" 
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                Careers
-              </Link>
-            </div>
-          </div>
+          <nav className="min-w-0" aria-labelledby="footer-services-heading">
+            <h3 id="footer-services-heading" className="font-medium mb-4">Services</h3>
+            <ul role="list" className="space-y-2">
+              <li>
+                <Link 
+                  href="/cleaning-services" 
+                  className="block text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                >
+                  Cleaning Services
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/rental-services" 
+                  className="block text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                >
+                  Rental Management
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/jobs" 
+                  className="block text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                >
+                  Careers
+                </Link>
+              </li>
+            </ul>
+          </nav>
 
           {/* Contact Info */}
-          <div className="min-w-0">
-            <h3 className="font-medium mb-4">Contact</h3>
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Phone className="h-4 w-4 flex-shrink-0" />
-                <span>+41 27 956 XX XX</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Mail className="h-4 w-4 flex-shrink-0" />
-                <span className="break-all">hello@swissalpinejourney.com</span>
-              </div>
-              <div className="flex items-start gap-2 text-muted-foreground">
-                <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
+          <address className="min-w-0 not-italic" aria-labelledby="footer-contact-heading">
+            <h3 id="footer-contact-heading" className="font-medium mb-4">Contact</h3>
+            <ul role="list" className="space-y-3">
+              <li className="flex items-center gap-2 text-muted-foreground">
+                <Phone className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                <a href="tel:+41279560000" className="hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                  +41 27 956 XX XX
+                </a>
+              </li>
+              <li className="flex items-center gap-2 text-muted-foreground">
+                <Mail className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                <a href="mailto:hello@swissalpinejourney.com" className="break-all hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                  hello@swissalpinejourney.com
+                </a>
+              </li>
+              <li className="flex items-start gap-2 text-muted-foreground">
+                <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <span>Grächen, Valais, Switzerland</span>
-              </div>
-            </div>
-          </div>
+              </li>
+            </ul>
+          </address>
 
           {/* Legal Links */}
-          <div className="min-w-0">
-            <h3 className="font-medium mb-4">Legal</h3>
-            <div className="space-y-2">
-              <Link 
-                href="/legal#privacy" 
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                Privacy Policy
-              </Link>
-              <Link 
-                href="/legal#terms" 
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                Terms & Conditions
-              </Link>
-              <Link 
-                href="/legal#gdpr" 
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                GDPR Information
-              </Link>
-            </div>
-          </div>
+          <nav className="min-w-0" aria-labelledby="footer-legal-heading">
+            <h3 id="footer-legal-heading" className="font-medium mb-4">Legal</h3>
+            <ul role="list" className="space-y-2">
+              <li>
+                <Link 
+                  href="/legal#privacy" 
+                  className="block text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/legal#terms" 
+                  className="block text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                >
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/legal#gdpr" 
+                  className="block text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                >
+                  GDPR Information
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
 
         <div className="border-t border-border mt-8 pt-6 text-center text-muted-foreground">
