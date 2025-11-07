@@ -55,7 +55,7 @@ export function DateRangePicker({ checkIn, checkOut, onChange }) {
         Dates
       </label>
       <div className="relative">
-        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" aria-hidden="true" />
+        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-600 pointer-events-none z-10" aria-hidden="true" />
         <DatePicker
           id="date-picker"
           selected={checkIn}
