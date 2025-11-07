@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Users, Bed, Bath } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { optimizeUplistingImage, IMAGE_SIZES, getImageSizes } from '@/lib/image-optimizer';
 
 export default function PropertyCardSimple({ property }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
