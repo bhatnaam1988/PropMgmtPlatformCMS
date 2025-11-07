@@ -24,11 +24,17 @@ import { cn } from '@/lib/utils';
 export function LocationSelect({ value, onChange }) {
   return (
     <div className="relative">
-      <label className="text-sm font-medium text-gray-700 mb-2 block">Location</label>
+      <label htmlFor="location-select" className="text-sm font-medium text-gray-700 mb-2 block">
+        Location
+      </label>
       <div className="relative">
-        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-        <Select value={value || "all"} onValueChange={(val) => onChange(val === "all" ? "" : val)}>
-          <SelectTrigger className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white">
+        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" aria-hidden="true" />
+        <Select 
+          value={value || "all"} 
+          onValueChange={(val) => onChange(val === "all" ? "" : val)}
+          aria-label="Filter by location"
+        >
+          <SelectTrigger id="location-select" className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white">
             <SelectValue placeholder="All locations" />
           </SelectTrigger>
           <SelectContent className="z-[9999]">
@@ -45,10 +51,13 @@ export function LocationSelect({ value, onChange }) {
 export function DateRangePicker({ checkIn, checkOut, onChange }) {
   return (
     <div className="relative">
-      <label className="text-sm font-medium text-gray-700 mb-2 block">Dates</label>
+      <label htmlFor="date-picker" className="text-sm font-medium text-gray-700 mb-2 block">
+        Dates
+      </label>
       <div className="relative">
-        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
+        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" aria-hidden="true" />
         <DatePicker
+          id="date-picker"
           selected={checkIn}
           onChange={onChange}
           startDate={checkIn}
@@ -61,6 +70,7 @@ export function DateRangePicker({ checkIn, checkOut, onChange }) {
           popperClassName="react-datepicker-popper"
           popperPlacement="bottom-start"
           wrapperClassName="w-full"
+          aria-label="Select check-in and check-out dates"
         />
       </div>
     </div>
@@ -71,11 +81,17 @@ export function DateRangePicker({ checkIn, checkOut, onChange }) {
 export function GuestsSelect({ value, onChange }) {
   return (
     <div className="relative">
-      <label className="text-sm font-medium text-gray-700 mb-2 block">Guests</label>
+      <label htmlFor="guests-select" className="text-sm font-medium text-gray-700 mb-2 block">
+        Guests
+      </label>
       <div className="relative">
-        <UsersIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-        <Select value={value.toString()} onValueChange={(val) => onChange(parseInt(val))}>
-          <SelectTrigger className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white">
+        <UsersIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" aria-hidden="true" />
+        <Select 
+          value={value.toString()} 
+          onValueChange={(val) => onChange(parseInt(val))}
+          aria-label="Filter by number of guests"
+        >
+          <SelectTrigger id="guests-select" className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white">
             <SelectValue placeholder="Select guests" />
           </SelectTrigger>
           <SelectContent className="z-[9999]">
@@ -95,11 +111,17 @@ export function GuestsSelect({ value, onChange }) {
 export function BedroomsSelect({ value, onChange }) {
   return (
     <div className="relative">
-      <label className="text-sm font-medium text-gray-700 mb-2 block">Bedrooms</label>
+      <label htmlFor="bedrooms-select" className="text-sm font-medium text-gray-700 mb-2 block">
+        Bedrooms
+      </label>
       <div className="relative">
-        <Bed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
-        <Select value={value} onValueChange={onChange}>
-          <SelectTrigger className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white">
+        <Bed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" aria-hidden="true" />
+        <Select 
+          value={value} 
+          onValueChange={onChange}
+          aria-label="Filter by number of bedrooms"
+        >
+          <SelectTrigger id="bedrooms-select" className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white">
             <SelectValue placeholder="Any" />
           </SelectTrigger>
           <SelectContent className="z-[9999]">
@@ -162,16 +184,20 @@ export function AmenitiesMultiSelect({ value, onChange, availableAmenities = [] 
 
   return (
     <div className="relative">
-      <label className="text-sm font-medium text-gray-700 mb-2 block">Amenities</label>
+      <label className="text-sm font-medium text-gray-700 mb-2 block">
+        Amenities
+      </label>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
+            aria-label="Filter by amenities"
+            aria-haspopup="listbox"
             className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white justify-start font-normal hover:bg-white hover:border-gray-300"
           >
-            <Sliders className="absolute left-3 w-5 h-5 text-gray-400" />
+            <Sliders className="absolute left-3 w-5 h-5 text-gray-400" aria-hidden="true" />
             <span className={cn(
               value.length === 0 ? 'text-gray-500' : 'text-gray-900'
             )}>
@@ -179,7 +205,7 @@ export function AmenitiesMultiSelect({ value, onChange, availableAmenities = [] 
             </span>
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[280px] p-3 z-[9999]" align="start">
+        <PopoverContent className="w-[280px] p-3 z-[9999]" align="start" role="listbox">
           <div className="space-y-2">
             <div className="flex items-center justify-between mb-2">
               <p className="text-sm font-medium">Select Amenities</p>
@@ -189,23 +215,31 @@ export function AmenitiesMultiSelect({ value, onChange, availableAmenities = [] 
                   size="sm"
                   className="h-auto p-1 text-xs"
                   onClick={() => onChange([])}
+                  aria-label="Clear all amenity filters"
                 >
                   Clear all
                 </Button>
               )}
             </div>
             {/* Scrollable container with max height - shows ~8 items initially */}
-            <div className="max-h-[320px] overflow-y-auto pr-2 space-y-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+            <div 
+              className="max-h-[320px] overflow-y-auto pr-2 space-y-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollable-region"
+              role="list"
+              tabIndex={0}
+              aria-label="Amenities list"
+            >
               {amenitiesOptions.map((option) => (
                 <div
                   key={option.value}
                   className="flex items-center space-x-2 hover:bg-gray-50 p-2 rounded cursor-pointer"
                   onClick={() => toggleAmenity(option.value)}
+                  role="listitem"
                 >
                   <Checkbox
                     id={option.value}
                     checked={value.includes(option.value)}
                     onCheckedChange={() => toggleAmenity(option.value)}
+                    aria-label={`Filter by ${option.label}`}
                   />
                   <label
                     htmlFor={option.value}
@@ -214,7 +248,7 @@ export function AmenitiesMultiSelect({ value, onChange, availableAmenities = [] 
                     {option.label}
                   </label>
                   {value.includes(option.value) && (
-                    <Check className="w-4 h-4 text-blue-600" />
+                    <Check className="w-4 h-4 text-blue-600" aria-hidden="true" />
                   )}
                 </div>
               ))}
