@@ -95,10 +95,13 @@ export default function Graechen() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px]" aria-labelledby="hero-heading">
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1656746618448-944c18bb4bd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxHcmFjaGVuJTIwU3dpdHplcmxhbmQlMjB0b3duJTIwYWxwaW5lJTIwdmlsbGFnZXxlbnwxfHx8fDE3NTkxMTk0ODd8MA&ixlib=rb-4.1.0&q=80&w=1080"
           alt="Panoramic view of Grächen village in Valais, Switzerland with traditional alpine chalets and mountain backdrop"
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/40" aria-hidden="true"></div>
         <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
