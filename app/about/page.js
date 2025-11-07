@@ -8,17 +8,17 @@ import { Heart, Award, Users, Star } from 'lucide-react';
 export default function About() {
   const values = [
     {
-      icon: <Heart className="h-8 w-8 text-primary" />,
+      icon: <Heart className="h-8 w-8 text-primary" aria-hidden="true" />,
       title: "Prime Locations",
       description: "We select properties based on their proximity to village centers, ski areas, and outdoor activities for maximum convenience."
     },
     {
-      icon: <Award className="h-8 w-8 text-primary" />,
+      icon: <Award className="h-8 w-8 text-primary" aria-hidden="true" />,
       title: "Quality Standards",
       description: "Every property in our collection is carefully maintained and equipped with thoughtful amenities for a comfortable stay."
     },
     {
-      icon: <Users className="h-8 w-8 text-primary" />,
+      icon: <Users className="h-8 w-8 text-primary" aria-hidden="true" />,
       title: "Local Expertise",
       description: "We're dedicated to helping you make the most of your Alpine experience with insider knowledge and personalized recommendations."
     }
@@ -33,17 +33,19 @@ export default function About() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20">
+      <section className="relative py-20" aria-labelledby="hero-heading">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(https://images.unsplash.com/photo-1633341500706-62690376b1ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbiUyMGNoYWxldHxlbnwxfHx8fDE3NTc4Mzk5ODV8MA&ixlib=rb-4.1.0&q=80&w=1080)`
           }}
+          role="img"
+          aria-label="Scenic Swiss Alps mountain chalet landscape"
         >
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-black/50" aria-hidden="true"></div>
         </div>
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl md:text-5xl mb-6">Our Story</h1>
+          <h1 id="hero-heading" className="text-4xl md:text-5xl mb-6">Our Story</h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
             Where authentic stays meet modern comfort and local adventure
           </p>
@@ -51,11 +53,11 @@ export default function About() {
       </section>
 
       {/* Our Story */}
-      <section className="py-16">
+      <section className="py-16" aria-labelledby="story-heading">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="mb-6">Welcome to Swiss Alpine Journey</h2>
+              <h2 id="story-heading" className="mb-6">Welcome to Swiss Alpine Journey</h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
                   Our story begins in Grächen, where my grandfather built the first family apartments many years ago. What started as a place for our own family holidays has grown into a lasting commitment to share the beauty and comfort of the Swiss Alps with others.
@@ -71,7 +73,7 @@ export default function About() {
             <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1628172225866-fbbec7bcbe9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscGluZSUyMGNoYWxldCUyMGludGVyaW9yfGVufDF8fHx8MTc1NzgzOTk4OHww&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Peaceful home interior"
+                alt="Cozy Swiss alpine chalet interior with comfortable furnishings and warm lighting"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -80,10 +82,10 @@ export default function About() {
       </section>
 
       {/* Values */}
-      <section className="py-16 bg-muted/50">
+      <section className="py-16 bg-muted/50" aria-labelledby="values-heading">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="mb-4">Our Values</h2>
+            <h2 id="values-heading" className="mb-4">Our Values</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               The principles that guide everything we do, from selecting properties to caring for our guests
             </p>
@@ -106,12 +108,13 @@ export default function About() {
       </section>
 
       {/* Stats */}
-      <section className="py-16">
+      <section className="py-16" aria-labelledby="stats-heading">
         <div className="container mx-auto px-4">
+          <h2 id="stats-heading" className="sr-only">Our Achievements</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-medium text-primary mb-2">
+                <div className="text-3xl md:text-4xl font-medium text-primary mb-2" aria-label={`${stat.number} ${stat.label}`}>
                   {stat.number}
                 </div>
                 <div className="text-muted-foreground">{stat.label}</div>
@@ -122,46 +125,46 @@ export default function About() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 bg-muted/50">
+      <section className="py-16 bg-muted/50" aria-labelledby="why-choose-heading">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1578416043044-298e3d1da20e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3p5JTIwbW91bnRhaW4lMjBjaGFsZXQlMjBmaXJlcGxhY2V8ZW58MXx8fHwxNzU3ODM5OTkyfDA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Cozy chalet interior"
+                alt="Cozy mountain chalet interior with fireplace and comfortable seating area"
                 className="w-full h-full object-cover"
               />
             </div>
             <div>
-              <h2 className="mb-6">Why Choose Swiss Alpine Journey?</h2>
+              <h2 id="why-choose-heading" className="mb-6">Why Choose Swiss Alpine Journey?</h2>
               <div className="space-y-6">
-                <div className="flex gap-4">
+                <article className="flex gap-4">
                   <div className="flex-shrink-0">
-                    <Star className="h-6 w-6 text-primary" />
+                    <Star className="h-6 w-6 text-primary" aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="mb-2">Strategic Selection</h3>
                     <p className="text-muted-foreground">Every property is carefully chosen for its prime location near skiing, activities, and village amenities.</p>
                   </div>
-                </div>
-                <div className="flex gap-4">
+                </article>
+                <article className="flex gap-4">
                   <div className="flex-shrink-0">
-                    <Star className="h-6 w-6 text-primary" />
+                    <Star className="h-6 w-6 text-primary" aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="mb-2">Quality Maintenance</h3>
                     <p className="text-muted-foreground">We personally visit and maintain every property, ensuring it meets our high standards for comfort and convenience.</p>
                   </div>
-                </div>
-                <div className="flex gap-4">
+                </article>
+                <article className="flex gap-4">
                   <div className="flex-shrink-0">
-                    <Star className="h-6 w-6 text-primary" />
+                    <Star className="h-6 w-6 text-primary" aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="mb-2">Always Here for You</h3>
                     <p className="text-muted-foreground">Our dedicated support team is always available to ensure your stay is worry-free and everything runs smoothly.</p>
                   </div>
-                </div>
+                </article>
               </div>
             </div>
           </div>
@@ -169,13 +172,13 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="py-16">
+      <section className="py-16" aria-labelledby="cta-heading">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="mb-4">Ready to Plan Your Journey?</h2>
+          <h2 id="cta-heading" className="mb-4">Ready to Plan Your Journey?</h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             Let us help you discover your perfect Swiss home base. Browse our collection of thoughtfully located homes and start planning your next journey in Switzerland.
           </p>
-          <Button size="lg" asChild>
+          <Button size="lg" asChild className="focus:ring-2 focus:ring-offset-2 focus:ring-black">
             <Link href="/stay">Plan Your Journey</Link>
           </Button>
         </div>
