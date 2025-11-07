@@ -29,10 +29,16 @@ export default function PropertyCardSimple({ property }) {
   return (
     <div className="group">
       <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
-        <img
-          src={property.photos[currentImageIndex]?.url || property.photos[0]?.url || '/placeholder.jpg'}
-          alt={property.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        <Image
+          src={optimizeUplistingImage(
+            property.photos[currentImageIndex]?.url || property.photos[0]?.url || '/placeholder.jpg',
+            IMAGE_SIZES.CARD
+          )}
+          alt={`${property.name} - Photo ${currentImageIndex + 1}`}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          sizes={getImageSizes('card')}
+          quality={75}
         />
 
         {/* Navigation Arrows */}
