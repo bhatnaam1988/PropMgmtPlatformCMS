@@ -137,61 +137,71 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border">
-            <nav className="flex flex-col gap-4">
+          <div id="mobile-menu" className="md:hidden py-4 border-t border-border">
+            <nav className="flex flex-col gap-4" aria-label="Mobile navigation">
               <Link
                 href="/"
-                className="text-foreground hover:text-primary transition-colors py-2 flex items-center gap-2"
+                className="text-foreground hover:text-primary transition-colors py-2 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
                 onClick={() => setIsMenuOpen(false)}
+                aria-label="Swiss Alpine Journey - Home"
               >
-                <Home className="h-4 w-4" />
-                Swiss Alpine Journey
+                <Home className="h-4 w-4" aria-hidden="true" />
+                <span>Swiss Alpine Journey</span>
               </Link>
               <Link
                 href="/stay"
-                className="text-foreground hover:text-primary transition-colors py-2"
+                className="text-foreground hover:text-primary transition-colors py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Stay
               </Link>
               <div className="border-t border-border pt-4">
-                <p className="text-muted-foreground mb-2">Explore</p>
-                {exploreItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="text-foreground hover:text-primary transition-colors py-2 pl-4 block"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+                <p className="text-muted-foreground mb-2 font-medium">Explore</p>
+                <ul role="list">
+                  {exploreItems.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="text-foreground hover:text-primary transition-colors py-2 pl-4 block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div className="border-t border-border pt-4">
-                <p className="text-muted-foreground mb-2">Services</p>
-                {servicesItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="text-foreground hover:text-primary transition-colors py-2 pl-4 block"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+                <p className="text-muted-foreground mb-2 font-medium">Services</p>
+                <ul role="list">
+                  {servicesItems.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="text-foreground hover:text-primary transition-colors py-2 pl-4 block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div className="border-t border-border pt-4">
-                <p className="text-muted-foreground mb-2">About</p>
-                {aboutItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="text-foreground hover:text-primary transition-colors py-2 pl-4 block"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+                <p className="text-muted-foreground mb-2 font-medium">About</p>
+                <ul role="list">
+                  {aboutItems.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="text-foreground hover:text-primary transition-colors py-2 pl-4 block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </nav>
           </div>
