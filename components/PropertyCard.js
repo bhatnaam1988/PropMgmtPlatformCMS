@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Users, Bed, Bath, Calendar, Clock, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatDateLocal } from '@/lib/uplisting';
+import { optimizeUplistingImage, IMAGE_SIZES, getImageSizes } from '@/lib/image-optimizer';
 
 export default function PropertyCard({ property, priceDisplay, showFallbackWarning, isUnavailable, filters, nights }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
