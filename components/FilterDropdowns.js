@@ -115,7 +115,7 @@ export function BedroomsSelect({ value, onChange }) {
         Bedrooms
       </label>
       <div className="relative">
-        <Bed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" aria-hidden="true" />
+        <Bed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-600 pointer-events-none z-10" aria-hidden="true" />
         <Select 
           value={value} 
           onValueChange={onChange}
