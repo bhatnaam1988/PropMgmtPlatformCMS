@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronRight, Heart, Home, Users as UsersIcon, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -40,10 +41,13 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative h-[600px]" aria-labelledby="hero-heading">
         <div className="absolute inset-0">
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1633341500706-62690376b1ec?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbiUyMGNoYWxldHxlbnwwfHx8fDE3NjE2NjA4MTR8MA&ixlib=rb-4.1.0&q=85"
             alt="Scenic view of Swiss Alpine village with traditional chalets and snow-capped mountains"
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
         </div>
@@ -77,6 +81,15 @@ export default function HomePage() {
               ))}
             </div>
           )}
+          
+          {/* Internal Link to Stay Page */}
+          <div className="text-center mt-12">
+            <Button asChild variant="outline" size="lg" className="focus:ring-2 focus:ring-offset-2 focus:ring-black">
+              <Link href="/stay">
+                View All Properties <ChevronRight className="w-4 h-4 ml-2" aria-hidden="true" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -84,11 +97,13 @@ export default function HomePage() {
       <section className="py-20 bg-gray-50" aria-labelledby="home-base-heading">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <img
+            <div className="relative h-[500px] rounded-2xl overflow-hidden">
+              <Image
                 src="https://images.unsplash.com/photo-1629114472586-19096663e723?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwyfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbiUyMGNoYWxldHxlbnwwfHx8fDE3NjE2NjA4MTR8MA&ixlib=rb-4.1.0&q=85"
                 alt="Charming traditional Swiss chalet in Grächen village with wooden architecture and Alpine surroundings"
-                className="rounded-2xl w-full h-[500px] object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
             <div>
@@ -120,18 +135,24 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="text-xl font-medium mb-4">Summer Adventures</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 mb-4">
                 Hiking, mountain biking, and exploring Alpine trails with stunning panoramic views
               </p>
+              <Link href="/explore/travel-tips" className="text-black hover:underline font-medium">
+                Learn More →
+              </Link>
             </article>
             <article className="text-center p-8">
               <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
                 <Sparkles className="w-12 h-12" aria-hidden="true" />
               </div>
               <h3 className="text-xl font-medium mb-4">Winter Sports</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 mb-4">
                 Skiing, snowboarding, and winter hiking across world-class slopes and trails
               </p>
+              <Link href="/explore/travel-tips" className="text-black hover:underline font-medium">
+                Explore Winter Activities →
+              </Link>
             </article>
             <article className="text-center p-8">
               <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
@@ -140,9 +161,12 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="text-xl font-medium mb-4">Local Cuisine</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 mb-4">
                 Traditional Swiss specialties, fine dining, and cozy mountain restaurants
               </p>
+              <Link href="/explore/graechen" className="text-black hover:underline font-medium">
+                Discover Local Life →
+              </Link>
             </article>
           </div>
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, Award, Users, Star } from 'lucide-react';
@@ -34,14 +35,15 @@ export default function About() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative py-20" aria-labelledby="hero-heading">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(https://images.unsplash.com/photo-1633341500706-62690376b1ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbiUyMGNoYWxldHxlbnwxfHx8fDE3NTc4Mzk5ODV8MA&ixlib=rb-4.1.0&q=80&w=1080)`
-          }}
-          role="img"
-          aria-label="Scenic Swiss Alps mountain chalet landscape"
-        >
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1633341500706-62690376b1ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbiUyMGNoYWxldHxlbnwxfHx8fDE3NTc4Mzk5ODV8MA&ixlib=rb-4.1.0&q=80&w=1080"
+            alt="Scenic Swiss Alps mountain chalet landscape"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
           <div className="absolute inset-0 bg-black/50" aria-hidden="true"></div>
         </div>
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
@@ -69,12 +71,20 @@ export default function About() {
                   For me, hosting is about reliability, thoughtful design, and ease. Each property is equipped with everything you need to settle in quickly and feel at home, so you can focus on what truly matters – whether that's relaxing in the alpine calm or setting out for new adventures on the trails and slopes.
                 </p>
               </div>
+              {/* Internal Link */}
+              <div className="mt-6">
+                <Link href="/stay" className="text-black hover:underline font-medium">
+                  Browse Our Properties →
+                </Link>
+              </div>
             </div>
-            <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
-              <img
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+              <Image
                 src="https://images.unsplash.com/photo-1628172225866-fbbec7bcbe9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscGluZSUyMGNoYWxldCUyMGludGVyaW9yfGVufDF8fHx8MTc1NzgzOTk4OHww&ixlib=rb-4.1.0&q=80&w=1080"
                 alt="Cozy Swiss alpine chalet interior with comfortable furnishings and warm lighting"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
           </div>
@@ -128,11 +138,13 @@ export default function About() {
       <section className="py-16 bg-muted/50" aria-labelledby="why-choose-heading">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
-              <img
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+              <Image
                 src="https://images.unsplash.com/photo-1578416043044-298e3d1da20e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3p5JTIwbW91bnRhaW4lMjBjaGFsZXQlMjBmaXJlcGxhY2V8ZW58MXx8fHwxNzU3ODM5OTkyfDA&ixlib=rb-4.1.0&q=80&w=1080"
                 alt="Cozy mountain chalet interior with fireplace and comfortable seating area"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
             <div>
@@ -165,6 +177,15 @@ export default function About() {
                     <p className="text-muted-foreground">Our dedicated support team is always available to ensure your stay is worry-free and everything runs smoothly.</p>
                   </div>
                 </article>
+              </div>
+              {/* Internal Links */}
+              <div className="mt-8 space-y-2">
+                <Link href="/contact" className="block text-black hover:underline font-medium">
+                  Get in Touch →
+                </Link>
+                <Link href="/explore/graechen" className="block text-black hover:underline font-medium">
+                  Explore Grächen →
+                </Link>
               </div>
             </div>
           </div>
