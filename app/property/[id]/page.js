@@ -184,9 +184,22 @@ export default function PropertyDetailPage() {
     );
   }
 
+  // Generate structured data schemas for this property
+  const propertySchemas = property ? [
+    getPropertySchema(property),
+    getVacationRentalSchema(property),
+    getBreadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Stay', url: '/stay' },
+      { name: property.title || property.name, url: `/property/${property.id}` },
+    ]),
+  ].filter(Boolean) : [];
+
   return (
-    <div className="min-h-screen bg-white">
-      <div className="pt-0">
+    <>
+      {property && <MultipleStructuredData schemas={propertySchemas} />}
+      <div className="min-h-screen bg-white">
+        <div className="pt-0">
         <div className="container mx-auto px-4 py-8">
           {/* Back Button */}
           <Link href="/stay" className="inline-flex items-center text-gray-600 hover:text-black mb-6">
