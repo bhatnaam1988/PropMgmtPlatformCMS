@@ -3,6 +3,8 @@
  * Generates sitemap.xml with all static and dynamic pages
  */
 
+import { getAllBlogPostSlugs } from '@/lib/sanity';
+
 export default async function sitemap() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://swissalpinejourney.com';
   
@@ -25,6 +27,20 @@ export default async function sitemap() {
     }
   } catch (error) {
     console.error('Error fetching properties for sitemap:', error);
+  }
+
+  // Fetch blog posts for dynamic URLs
+  let blogUrls = [];
+  try {
+    const posts = await getAllBlogPostSlugs();
+    blogUrls = posts.map(post => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    }));
+  } catch (error) {
+    console.error('Error fetching blog posts for sitemap:', error);
   }
 
   // Static pages with their priorities and update frequencies
