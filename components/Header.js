@@ -72,6 +72,12 @@ export function Header() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+            <Link
+              href="/blog"
+              className="text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
+            >
+              Blog
+            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger 
                 className="flex items-center gap-1 text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
