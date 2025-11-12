@@ -11,8 +11,14 @@ export default defineConfig({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   
   plugins: [
-    structureTool(),
-    visionTool(),
+    structureTool({
+      name: 'content',
+      title: 'Content',
+    }),
+    visionTool({
+      name: 'vision',
+      title: 'Vision',
+    }),
   ],
   
   schema: {
