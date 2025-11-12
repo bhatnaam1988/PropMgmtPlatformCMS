@@ -112,6 +112,12 @@ export default async function sitemap() {
       priority: 0.5,
     },
     {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/legal`,
       lastModified: new Date('2024-11-01'),
       changeFrequency: 'yearly',
@@ -120,5 +126,5 @@ export default async function sitemap() {
   ];
 
   // Combine static and dynamic pages
-  return [...staticPages, ...propertyUrls];
+  return [...staticPages, ...propertyUrls, ...blogUrls];
 }
