@@ -161,6 +161,13 @@ export function Header() {
               >
                 Stay
               </Link>
+              <Link
+                href="/blog"
+                className="text-foreground hover:text-primary transition-colors py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
+              </Link>
               <div className="border-t border-border pt-4">
                 <p className="text-muted-foreground mb-2 font-medium">Explore</p>
                 <ul role="list">
