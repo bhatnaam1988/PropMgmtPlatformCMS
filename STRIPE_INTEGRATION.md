@@ -68,7 +68,7 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 
 1. Go to [Stripe Dashboard → Webhooks](https://dashboard.stripe.com/test/webhooks)
 2. Click **Add endpoint**
-3. Enter URL: `https://alpine-journeys-2.preview.emergentagent.com/api/stripe/webhook`
+3. Enter URL: `https://vacay-rentals-2.preview.emergentagent.com/api/stripe/webhook`
 4. Select events:
    - `payment_intent.succeeded`
    - `payment_intent.payment_failed`

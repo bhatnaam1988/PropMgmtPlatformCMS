@@ -12,7 +12,7 @@ import os
 import time
 
 # Configuration
-BASE_URL = "https://alpine-journeys-2.preview.emergentagent.com"
+BASE_URL = "https://vacay-rentals-2.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
 
 # Test property IDs from the review request

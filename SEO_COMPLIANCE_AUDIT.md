@@ -214,7 +214,7 @@
   "@type": "LodgingBusiness",
   "name": "Swiss Alpine Journey",
   "description": "Premium vacation rentals in Swiss Alps",
-  "url": "https://alpine-journeys-2.preview.emergentagent.com",
+  "url": "https://vacay-rentals-2.preview.emergentagent.com",
   "address": {...},
   "telephone": "+41...",
   "priceRange": "CHF 100-500"
@@ -345,7 +345,7 @@ Allow: /
 Disallow: /api/
 Disallow: /booking/failure
 
-Sitemap: https://alpine-journeys-2.preview.emergentagent.com/sitemap.xml
+Sitemap: https://vacay-rentals-2.preview.emergentagent.com/sitemap.xml
 ```
 
 **7. Meta Robots - MISSING**

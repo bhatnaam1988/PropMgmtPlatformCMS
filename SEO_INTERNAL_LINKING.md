@@ -67,7 +67,7 @@ All pages have optimized metadata including:
 User-agent: *
 Allow: /
 
-Sitemap: https://alpine-journeys-2.preview.emergentagent.com/sitemap.xml
+Sitemap: https://vacay-rentals-2.preview.emergentagent.com/sitemap.xml
 ```
 
 ### 4. Schema.org Structured Data ✅
