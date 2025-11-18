@@ -11,7 +11,6 @@ import seo from './seo';
 
 // Page Settings
 import homeSettings from './settings/homeSettings';
-import aboutSettings from './settings/aboutSettings';
 import aboutSettingsHybrid from './settings/aboutSettingsHybrid';
 import contactSettings from './settings/contactSettings';
 import servicePageSettings from './settings/servicePageSettings';
