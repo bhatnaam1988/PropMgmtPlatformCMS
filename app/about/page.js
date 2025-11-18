@@ -1,44 +1,94 @@
-'use client';
-
+import { getAboutSettingsHybrid } from '@/lib/sanity';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, Award, Users, Star } from 'lucide-react';
+import * as Icons from 'lucide-react';
 
-export default function About() {
-  const values = [
-    {
-      icon: <Heart className="h-8 w-8 text-primary" aria-hidden="true" />,
-      title: "Prime Locations",
-      description: "We select properties based on their proximity to village centers, ski areas, and outdoor activities for maximum convenience."
+export const revalidate = 300; // Revalidate every 5 minutes
+
+export async function generateMetadata() {
+  const settings = await getAboutSettingsHybrid();
+  
+  if (!settings?.seo) {
+    return {
+      title: 'About Us | Swiss Alpine Journey',
+    };
+  }
+  
+  return {
+    title: settings.seo.metaTitle || 'About Us | Swiss Alpine Journey',
+    description: settings.seo.metaDescription || 'Learn about Swiss Alpine Journey',
+    keywords: settings.seo.keywords || [],
+  };
+}
+
+export default async function About() {
+  const settings = await getAboutSettingsHybrid();
+  
+  // Fallback data if Sanity is unavailable
+  const fallback = {
+    heroSection: {
+      heading: 'Our Story',
+      subheading: 'Where authentic stays meet modern comfort and local adventure',
     },
-    {
-      icon: <Award className="h-8 w-8 text-primary" aria-hidden="true" />,
-      title: "Quality Standards",
-      description: "Every property in our collection is carefully maintained and equipped with thoughtful amenities for a comfortable stay."
+    welcomeStory: {
+      heading: 'Welcome to Swiss Alpine Journey',
+      paragraphs: [
+        "Our story begins in Grächen, where my grandfather built the first family apartments many years ago.",
+        "Having spent much of my life in these alps, I continue that tradition today.",
+        "For me, hosting is about reliability, thoughtful design, and ease."
+      ],
+      ctaText: 'Browse Our Properties →',
+      ctaLink: '/stay',
     },
-    {
-      icon: <Users className="h-8 w-8 text-primary" aria-hidden="true" />,
-      title: "Local Expertise",
-      description: "We're dedicated to helping you make the most of your Alpine experience with insider knowledge and personalized recommendations."
-    }
-  ];
-
-  const stats = [
-    { number: "100+", label: "Happy Families Hosted" },
-    { number: "Airbnb Superhost", label: "Since 2024" },
-    { number: "4.9", label: "Average Rating" }
-  ];
-
+    valuesSection: {
+      heading: 'Our Values',
+      description: 'The principles that guide everything we do',
+      values: [
+        { icon: 'Heart', title: 'Prime Locations', description: 'Proximity to village centers' },
+        { icon: 'Award', title: 'Quality Standards', description: 'Carefully maintained' },
+        { icon: 'Users', title: 'Local Expertise', description: 'Personalized recommendations' },
+      ],
+    },
+    statsSection: {
+      stats: [
+        { number: '100+', label: 'Happy Families Hosted' },
+        { number: 'Airbnb Superhost', label: 'Since 2024' },
+        { number: '4.9', label: 'Average Rating' },
+      ],
+    },
+    whyChooseSection: {
+      heading: 'Why Choose Swiss Alpine Journey?',
+      points: [
+        { title: 'Strategic Selection', description: 'Prime locations' },
+        { title: 'Quality Maintenance', description: 'High standards' },
+        { title: 'Always Here for You', description: 'Dedicated support' },
+      ],
+      links: [
+        { text: 'Get in Touch →', url: '/contact' },
+        { text: 'Explore Grächen →', url: '/explore/graechen' },
+      ],
+    },
+    finalCTA: {
+      heading: 'Ready to Plan Your Journey?',
+      description: 'Let us help you discover your perfect Swiss home base.',
+      buttonText: 'Plan Your Journey',
+      buttonLink: '/stay',
+    },
+  };
+  
+  const data = settings || fallback;
+  
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {/* Hero Section - Content from Sanity */}
       <section className="relative py-20" aria-labelledby="hero-heading">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1633341500706-62690376b1ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbiUyMGNoYWxldHxlbnwxfHx8fDE3NTc4Mzk5ODV8MA&ixlib=rb-4.1.0&q=80&w=1080"
-            alt="Scenic Swiss Alps mountain chalet landscape"
+            src={data.heroSection?.backgroundImage?.asset?.url || "https://images.unsplash.com/photo-1633341500706-62690376b1ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBtb3VudGFpbiUyMGNoYWxldHxlbnwxfHx8fDE3NTc4Mzk5ODV8MA&ixlib=rb-4.1.0&q=80&w=1080"}
+            alt={data.heroSection?.backgroundImage?.alt || "Scenic Swiss Alps mountain chalet landscape"}
             fill
             className="object-cover"
             priority
@@ -47,41 +97,35 @@ export default function About() {
           <div className="absolute inset-0 bg-black/50" aria-hidden="true"></div>
         </div>
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <h1 id="hero-heading" className="text-4xl md:text-5xl mb-6">Our Story</h1>
+          <h1 id="hero-heading" className="text-4xl md:text-5xl mb-6">{data.heroSection?.heading}</h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
-            Where authentic stays meet modern comfort and local adventure
+            {data.heroSection?.subheading}
           </p>
         </div>
       </section>
 
-      {/* Our Story */}
+      {/* Welcome Story - Content from Sanity */}
       <section className="py-16" aria-labelledby="story-heading">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 id="story-heading" className="mb-6">Welcome to Swiss Alpine Journey</h2>
+              <h2 id="story-heading" className="mb-6">{data.welcomeStory?.heading}</h2>
               <div className="space-y-4 text-muted-foreground">
-                <p>
-                  Our story begins in Grächen, where my grandfather built the first family apartments many years ago. What started as a place for our own family holidays has grown into a lasting commitment to share the beauty and comfort of the Swiss Alps with others.
-                </p>
-                <p>
-                  Having spent much of my life in these alps – hiking, working, and appreciating their rhythm through every season – I continue that tradition today by welcoming guests not only to my grandfather's original apartment, which I now own, but also to other carefully maintained homes I've acquired or help manage for local owners.
-                </p>
-                <p>
-                  For me, hosting is about reliability, thoughtful design, and ease. Each property is equipped with everything you need to settle in quickly and feel at home, so you can focus on what truly matters – whether that's relaxing in the alpine calm or setting out for new adventures on the trails and slopes.
-                </p>
+                {data.welcomeStory?.paragraphs?.map((para, idx) => (
+                  <p key={idx}>{para}</p>
+                ))}
               </div>
-              {/* Internal Link */}
+              {/* Internal Link - Content from Sanity */}
               <div className="mt-6">
-                <Link href="/stay" className="text-black hover:underline font-medium">
-                  Browse Our Properties →
+                <Link href={data.welcomeStory?.ctaLink || '/stay'} className="text-black hover:underline font-medium">
+                  {data.welcomeStory?.ctaText || 'Browse Our Properties →'}
                 </Link>
               </div>
             </div>
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1628172225866-fbbec7bcbe9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscGluZSUyMGNoYWxldCUyMGludGVyaW9yfGVufDF8fHx8MTc1NzgzOTk4OHww&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Cozy Swiss alpine chalet interior with comfortable furnishings and warm lighting"
+                src={data.welcomeStory?.image?.asset?.url || "https://images.unsplash.com/photo-1628172225866-fbbec7bcbe9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscGluZSUyMGNoYWxldCUyMGludGVyaW9yfGVufDF8fHx8MTc1NzgzOTk4OHww&ixlib=rb-4.1.0&q=80&w=1080"}
+                alt={data.welcomeStory?.image?.alt || "Cozy Swiss alpine chalet interior"}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -91,38 +135,41 @@ export default function About() {
         </div>
       </section>
 
-      {/* Values */}
+      {/* Values - Content from Sanity */}
       <section className="py-16 bg-muted/50" aria-labelledby="values-heading">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 id="values-heading" className="mb-4">Our Values</h2>
+            <h2 id="values-heading" className="mb-4">{data.valuesSection?.heading}</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              The principles that guide everything we do, from selecting properties to caring for our guests
+              {data.valuesSection?.description}
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {values.map((value, index) => (
-              <Card key={index} className="text-center">
-                <CardContent className="p-6">
-                  <div className="flex justify-center mb-3">
-                    {value.icon}
-                  </div>
-                  <h3 className="mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground text-sm">{value.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+            {data.valuesSection?.values?.map((value, index) => {
+              const IconComponent = Icons[value.icon] || Icons.Heart;
+              return (
+                <Card key={index} className="text-center">
+                  <CardContent className="p-6">
+                    <div className="flex justify-center mb-3">
+                      <IconComponent className="h-8 w-8 text-primary" aria-hidden="true" />
+                    </div>
+                    <h3 className="mb-3">{value.title}</h3>
+                    <p className="text-muted-foreground text-sm">{value.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Stats */}
+      {/* Stats - Content from Sanity */}
       <section className="py-16" aria-labelledby="stats-heading">
         <div className="container mx-auto px-4">
           <h2 id="stats-heading" className="sr-only">Our Achievements</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {stats.map((stat, index) => (
+            {data.statsSection?.stats?.map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-3xl md:text-4xl font-medium text-primary mb-2" aria-label={`${stat.number} ${stat.label}`}>
                   {stat.number}
@@ -134,73 +181,56 @@ export default function About() {
         </div>
       </section>
 
-      {/* Why Choose Us */}
+      {/* Why Choose Us - Content from Sanity */}
       <section className="py-16 bg-muted/50" aria-labelledby="why-choose-heading">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1578416043044-298e3d1da20e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3p5JTIwbW91bnRhaW4lMjBjaGFsZXQlMjBmaXJlcGxhY2V8ZW58MXx8fHwxNzU3ODM5OTkyfDA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Cozy mountain chalet interior with fireplace and comfortable seating area"
+                src={data.whyChooseSection?.image?.asset?.url || "https://images.unsplash.com/photo-1578416043044-298e3d1da20e?w=1080"}
+                alt={data.whyChooseSection?.image?.alt || "Cozy mountain chalet interior"}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
             <div>
-              <h2 id="why-choose-heading" className="mb-6">Why Choose Swiss Alpine Journey?</h2>
+              <h2 id="why-choose-heading" className="mb-6">{data.whyChooseSection?.heading}</h2>
               <div className="space-y-6">
-                <article className="flex gap-4">
-                  <div className="flex-shrink-0">
-                    <Star className="h-6 w-6 text-primary" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h3 className="mb-2">Strategic Selection</h3>
-                    <p className="text-muted-foreground">Every property is carefully chosen for its prime location near skiing, activities, and village amenities.</p>
-                  </div>
-                </article>
-                <article className="flex gap-4">
-                  <div className="flex-shrink-0">
-                    <Star className="h-6 w-6 text-primary" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h3 className="mb-2">Quality Maintenance</h3>
-                    <p className="text-muted-foreground">We personally visit and maintain every property, ensuring it meets our high standards for comfort and convenience.</p>
-                  </div>
-                </article>
-                <article className="flex gap-4">
-                  <div className="flex-shrink-0">
-                    <Star className="h-6 w-6 text-primary" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h3 className="mb-2">Always Here for You</h3>
-                    <p className="text-muted-foreground">Our dedicated support team is always available to ensure your stay is worry-free and everything runs smoothly.</p>
-                  </div>
-                </article>
+                {data.whyChooseSection?.points?.map((point, index) => (
+                  <article key={index} className="flex gap-4">
+                    <div className="flex-shrink-0">
+                      <Star className="h-6 w-6 text-primary" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="mb-2">{point.title}</h3>
+                      <p className="text-muted-foreground">{point.description}</p>
+                    </div>
+                  </article>
+                ))}
               </div>
-              {/* Internal Links */}
+              {/* Internal Links - Content from Sanity */}
               <div className="mt-8 space-y-2">
-                <Link href="/contact" className="block text-black hover:underline font-medium">
-                  Get in Touch →
-                </Link>
-                <Link href="/explore/graechen" className="block text-black hover:underline font-medium">
-                  Explore Grächen →
-                </Link>
+                {data.whyChooseSection?.links?.map((link, index) => (
+                  <Link key={index} href={link.url} className="block text-black hover:underline font-medium">
+                    {link.text}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Final CTA - Content from Sanity */}
       <section className="py-16" aria-labelledby="cta-heading">
         <div className="container mx-auto px-4 text-center">
-          <h2 id="cta-heading" className="mb-4">Ready to Plan Your Journey?</h2>
+          <h2 id="cta-heading" className="mb-4">{data.finalCTA?.heading}</h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Let us help you discover your perfect Swiss home base. Browse our collection of thoughtfully located homes and start planning your next journey in Switzerland.
+            {data.finalCTA?.description}
           </p>
           <Button size="lg" asChild className="focus:ring-2 focus:ring-offset-2 focus:ring-black">
-            <Link href="/stay">Plan Your Journey</Link>
+            <Link href={data.finalCTA?.buttonLink || '/stay'}>{data.finalCTA?.buttonText || 'Plan Your Journey'}</Link>
           </Button>
         </div>
       </section>
