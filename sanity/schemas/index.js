@@ -39,7 +39,6 @@ export const schemaTypes = [
   
   // Page Settings
   homeSettings,
-  aboutSettings,
   aboutSettingsHybrid,
   contactSettings,
   servicePageSettings,
