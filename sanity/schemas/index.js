@@ -18,6 +18,9 @@ import rentalServicesSettingsHybrid from './settings/rentalServicesSettingsHybri
 import jobsSettingsHybrid from './settings/jobsSettingsHybrid';
 import legalSettingsHybrid from './settings/legalSettingsHybrid';
 import graechenSettingsHybrid from './settings/graechenSettingsHybrid';
+import travelTipsSettingsHybrid from './settings/travelTipsSettingsHybrid';
+import behindTheScenesSettingsHybrid from './settings/behindTheScenesSettingsHybrid';
+import otherLocationsSettingsHybrid from './settings/otherLocationsSettingsHybrid';
 
 // Content blocks
 import textBlock from './blocks/textBlock';
