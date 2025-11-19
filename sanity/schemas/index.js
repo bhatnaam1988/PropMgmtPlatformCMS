@@ -38,14 +38,15 @@ export const schemaTypes = [
   navigation,
   footer,
   
-  // Page Settings
-  homeSettings,
+  // Page Settings (Hybrid Approach)
+  homeSettingsHybrid,
   aboutSettingsHybrid,
-  contactSettings,
-  servicePageSettings,
-  explorePageSettings,
-  jobsSettings,
-  legalSettings,
+  contactSettingsHybrid,
+  cleaningServicesSettingsHybrid,
+  rentalServicesSettingsHybrid,
+  jobsSettingsHybrid,
+  legalSettingsHybrid,
+  graechenSettingsHybrid,
   
   // Object types
   seo,
