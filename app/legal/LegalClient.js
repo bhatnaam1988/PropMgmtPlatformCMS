@@ -126,7 +126,7 @@ export default function LegalClient({ content }) {
         <div className="text-center pt-8 border-t">
           <p className="text-muted-foreground text-sm">
             {content.footerText?.text}{' '}
-            <Link href={content.footerText?.linkUrl} className="text-primary hover:underline">
+            <Link href={content.footerText?.linkUrl || '/contact'} className="text-primary hover:underline">
               {content.footerText?.linkText}
             </Link>.
           </p>
