@@ -8,7 +8,7 @@ Your vacation rental application now includes a fully integrated Sanity CMS for 
 
 ### Sanity Studio URL
 **Local Development:** `http://localhost:3000/studio`
-**Production:** `https://vacay-rentals-2.preview.emergentagent.com/studio`
+**Production:** `https://sanity-nextjs-pages.preview.emergentagent.com/studio`
 
 ### Login Options
 - Google Account
