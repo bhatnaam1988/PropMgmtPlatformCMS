@@ -166,8 +166,8 @@ export default async function HomePage() {
 
       {/* Newsletter Section - Client Component */}
       <Newsletter 
-        heading={data.newsletterSection?.heading}
-        description={data.newsletterSection?.description}
+        heading={data.newsletterSection?.heading || 'Stay Connected'}
+        description={data.newsletterSection?.description || 'Join our community'}
       />
     </div>
   );
