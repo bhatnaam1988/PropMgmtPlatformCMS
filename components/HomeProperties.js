@@ -6,7 +6,7 @@ import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import PropertyCardSimple from '@/components/PropertyCardSimple';
 
-export default function HomeProperties({ sectionHeading, ctaText, ctaLink }) {
+export default function HomeProperties({ sectionHeading = 'Our listings', ctaText = 'View All Properties', ctaLink = '/stay' }) {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -45,8 +45,8 @@ export default function HomeProperties({ sectionHeading, ctaText, ctaLink }) {
         
         <div className="text-center mt-12">
           <Button asChild variant="outline" size="lg" className="focus:ring-2 focus:ring-offset-2 focus:ring-black">
-            <Link href={ctaLink || '/stay'}>
-              {ctaText || 'View All Properties'} <ChevronRight className="w-4 h-4 ml-2" aria-hidden="true" />
+            <Link href={ctaLink}>
+              {ctaText} <ChevronRight className="w-4 h-4 ml-2" aria-hidden="true" />
             </Link>
           </Button>
         </div>
