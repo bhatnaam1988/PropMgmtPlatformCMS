@@ -1,78 +1,79 @@
-'use client';
-
+import { getBehindTheScenesSettings } from '@/lib/sanity';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Heart, Home, Users, Sparkles, CheckCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle, ArrowRight } from 'lucide-react';
+import * as Icons from 'lucide-react';
 
-export default function BehindTheScenes() {
-  const values = [
-    {
-      icon: <Heart className="h-8 w-8 text-primary" />,
-      title: 'Passion for the Alps',
-      description: 'Our love for the Swiss alps drives everything we do. We\'re not just property managers - we\'re alpine enthusiasts who want to share the magic of Alpine living with every guest.'
-    },
-    {
-      icon: <Home className="h-8 w-8 text-primary" />,
-      title: 'Quality First',
-      description: 'We carefully select and maintain each property to ensure it meets our high standards. From location to amenities, every detail matters in creating your perfect alpine retreat.'
-    },
-    {
-      icon: <Users className="h-8 w-8 text-primary" />,
-      title: 'Guest-Centered',
-      description: 'Your experience is our priority. We provide thoughtful touches, local recommendations, and responsive support to make your stay seamless and memorable.'
-    },
-    {
-      icon: <Sparkles className="h-8 w-8 text-primary" />,
-      title: 'Authentic Experiences',
-      description: 'We believe in authentic Swiss Alpine experiences. Our properties are located where locals live, close to village centers, activities, and the real charm of alpine life.'
-    }
-  ];
+export const revalidate = 300;
 
-  const team = [
-    {
-      role: 'Property Care',
-      description: 'Our dedicated cleaning and maintenance team ensures every property is spotless, well-maintained, and ready for your arrival. They take pride in creating a welcoming environment.'
+export default async function BehindTheScenes() {
+  const settings = await getBehindTheScenesSettings();
+  
+  const fallback = {
+    pageHeader: {
+      heading: 'Behind the Scenes',
+      description: 'Discover the story behind Swiss Alpine Journey and the dedication that goes into creating your perfect alpine getaway.'
     },
-    {
-      role: 'Guest Services',
-      description: 'Available to answer questions, provide local tips, and assist with any needs during your stay. We\'re your connection to the best experiences in Grächen and beyond.'
+    storySection: {
+      heading: 'Our Story',
+      paragraphs: [
+        'Swiss Alpine Journey was born from a simple belief: the best vacation experiences happen when quality accommodations meet convenient locations and thoughtful service.',
+        'We chose Grächen as our home base because it embodies everything we love about the Swiss Alps.'
+      ]
     },
-    {
-      role: 'Local Partnerships',
-      description: 'We work closely with local businesses, ski schools, restaurants, and activity providers to ensure you have access to the best the region has to offer.'
+    valuesSection: {
+      heading: 'What Drives Us',
+      values: [
+        { icon: 'Heart', title: 'Passion for the Alps', description: 'Our love for the Swiss alps drives everything we do.' },
+        { icon: 'Home', title: 'Quality First', description: 'We carefully select and maintain each property.' }
+      ]
+    },
+    teamSection: {
+      heading: 'Our Team',
+      roles: [
+        { role: 'Property Care', description: 'Dedicated cleaning and maintenance team' },
+        { role: 'Guest Services', description: 'Available to answer questions' }
+      ]
+    },
+    processSection: {
+      heading: 'How We Prepare Your Stay',
+      steps: [
+        { title: 'Property Selection', description: 'Handpicked based on location and quality' },
+        { title: 'Renovation & Setup', description: 'Thoughtful renovations blend charm with comfort' }
+      ]
+    },
+    qualityStandardsSection: {
+      heading: 'Our Quality Standards',
+      standards: [
+        'Properties within walking distance of village centers',
+        'Professional cleaning after every stay'
+      ]
+    },
+    communitySection: {
+      heading: 'Community & Sustainability',
+      paragraph1: 'We\'re committed to being responsible members of the Grächen community.',
+      paragraph2: 'When you stay with us, you\'re supporting a local business that cares.'
+    },
+    finalCTA: {
+      heading: 'Experience the Difference',
+      description: 'Ready to experience Swiss Alpine Journey hospitality?',
+      primaryButtonText: 'View Listings',
+      primaryButtonLink: '/stay',
+      secondaryButtonText: 'Contact Us',
+      secondaryButtonLink: '/contact'
     }
-  ];
-
-  const process = [
-    {
-      title: 'Property Selection',
-      description: 'We handpick properties based on location, quality, and potential to provide exceptional guest experiences. Proximity to village centers and activities is essential.'
-    },
-    {
-      title: 'Renovation & Setup',
-      description: 'Many properties undergo thoughtful renovations to blend traditional Alpine charm with modern comforts. We furnish them with everything you need for a comfortable stay.'
-    },
-    {
-      title: 'Professional Cleaning',
-      description: 'Between each stay, our professional cleaning team thoroughly cleans and inspects every property to our exacting standards.'
-    },
-    {
-      title: 'Guest Welcome',
-      description: 'We prepare detailed guides, provide local recommendations, and ensure smooth check-in so you can start enjoying your Alpine adventure immediately.'
-    }
-  ];
+  };
+  
+  const data = settings || fallback;
 
   return (
     <div className="page-no-hero min-h-screen py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="mb-4">Behind the Scenes</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Discover the story behind Swiss Alpine Journey and the dedication that goes into 
-            creating your perfect alpine getaway.
-          </p>
+          <h1 className="mb-4">{data.pageHeader?.heading}</h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto">{data.pageHeader?.description}</p>
         </div>
 
         {/* Hero Image */}
@@ -94,50 +95,41 @@ export default function BehindTheScenes() {
         {/* Our Story */}
         <div className="mb-16">
           <div className="max-w-3xl mx-auto">
-            <h2 className="mb-6 text-center">Our Story</h2>
+            <h2 className="mb-6 text-center">{data.storySection?.heading}</h2>
             <div className="space-y-4 text-muted-foreground">
-              <p>
-                Swiss Alpine Journey was born from a simple belief: the best vacation experiences happen when 
-                quality accommodations meet convenient locations and thoughtful service. We saw too many guests 
-                staying in properties that were either poorly maintained or inconveniently located far from 
-                village centers and activities.
-              </p>
-              <p>
-                We chose Grächen as our home base because it embodies everything we love about the Swiss Alps - 
-                a charming car-free village with authentic Alpine character, excellent skiing and hiking, and 
-                the warmth of a genuine alpine community. It's not the most famous resort, but that's exactly 
-                what makes it special.
-              </p>
-              <p>
-                Today, we're proud to offer carefully curated properties that prioritize location, quality, and 
-                convenience. Each property is chosen for its proximity to village amenities, outdoor activities, 
-                and the experiences that make a Swiss alpine vacation truly memorable.
-              </p>
+              {data.storySection?.paragraphs?.map((para, index) => (
+                <p key={index}>{para}</p>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Our Values */}
         <div className="mb-16">
-          <h2 className="mb-8 text-center">What Drives Us</h2>
+          <h2 className="mb-8 text-center">{data.valuesSection?.heading}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {values.map((value, index) => (
-              <Card key={index}>
-                <CardContent className="p-6">
-                  <div className="mb-4">{value.icon}</div>
-                  <h3 className="mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground text-sm">{value.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+            {data.valuesSection?.values?.map((value, index) => {
+              const IconComponent = Icons[value.icon] || Icons.Heart;
+              return (
+                <Card key={index}>
+                  <CardContent className="p-6">
+                    <div className="mb-4">
+                      <IconComponent className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="mb-3">{value.title}</h3>
+                    <p className="text-muted-foreground text-sm">{value.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
 
         {/* The Team */}
         <div className="mb-16">
-          <h2 className="mb-8 text-center">Our Team</h2>
+          <h2 className="mb-8 text-center">{data.teamSection?.heading}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {team.map((member, index) => (
+            {data.teamSection?.roles?.map((member, index) => (
               <Card key={index}>
                 <CardContent className="p-6">
                   <h3 className="mb-3">{member.role}</h3>
@@ -150,9 +142,9 @@ export default function BehindTheScenes() {
 
         {/* Our Process */}
         <div className="mb-16">
-          <h2 className="mb-8 text-center">How We Prepare Your Stay</h2>
+          <h2 className="mb-8 text-center">{data.processSection?.heading}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {process.map((step, index) => (
+            {data.processSection?.steps?.map((step, index) => (
               <Card key={index}>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-2 mb-3">
@@ -172,18 +164,9 @@ export default function BehindTheScenes() {
         <div className="mb-16">
           <Card className="bg-muted/50">
             <CardContent className="p-8">
-              <h2 className="mb-6 text-center">Our Quality Standards</h2>
+              <h2 className="mb-6 text-center">{data.qualityStandardsSection?.heading}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
-                {[
-                  'Properties within walking distance of village centers',
-                  'Close proximity to ski lifts and hiking trails',
-                  'Professional cleaning after every stay',
-                  'Regular property inspections and maintenance',
-                  'Fully equipped kitchens with quality appliances',
-                  'Comfortable, well-maintained furnishings',
-                  'Reliable Wi-Fi and modern amenities',
-                  'Responsive guest support and local expertise'
-                ].map((standard, index) => (
+                {data.qualityStandardsSection?.standards?.map((standard, index) => (
                   <div key={index} className="flex items-start gap-2">
                     <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                     <span className="text-muted-foreground text-sm">{standard}</span>
@@ -197,36 +180,28 @@ export default function BehindTheScenes() {
         {/* Community Involvement */}
         <div className="mb-16">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="mb-6">Community & Sustainability</h2>
-            <p className="text-muted-foreground mb-6">
-              We're committed to being responsible members of the Grächen community and protecting the 
-              Alpine environment we love. We partner with local businesses, support sustainable tourism 
-              practices, and educate our guests about respecting the natural beauty of the region.
-            </p>
-            <p className="text-muted-foreground">
-              When you stay with us, you're not just booking accommodation - you're supporting a local 
-              business that cares about the community and environment.
-            </p>
+            <h2 className="mb-6">{data.communitySection?.heading}</h2>
+            <p className="text-muted-foreground mb-6">{data.communitySection?.paragraph1}</p>
+            <p className="text-muted-foreground">{data.communitySection?.paragraph2}</p>
           </div>
         </div>
 
         {/* CTA */}
         <Card>
           <CardContent className="p-8 text-center">
-            <h2 className="mb-4">Experience the Difference</h2>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Ready to experience Swiss Alpine Journey hospitality? Explore our carefully selected 
-              properties and start planning your alpine adventure.
-            </p>
+            <h2 className="mb-4">{data.finalCTA?.heading}</h2>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">{data.finalCTA?.description}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
-                <Link href="/stay">
-                  View Listings
+                <Link href={data.finalCTA?.primaryButtonLink || '/stay'}>
+                  {data.finalCTA?.primaryButtonText || 'View Listings'}
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link href="/contact">Contact Us</Link>
+                <Link href={data.finalCTA?.secondaryButtonLink || '/contact'}>
+                  {data.finalCTA?.secondaryButtonText || 'Contact Us'}
+                </Link>
               </Button>
             </div>
           </CardContent>
