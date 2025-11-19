@@ -50,6 +50,9 @@ export const schemaTypes = [
   jobsSettingsHybrid,
   legalSettingsHybrid,
   graechenSettingsHybrid,
+  travelTipsSettingsHybrid,
+  behindTheScenesSettingsHybrid,
+  otherLocationsSettingsHybrid,
   
   // Object types
   seo,
