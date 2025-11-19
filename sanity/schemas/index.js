@@ -9,14 +9,15 @@ import navigation from './navigation';
 import footer from './footer';
 import seo from './seo';
 
-// Page Settings
-import homeSettings from './settings/homeSettings';
+// Page Settings (Hybrid Approach)
+import homeSettingsHybrid from './settings/homeSettingsHybrid';
 import aboutSettingsHybrid from './settings/aboutSettingsHybrid';
-import contactSettings from './settings/contactSettings';
-import servicePageSettings from './settings/servicePageSettings';
-import explorePageSettings from './settings/explorePageSettings';
-import jobsSettings from './settings/jobsSettings';
-import legalSettings from './settings/legalSettings';
+import contactSettingsHybrid from './settings/contactSettingsHybrid';
+import cleaningServicesSettingsHybrid from './settings/cleaningServicesSettingsHybrid';
+import rentalServicesSettingsHybrid from './settings/rentalServicesSettingsHybrid';
+import jobsSettingsHybrid from './settings/jobsSettingsHybrid';
+import legalSettingsHybrid from './settings/legalSettingsHybrid';
+import graechenSettingsHybrid from './settings/graechenSettingsHybrid';
 
 // Content blocks
 import textBlock from './blocks/textBlock';
