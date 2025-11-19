@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export default function Newsletter({ heading, description }) {
+export default function Newsletter({ heading = 'Stay Connected', description = 'Join our community for updates' }) {
   const [email, setEmail] = useState('');
 
   const handleNewsletterSubmit = async (e) => {
