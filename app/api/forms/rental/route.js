@@ -5,10 +5,10 @@ import clientPromise from '@/lib/mongodb';
 export async function POST(request) {
   try {
     const formData = await request.json();
-    const { name, email, phone, position, message } = formData;
+    const { name, email, phone, propertyAddress, propertyType, message } = formData;
 
     // Validate required fields
-    if (!name || !email || !position || !message) {
+    if (!name || !email || !propertyAddress) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
         { status: 400 }
@@ -19,12 +19,13 @@ export async function POST(request) {
     const client = await clientPromise;
     const db = client.db('swissalpine');
     const submission = {
-      type: 'job_application',
+      type: 'rental',
       name,
       email,
       phone: phone || '',
-      position,
-      message,
+      propertyAddress,
+      propertyType: propertyType || '',
+      message: message || '',
       submittedAt: new Date(),
       status: 'new'
     };
@@ -34,13 +35,13 @@ export async function POST(request) {
     // Send email notification
     const emailService = getEmailService();
     const emailHtml = `
-      <h2>New Job Application</h2>
+      <h2>New Property Management Partnership Request</h2>
       <p><strong>Name:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-      <p><strong>Position Applied For:</strong> ${position}</p>
-      <p><strong>Cover Letter / Why They'd Be Great:</strong></p>
-      <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; white-space: pre-wrap;">${message}</pre>
+      <p><strong>Property Address:</strong> ${propertyAddress}</p>
+      <p><strong>Property Type:</strong> ${propertyType || 'Not specified'}</p>
+      ${message ? `<p><strong>About the Property:</strong></p><p>${message.replace(/\n/g, '<br>')}</p>` : ''}
       <hr>
       <p><small>Submission ID: ${result.insertedId}</small></p>
       <p><small>Submitted: ${new Date().toLocaleString()}</small></p>
@@ -48,20 +49,20 @@ export async function POST(request) {
 
     await emailService.sendEmail({
       to: process.env.ADMIN_EMAIL,
-      subject: `New Job Application: ${position} - ${name}`,
+      subject: `New Partnership Request: ${propertyAddress}`,
       html: emailHtml
     });
 
     return NextResponse.json({
       success: true,
-      message: 'Job application submitted successfully',
+      message: 'Partnership request submitted successfully',
       submissionId: result.insertedId
     });
 
   } catch (error) {
-    console.error('Job application submission error:', error);
+    console.error('Rental form submission error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to submit job application' },
+      { success: false, error: 'Failed to submit partnership request' },
       { status: 500 }
     );
   }

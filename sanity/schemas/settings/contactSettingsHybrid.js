@@ -36,6 +36,11 @@ export default {
           type: 'string'
         },
         {
+          name: 'whatsapp',
+          title: 'WhatsApp Number',
+          type: 'string'
+        },
+        {
           name: 'responseTime',
           title: 'Response Time',
           type: 'string'

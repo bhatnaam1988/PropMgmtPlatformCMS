@@ -25,7 +25,7 @@ export default function Legal() {
   }, [pathname, searchParams]);
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="page-no-hero min-h-screen py-8">
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Back Button */}
         <Button variant="ghost" asChild className="mb-6">

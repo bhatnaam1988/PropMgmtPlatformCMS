@@ -64,7 +64,7 @@ export default function BehindTheScenes() {
   ];
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="page-no-hero min-h-screen py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">

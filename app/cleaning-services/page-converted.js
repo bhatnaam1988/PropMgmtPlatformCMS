@@ -9,18 +9,18 @@ export default async function CleaningServices() {
   const fallbackData = {
     heroSection: {
       heading: 'Professional Cleaning Services',
-      description: 'Maintain your vacation rental to the highest standards with our comprehensive cleaning services.',
+      description: 'Maintain your vacation rental to the highest standards with our comprehensive cleaning services tailored for the hospitality industry.',
       backgroundImage: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1920',
-      backgroundImageAlt: 'Professional cleaning'
+      backgroundImageAlt: 'Professional cleaning service'
     },
     servicesGrid: {
       services: [
         { title: 'Turnover Cleaning', description: 'Complete cleaning between guest stays.' },
-        { title: 'Deep Cleaning', description: 'Thorough seasonal cleaning.' },
+        { title: 'Deep Cleaning', description: 'Thorough seasonal deep cleaning.' },
         { title: 'Laundry Service', description: 'Professional washing and folding.' },
         { title: 'Inspection Reports', description: 'Detailed post-cleaning reports.' },
         { title: 'Restocking', description: 'Replenishment of supplies.' },
-        { title: 'Emergency Cleaning', description: 'Same-day services.' }
+        { title: 'Emergency Cleaning', description: 'Same-day emergency services.' }
       ]
     },
     whyChooseSection: {

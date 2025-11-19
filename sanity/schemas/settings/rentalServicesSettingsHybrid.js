@@ -20,13 +20,18 @@ export default {
         },
         {
           name: 'backgroundImage',
-          title: 'Background Image URL',
-          type: 'url'
-        },
-        {
-          name: 'backgroundImageAlt',
-          title: 'Background Image Alt Text',
-          type: 'string'
+          title: 'Background Image',
+          type: 'image',
+          options: {
+            hotspot: true
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string'
+            }
+          ]
         }
       ]
     },

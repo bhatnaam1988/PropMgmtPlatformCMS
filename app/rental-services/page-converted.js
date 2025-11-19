@@ -34,7 +34,7 @@ export default async function RentalServices() {
     },
     formSection: {
       heading: 'Partner With Us',
-      description: "Let's discuss how we can maximize your rental income."
+      description: 'Let\'s discuss how we can maximize your rental income.'
     }
   };
   

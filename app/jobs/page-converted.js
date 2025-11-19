@@ -31,8 +31,8 @@ export default async function Jobs() {
     },
     applicationSection: {
       heading: 'Apply Now',
-      description: "Send us your CV and tell us why you'd be a great fit.",
-      footerText: "We'll respond within 5 business days."
+      description: 'Send us your CV.',
+      footerText: 'We\'ll respond within 5 business days.'
     }
   };
   

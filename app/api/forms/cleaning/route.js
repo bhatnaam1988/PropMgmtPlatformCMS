@@ -5,10 +5,10 @@ import clientPromise from '@/lib/mongodb';
 export async function POST(request) {
   try {
     const formData = await request.json();
-    const { name, email, phone, position, message } = formData;
+    const { name, email, phone, propertyAddress, serviceType, message } = formData;
 
     // Validate required fields
-    if (!name || !email || !position || !message) {
+    if (!name || !email || !propertyAddress || !serviceType) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
         { status: 400 }
@@ -19,12 +19,13 @@ export async function POST(request) {
     const client = await clientPromise;
     const db = client.db('swissalpine');
     const submission = {
-      type: 'job_application',
+      type: 'cleaning',
       name,
       email,
       phone: phone || '',
-      position,
-      message,
+      propertyAddress,
+      serviceType,
+      message: message || '',
       submittedAt: new Date(),
       status: 'new'
     };
@@ -34,13 +35,13 @@ export async function POST(request) {
     // Send email notification
     const emailService = getEmailService();
     const emailHtml = `
-      <h2>New Job Application</h2>
+      <h2>New Cleaning Services Request</h2>
       <p><strong>Name:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-      <p><strong>Position Applied For:</strong> ${position}</p>
-      <p><strong>Cover Letter / Why They'd Be Great:</strong></p>
-      <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; white-space: pre-wrap;">${message}</pre>
+      <p><strong>Property Address:</strong> ${propertyAddress}</p>
+      <p><strong>Service Type:</strong> ${serviceType}</p>
+      ${message ? `<p><strong>Additional Details:</strong></p><p>${message.replace(/\n/g, '<br>')}</p>` : ''}
       <hr>
       <p><small>Submission ID: ${result.insertedId}</small></p>
       <p><small>Submitted: ${new Date().toLocaleString()}</small></p>
@@ -48,20 +49,20 @@ export async function POST(request) {
 
     await emailService.sendEmail({
       to: process.env.ADMIN_EMAIL,
-      subject: `New Job Application: ${position} - ${name}`,
+      subject: `New Cleaning Service Request: ${serviceType}`,
       html: emailHtml
     });
 
     return NextResponse.json({
       success: true,
-      message: 'Job application submitted successfully',
+      message: 'Cleaning service request submitted successfully',
       submissionId: result.insertedId
     });
 
   } catch (error) {
-    console.error('Job application submission error:', error);
+    console.error('Cleaning form submission error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to submit job application' },
+      { success: false, error: 'Failed to submit cleaning service request' },
       { status: 500 }
     );
   }
