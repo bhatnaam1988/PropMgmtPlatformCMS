@@ -25,15 +25,7 @@ async function populateHomeSettings() {
     _id: 'homeSettingsHybrid',
     heroSection: {
       heading: 'Swiss Alpine Journey',
-      subheading: 'Where authentic stays meet modern comfort and local adventure',
-      backgroundImage: {
-        _type: 'image',
-        asset: {
-          _type: 'reference',
-          _ref: 'image-hero-home'
-        },
-        alt: 'Scenic view of Swiss Alpine village with traditional chalets and snow-capped mountains'
-      }
+      subheading: 'Where authentic stays meet modern comfort and local adventure'
     },
     ourListingsSection: {
       heading: 'Our listings',
@@ -44,15 +36,7 @@ async function populateHomeSettings() {
       heading: 'Our Home Base: Grächen',
       description: 'All of our properties are located in the charming village of Grächen. Discover why we chose this car-free Alpine gem as the perfect location for your Swiss mountain getaway.',
       ctaText: 'Explore Grächen',
-      ctaLink: '/explore/graechen',
-      backgroundImage: {
-        _type: 'image',
-        asset: {
-          _type: 'reference',
-          _ref: 'image-graechen-home'
-        },
-        alt: 'Charming traditional Swiss chalet in Grächen village with wooden architecture and Alpine surroundings'
-      }
+      ctaLink: '/explore/graechen'
     },
     activitiesSection: {
       activities: [
