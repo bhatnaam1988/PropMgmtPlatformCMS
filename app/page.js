@@ -98,9 +98,9 @@ export default async function HomePage() {
 
       {/* Our Listings Section - Client Component */}
       <HomeProperties 
-        sectionHeading={data.ourListingsSection?.heading}
-        ctaText={data.ourListingsSection?.ctaText}
-        ctaLink={data.ourListingsSection?.ctaLink}
+        sectionHeading={data.ourListingsSection?.heading || 'Our listings'}
+        ctaText={data.ourListingsSection?.ctaText || 'View All Properties'}
+        ctaLink={data.ourListingsSection?.ctaLink || '/stay'}
       />
 
       {/* Our Home Base Section */}
