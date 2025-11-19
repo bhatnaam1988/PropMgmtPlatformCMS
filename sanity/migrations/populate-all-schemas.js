@@ -227,15 +227,7 @@ async function populateGraechenSettings() {
     heroSection: {
       location: 'Valais, Switzerland',
       heading: 'Grächen',
-      subheading: 'The Sunny Village of the Matter Valley',
-      backgroundImage: {
-        _type: 'image',
-        asset: {
-          _type: 'reference',
-          _ref: 'image-graechen-hero'
-        },
-        alt: 'Panoramic view of Grächen village in Valais, Switzerland with traditional alpine chalets and mountain backdrop'
-      }
+      subheading: 'The Sunny Village of the Matter Valley'
     },
     introSection: {
       heading: 'Why We Love Grächen',
