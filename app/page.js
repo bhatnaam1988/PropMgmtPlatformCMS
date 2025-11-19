@@ -155,7 +155,7 @@ export default async function HomePage() {
                 </div>
                 <h3 className="text-xl font-medium mb-4">{activity.title}</h3>
                 <p className="text-gray-600 mb-4">{activity.description}</p>
-                <Link href={activity.link} className="text-black hover:underline font-medium">
+                <Link href={activity.link || '/explore/travel-tips'} className="text-black hover:underline font-medium">
                   Learn More →
                 </Link>
               </article>
