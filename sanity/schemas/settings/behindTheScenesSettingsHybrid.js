@@ -135,5 +135,12 @@ export default {
         { name: 'secondaryButtonLink', type: 'string', title: 'Secondary Button Link' }
       ]
     }
-  ]
+  ],
+  preview: {
+    prepare() {
+      return {
+        title: 'Behind The Scenes Page Settings'
+      };
+    }
+  }
 };
