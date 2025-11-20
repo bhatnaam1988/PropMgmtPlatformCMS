@@ -9,18 +9,18 @@ export default {
       type: 'object',
       fields: [
         {
+          name: 'location',
+          title: 'Location',
+          type: 'string'
+        },
+        {
           name: 'heading',
           title: 'Heading',
           type: 'string'
         },
         {
-          name: 'subtitle',
-          title: 'Subtitle',
-          type: 'string'
-        },
-        {
-          name: 'location',
-          title: 'Location',
+          name: 'subheading',
+          title: 'Subheading',
           type: 'string'
         },
         {
