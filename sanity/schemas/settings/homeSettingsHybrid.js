@@ -37,8 +37,8 @@ export default {
       ]
     },
     {
-      name: 'listingsSection',
-      title: 'Listings Section',
+      name: 'ourListingsSection',
+      title: 'Our Listings Section',
       type: 'object',
       fields: [
         {
