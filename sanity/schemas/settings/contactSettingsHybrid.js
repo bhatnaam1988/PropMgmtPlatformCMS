@@ -26,24 +26,36 @@ export default {
       type: 'object',
       fields: [
         {
-          name: 'phone',
-          title: 'Phone Number',
-          type: 'string'
-        },
-        {
           name: 'email',
           title: 'Email Address',
           type: 'string'
         },
         {
-          name: 'whatsapp',
-          title: 'WhatsApp Number',
+          name: 'phone',
+          title: 'Phone Number',
           type: 'string'
         },
         {
-          name: 'responseTime',
-          title: 'Response Time',
+          name: 'address',
+          title: 'Address',
           type: 'string'
+        }
+      ]
+    },
+    {
+      name: 'hoursSection',
+      title: 'Office Hours Section',
+      type: 'object',
+      fields: [
+        {
+          name: 'heading',
+          title: 'Heading',
+          type: 'string'
+        },
+        {
+          name: 'hours',
+          title: 'Hours',
+          type: 'text'
         }
       ]
     },
@@ -56,6 +68,11 @@ export default {
           name: 'heading',
           title: 'Heading',
           type: 'string'
+        },
+        {
+          name: 'description',
+          title: 'Description',
+          type: 'text'
         }
       ]
     },
