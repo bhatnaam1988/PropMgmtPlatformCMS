@@ -80,5 +80,12 @@ export default {
         }
       ]
     }
-  ]
+  ],
+  preview: {
+    prepare() {
+      return {
+        title: 'Other Locations Page Settings'
+      };
+    }
+  }
 };
