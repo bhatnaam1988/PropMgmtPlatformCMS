@@ -88,5 +88,12 @@ export default {
         }
       ]
     }
-  ]
+  ],
+  preview: {
+    prepare() {
+      return {
+        title: 'Travel Tips Page Settings'
+      };
+    }
+  }
 };
