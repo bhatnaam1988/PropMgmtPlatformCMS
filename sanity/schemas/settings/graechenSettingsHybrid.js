@@ -143,8 +143,8 @@ export default {
           type: 'string'
         },
         {
-          name: 'infoCards',
-          title: 'Info Cards',
+          name: 'infoBlocks',
+          title: 'Info Blocks',
           type: 'array',
           of: [
             {
@@ -152,8 +152,8 @@ export default {
               fields: [
                 { name: 'title', title: 'Title', type: 'string' },
                 { 
-                  name: 'details', 
-                  title: 'Details', 
+                  name: 'items', 
+                  title: 'Items', 
                   type: 'array',
                   of: [{ type: 'string' }]
                 }
@@ -164,8 +164,81 @@ export default {
       ]
     },
     {
-      name: 'ctaSection',
-      title: 'Call-to-Action Section',
+      name: 'mountainViewsSection',
+      title: 'Mountain Views Section',
+      type: 'object',
+      fields: [
+        {
+          name: 'heading',
+          title: 'Heading',
+          type: 'string'
+        },
+        {
+          name: 'paragraph1',
+          title: 'First Paragraph',
+          type: 'text'
+        },
+        {
+          name: 'paragraph2',
+          title: 'Second Paragraph',
+          type: 'text'
+        },
+        {
+          name: 'ctaText',
+          title: 'CTA Button Text',
+          type: 'string'
+        },
+        {
+          name: 'ctaLink',
+          title: 'CTA Button Link',
+          type: 'string'
+        },
+        {
+          name: 'secondaryCtaText',
+          title: 'Secondary CTA Text',
+          type: 'string'
+        },
+        {
+          name: 'secondaryCtaLink',
+          title: 'Secondary CTA Link',
+          type: 'string'
+        }
+      ]
+    },
+    {
+      name: 'cultureSection',
+      title: 'Alpine Culture Section',
+      type: 'object',
+      fields: [
+        {
+          name: 'heading',
+          title: 'Heading',
+          type: 'string'
+        },
+        {
+          name: 'description',
+          title: 'Description',
+          type: 'text'
+        },
+        {
+          name: 'points',
+          title: 'Culture Points',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              fields: [
+                { name: 'title', title: 'Title', type: 'string' },
+                { name: 'description', title: 'Description', type: 'text' }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'finalCTA',
+      title: 'Final Call-to-Action',
       type: 'object',
       fields: [
         {
