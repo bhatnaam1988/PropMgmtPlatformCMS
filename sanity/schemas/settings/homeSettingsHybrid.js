@@ -47,8 +47,13 @@ export default {
           type: 'string'
         },
         {
-          name: 'buttonText',
+          name: 'ctaText',
           title: 'View All Button Text',
+          type: 'string'
+        },
+        {
+          name: 'ctaLink',
+          title: 'View All Button Link',
           type: 'string'
         }
       ]
@@ -69,18 +74,18 @@ export default {
           type: 'text'
         },
         {
-          name: 'buttonText',
+          name: 'ctaText',
           title: 'Button Text',
           type: 'string'
         },
         {
-          name: 'buttonLink',
+          name: 'ctaLink',
           title: 'Button Link',
           type: 'string'
         },
         {
-          name: 'image',
-          title: 'Image',
+          name: 'backgroundImage',
+          title: 'Background Image',
           type: 'image',
           options: { hotspot: true },
           fields: [
