@@ -78,6 +78,12 @@ export default {
             {
               type: 'object',
               fields: [
+                { 
+                  name: 'icon', 
+                  title: 'Icon Name (Lucide)', 
+                  type: 'string',
+                  description: 'e.g., Mountain, Snowflake, Sun, Sparkles'
+                },
                 { name: 'title', title: 'Title', type: 'string' },
                 { name: 'description', title: 'Description', type: 'text' }
               ]
