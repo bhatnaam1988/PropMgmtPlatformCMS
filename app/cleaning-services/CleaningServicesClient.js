@@ -75,23 +75,33 @@ export default function CleaningServicesClient({ content }) {
         </div>
       </section>
 
-      {/* Why Choose Us */}
+      {/* Benefits Section */}
       <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-12">{content.whyChooseSection.heading}</h2>
+          <h2 className="text-center mb-12">{content.benefitsSection?.heading || 'Why Choose Our Cleaning Service'}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {content.whyChooseSection.reasons.map((reason, idx) => (
+            {content.benefitsSection?.benefits?.map((benefit, idx) => (
               <div key={idx} className="flex gap-4">
                 <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="mb-2">{reason.title}</h3>
-                  <p className="text-muted-foreground">{reason.description}</p>
+                  <h3 className="mb-2">{benefit.title}</h3>
+                  <p className="text-muted-foreground">{benefit.description}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Pricing Section */}
+      {content.pricingSection && (
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="mb-6">{content.pricingSection.heading}</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">{content.pricingSection.description}</p>
+          </div>
+        </section>
+      )}
 
       {/* Request Form */}
       <section className="py-16">
