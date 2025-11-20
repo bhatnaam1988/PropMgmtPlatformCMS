@@ -113,8 +113,7 @@ export default {
               fields: [
                 { name: 'title', title: 'Title', type: 'string' },
                 { name: 'description', title: 'Description', type: 'text' },
-                { name: 'linkText', title: 'Link Text', type: 'string' },
-                { name: 'linkUrl', title: 'Link URL', type: 'string' }
+                { name: 'link', title: 'Link URL', type: 'string' }
               ]
             }
           ],
