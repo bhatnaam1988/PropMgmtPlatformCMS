@@ -57,8 +57,8 @@ export default {
       ]
     },
     {
-      name: 'whyChooseSection',
-      title: 'Why Choose Us Section',
+      name: 'benefitsSection',
+      title: 'Benefits Section',
       type: 'object',
       fields: [
         {
@@ -67,8 +67,8 @@ export default {
           type: 'string'
         },
         {
-          name: 'reasons',
-          title: 'Reasons',
+          name: 'benefits',
+          title: 'Benefits',
           type: 'array',
           of: [
             {
@@ -79,6 +79,23 @@ export default {
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      name: 'pricingSection',
+      title: 'Pricing Section',
+      type: 'object',
+      fields: [
+        {
+          name: 'heading',
+          title: 'Heading',
+          type: 'string'
+        },
+        {
+          name: 'description',
+          title: 'Description',
+          type: 'text'
         }
       ]
     },
