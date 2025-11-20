@@ -49,10 +49,14 @@ export default {
           type: 'string'
         },
         {
-          name: 'paragraphs',
-          title: 'Paragraphs',
-          type: 'array',
-          of: [{ type: 'text' }]
+          name: 'paragraph1',
+          title: 'First Paragraph',
+          type: 'text'
+        },
+        {
+          name: 'paragraph2',
+          title: 'Second Paragraph',
+          type: 'text'
         }
       ]
     },
