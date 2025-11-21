@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Home } from 'lucide-react';
@@ -15,7 +15,7 @@ import {
   AmenitiesMultiSelect
 } from '@/components/FilterDropdowns';
 
-export default function StayPage() {
+function StayPageContent() {
   const searchParams = useSearchParams();
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
