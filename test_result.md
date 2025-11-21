@@ -608,13 +608,15 @@ metadata:
   phase1_integration_test_results: "12/12 new pages passed"
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Property Image Gallery - Square layout redesign"
   stuck_tasks: []
   test_all: false
-  test_priority: "complete"
+  test_priority: "high_first"
   phase1_integration_complete: true
   all_new_pages_tested: true
   header_footer_consistency_verified: true
+  feature2_image_gallery_ready_for_testing: true
 
 agent_communication:
   - agent: "main"
