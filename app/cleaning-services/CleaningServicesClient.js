@@ -58,15 +58,15 @@ export default function CleaningServicesClient({ content }) {
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-16">
+      {/* Services Grid - Display 3 items in one row */}
+      <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {content.servicesGrid.services.map((service, idx) => (
-              <Card key={idx}>
-                <CardContent className="p-6">
-                  <Sparkles className="h-8 w-8 text-primary mb-4" />
-                  <h3 className="mb-3">{service.title}</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {content.servicesGrid.services.slice(1, 4).map((service, idx) => (
+              <Card key={idx} className="text-center">
+                <CardContent className="p-8">
+                  <Sparkles className="h-10 w-10 text-primary mb-4 mx-auto" />
+                  <h3 className="mb-3 text-xl font-semibold">{service.title}</h3>
                   <p className="text-muted-foreground">{service.description}</p>
                 </CardContent>
               </Card>
