@@ -211,8 +211,8 @@ export default function PropertyDetailPage() {
 
           {/* Image Gallery - Optimized */}
           <div className="grid grid-cols-4 gap-4 mb-8">
-            {/* Main large image - Square shape, larger to fill section */}
-            <div className="col-span-4 md:col-span-3 relative aspect-square rounded-2xl overflow-hidden cursor-pointer w-full">
+            {/* Main large image - Square shape, fits in viewport */}
+            <div className="col-span-4 md:col-span-3 relative aspect-square max-h-[600px] rounded-2xl overflow-hidden cursor-pointer w-full">
               <Image
                 src={optimizeUplistingImage(
                   property.photos[selectedImage]?.url || '/placeholder.jpg',
@@ -228,8 +228,8 @@ export default function PropertyDetailPage() {
               />
             </div>
             
-            {/* Thumbnail grid on the right - Square thumbnails, larger to fill space */}
-            <div className="col-span-4 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4 overflow-y-auto">
+            {/* Thumbnail grid on the right - Square thumbnails with scroll */}
+            <div className="col-span-4 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4 max-h-[600px] overflow-y-auto">
               {property.photos.slice(0, 8).map((photo, index) => (
                 <div key={index} className="relative aspect-square rounded-lg overflow-hidden w-full">
                   <Image
