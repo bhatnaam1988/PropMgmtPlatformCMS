@@ -4,3 +4,5 @@ node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
 # Note: .env files are committed for Emergent deployment
 # Emergent will auto-update environment variables during deployment
 # For local development, sensitive values should be in .env.local (not committed)
+.next/cache/webpack/client-production/0.pack
+.next/cache/webpack/server-production/0.pack
