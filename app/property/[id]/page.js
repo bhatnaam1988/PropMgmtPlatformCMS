@@ -209,10 +209,10 @@ export default function PropertyDetailPage() {
             Back to listings
           </Link>
 
-          {/* Image Gallery - Optimized */}
-          <div className="grid grid-cols-4 gap-4 mb-8">
-            {/* Main large image - Square shape, fits in viewport */}
-            <div className="col-span-4 md:col-span-3 relative aspect-square max-h-[600px] rounded-2xl overflow-hidden cursor-pointer w-full">
+          {/* Image Gallery - Airbnb Style */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8 h-[500px]">
+            {/* Main large image on the left */}
+            <div className="relative h-full rounded-l-xl overflow-hidden cursor-pointer">
               <Image
                 src={optimizeUplistingImage(
                   property.photos[selectedImage]?.url || '/placeholder.jpg',
@@ -228,25 +228,25 @@ export default function PropertyDetailPage() {
               />
             </div>
             
-            {/* Thumbnail grid on the right - Square thumbnails with scroll, properly spaced */}
-            <div className="col-span-4 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-6 max-h-[600px] overflow-y-auto">
-              {property.photos.slice(0, 8).map((photo, index) => (
-                <div key={index} className="relative h-40 aspect-square rounded-lg overflow-hidden">
+            {/* Thumbnail grid on the right - 2x2 grid with scroll */}
+            <div className="grid grid-cols-2 gap-2 h-full overflow-y-auto rounded-r-xl">
+              {property.photos.slice(0, 20).map((photo, index) => (
+                <div key={index} className="relative h-[245px] overflow-hidden">
                   <Image
                     src={optimizeUplistingImage(photo.url, IMAGE_SIZES.THUMBNAIL)}
                     alt={`${property.name} - Photo ${index + 1}`}
                     fill
-                    className={`object-cover cursor-pointer ${
-                      selectedImage === index ? 'ring-2 ring-black' : ''
+                    className={`object-cover cursor-pointer hover:brightness-90 transition ${
+                      selectedImage === index ? 'ring-4 ring-black' : ''
                     }`}
                     sizes={getImageSizes('thumbnail')}
-                    quality={70}
+                    quality={75}
                     onClick={() => setSelectedImage(index)}
                   />
                   {/* Show +X photos overlay on last thumbnail if there are more */}
-                  {index === 7 && property.photos.length > 8 && (
-                    <div className="absolute inset-0 bg-black/60 rounded-lg flex items-center justify-center text-white font-medium cursor-pointer">
-                      +{property.photos.length - 8} photos
+                  {index === 19 && property.photos.length > 20 && (
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white font-medium cursor-pointer">
+                      +{property.photos.length - 20} photos
                     </div>
                   )}
                 </div>
