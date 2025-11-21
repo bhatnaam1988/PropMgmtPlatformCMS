@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getProperty, formatProperty } from '@/lib/uplisting';
+import { setPrimaryImage } from '@/lib/property-config';
 
 export async function GET(request, { params }) {
   try {
     const data = await getProperty(params.id);
-    const property = formatProperty(data);
+    let property = formatProperty(data);
+    
+    // Set primary image for this property if configured
+    property = setPrimaryImage(property);
     
     return NextResponse.json({ property });
   } catch (error) {
