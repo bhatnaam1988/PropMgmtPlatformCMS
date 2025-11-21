@@ -228,10 +228,10 @@ export default function PropertyDetailPage() {
               />
             </div>
             
-            {/* Thumbnail grid on the right - Square thumbnails with scroll */}
-            <div className="col-span-4 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4 max-h-[600px] overflow-y-auto">
+            {/* Thumbnail grid on the right - Square thumbnails with scroll, properly spaced */}
+            <div className="col-span-4 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-6 max-h-[600px] overflow-y-auto">
               {property.photos.slice(0, 8).map((photo, index) => (
-                <div key={index} className="relative aspect-square rounded-lg overflow-hidden w-full">
+                <div key={index} className="relative h-40 aspect-square rounded-lg overflow-hidden">
                   <Image
                     src={optimizeUplistingImage(photo.url, IMAGE_SIZES.THUMBNAIL)}
                     alt={`${property.name} - Photo ${index + 1}`}
