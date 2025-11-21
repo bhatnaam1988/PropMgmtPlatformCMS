@@ -15,12 +15,10 @@ export default async function CleaningServices() {
     },
     servicesGrid: {
       services: [
-        { title: 'Turnover Cleaning', description: 'Complete cleaning between guest stays.' },
-        { title: 'Deep Cleaning', description: 'Thorough seasonal cleaning.' },
-        { title: 'Laundry Service', description: 'Professional washing and folding.' },
-        { title: 'Inspection Reports', description: 'Detailed post-cleaning reports.' },
-        { title: 'Restocking', description: 'Replenishment of supplies.' },
-        { title: 'Emergency Cleaning', description: 'Same-day services.' }
+        { title: 'Turnover Cleaning', description: 'Complete cleaning between guest stays (will not be displayed).' },
+        { title: 'Deep Cleaning', description: 'Comprehensive seasonal cleaning including windows, appliances, and detailed sanitization' },
+        { title: 'Linen Service', description: 'Professional laundering, ironing, and fresh linen setup for each guest arrival' },
+        { title: 'Quality Inspections', description: 'Post-cleaning inspection to ensure everything meets our high standards before guest check-in' }
       ]
     },
     whyChooseSection: {
