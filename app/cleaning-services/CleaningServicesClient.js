@@ -93,16 +93,6 @@ export default function CleaningServicesClient({ content }) {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      {content.pricingSection && (
-        <section className="py-16 bg-background">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="mb-6">{content.pricingSection.heading}</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">{content.pricingSection.description}</p>
-          </div>
-        </section>
-      )}
-
       {/* Request Form */}
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-2xl">
