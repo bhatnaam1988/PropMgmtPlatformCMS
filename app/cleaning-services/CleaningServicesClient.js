@@ -62,7 +62,7 @@ export default function CleaningServicesClient({ content }) {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {content.servicesGrid.services.slice(1, 4).map((service, idx) => (
+            {content.servicesGrid.services.slice(0, 3).map((service, idx) => (
               <Card key={idx} className="text-center">
                 <CardContent className="p-8">
                   <Sparkles className="h-10 w-10 text-primary mb-4 mx-auto" />
