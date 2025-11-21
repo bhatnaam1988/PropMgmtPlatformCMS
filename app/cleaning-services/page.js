@@ -15,24 +15,23 @@ export default async function CleaningServices() {
     },
     servicesGrid: {
       services: [
-        { title: 'Turnover Cleaning', description: 'Complete cleaning between guest stays (will not be displayed).' },
         { title: 'Deep Cleaning', description: 'Comprehensive seasonal cleaning including windows, appliances, and detailed sanitization' },
         { title: 'Linen Service', description: 'Professional laundering, ironing, and fresh linen setup for each guest arrival' },
         { title: 'Quality Inspections', description: 'Post-cleaning inspection to ensure everything meets our high standards before guest check-in' }
       ]
     },
-    whyChooseSection: {
+    benefitsSection: {
       heading: 'Why Choose Our Cleaning Services',
-      reasons: [
-        { title: 'Hospitality Expertise', description: 'Specialized in vacation rentals.' },
-        { title: 'Reliable & Consistent', description: 'Same high standards every time.' },
-        { title: 'Eco-Friendly Products', description: 'Safe for guests and environment.' },
-        { title: 'Flexible Scheduling', description: 'Quick turnarounds available.' }
+      benefits: [
+        { title: 'Local Team', description: 'Experienced cleaners who know Grächen properties and Alpine accommodation standards' },
+        { title: 'Reliable Scheduling', description: 'Flexible timing to accommodate back-to-back bookings and tight turnarounds' },
+        { title: 'Eco-Friendly Products', description: 'High-quality, environmentally responsible cleaning products safe for guests and properties' },
+        { title: 'Quality Assurance', description: 'Every cleaning is inspected to ensure it meets our high standards' }
       ]
     },
     formSection: {
       heading: 'Request a Quote',
-      description: 'Get a custom quote for your cleaning needs.'
+      description: 'Get a custom quote for your cleaning needs. Fill out the form below and we\'ll get back to you within 24 hours.'
     }
   };
   
