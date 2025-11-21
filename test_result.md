@@ -334,6 +334,18 @@ frontend:
         agent: "testing"
         comment: "✅ TESTED: Property detail page (ID 84656) loads 'Sunny Alps View: Central Bliss' correctly. Image gallery functional, booking widget with date/guest selection works. 'Booking Requirements' section visible with max guests, check-in/out times, extra guest fees. 'Fees & Taxes' section shows cleaning fee (CHF 169), VAT (3.8%), tourist tax (CHF 3/guest/night). Reserve button functional and navigates to checkout with proper parameters."
 
+  - task: "Property Image Gallery - Square layout redesign"
+    implemented: true
+    working: "NA"
+    file: "/app/app/property/[id]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "FEATURE 2 IMPLEMENTATION: Redesigned property detail page image gallery with square-shaped images. Main image: reduced from h-[500px] to h-[450px] (10% smaller), added aspect-square class for square shape. Thumbnails: increased from h-24 (96px) to h-28 (112px) (~15% larger), added aspect-square class for square shape. Preserved existing scroll functionality (max-h-[500px] overflow-y-auto), click handlers, and +X photos overlay. Changes verified with screenshot - both main image and thumbnails now display as square shapes with correct sizing. Ready for comprehensive testing to ensure no layout breaks or functionality issues."
+
   - task: "Checkout Page - Payment and booking form"
     implemented: true
     working: true
