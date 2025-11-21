@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Home, CheckCircle, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export default function BookingSuccessPage() {
+function BookingSuccessContent() {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get('bookingId') || searchParams.get('id');
   const propertyName = searchParams.get('property');
