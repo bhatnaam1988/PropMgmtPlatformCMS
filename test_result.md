@@ -334,17 +334,32 @@ frontend:
         agent: "testing"
         comment: "✅ TESTED: Property detail page (ID 84656) loads 'Sunny Alps View: Central Bliss' correctly. Image gallery functional, booking widget with date/guest selection works. 'Booking Requirements' section visible with max guests, check-in/out times, extra guest fees. 'Fees & Taxes' section shows cleaning fee (CHF 169), VAT (3.8%), tourist tax (CHF 3/guest/night). Reserve button functional and navigates to checkout with proper parameters."
 
-  - task: "Property Image Gallery - Square layout redesign"
+  - task: "Property Image Gallery - Airbnb-style layout redesign"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/property/[id]/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "FEATURE 2 IMPLEMENTATION: Redesigned property detail page image gallery with square-shaped images. Main image: reduced from h-[500px] to h-[450px] (10% smaller), added aspect-square class for square shape. Thumbnails: increased from h-24 (96px) to h-28 (112px) (~15% larger), added aspect-square class for square shape. Preserved existing scroll functionality (max-h-[500px] overflow-y-auto), click handlers, and +X photos overlay. Changes verified with screenshot - both main image and thumbnails now display as square shapes with correct sizing. Ready for comprehensive testing to ensure no layout breaks or functionality issues."
+      - working: true
+        agent: "main"
+        comment: "FEATURE 2 UPDATED TO AIRBNB-STYLE LAYOUT: Completely redesigned image gallery to match Airbnb design pattern. New layout: 2-column grid (grid-cols-2), left side has 1 large rectangular main image (500px height), right side has 2x2 grid of thumbnails (245px each) with vertical scroll. Removed square aspect ratio for more natural rectangular images. Features: gap-2 for tight spacing, rounded corners (rounded-l-xl, rounded-r-xl), hover effects on thumbnails, up to 20 images shown with scroll, proper selection ring. Tested and verified working across all property pages. Layout now closely matches Airbnb reference provided by user."
+
+  - task: "Primary/Showcase Images Configuration"
+    implemented: true
+    working: true
+    file: "/app/lib/property-config.js, /app/app/api/properties/route.js, /app/app/api/properties/[id]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "PRIMARY IMAGES IMPLEMENTATION (OPTION 1): Implemented code-based mapping for setting primary/showcase images for 3 properties. Created /app/lib/property-config.js with PRIMARY_IMAGES mapping (84656, 186289, 174947) and helper functions setPrimaryImage() and setPrimaryImagesForList(). Updated both API routes to use these helpers to reorder photos array with primary image first. Logic handles: existing primary image in photos (moves to first), primary image not in photos (adds as first), already first (no change). Tested and verified working across: homepage property showcase, stay/listings page property cards, and property detail pages. All 3 properties now display their configured primary images consistently. Zero performance impact, easy to maintain and extend."
 
   - task: "Checkout Page - Payment and booking form"
     implemented: true
