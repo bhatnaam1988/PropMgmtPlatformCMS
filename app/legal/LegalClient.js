@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, FileText, Shield, Cookie } from 'lucide-react';
 import * as Icons from 'lucide-react';
 
-export default function LegalClient({ content }) {
+function LegalClientContent({ content }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
