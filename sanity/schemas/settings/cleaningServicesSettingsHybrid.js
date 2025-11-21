@@ -83,23 +83,6 @@ export default {
       ]
     },
     {
-      name: 'pricingSection',
-      title: 'Pricing Section',
-      type: 'object',
-      fields: [
-        {
-          name: 'heading',
-          title: 'Heading',
-          type: 'string'
-        },
-        {
-          name: 'description',
-          title: 'Description',
-          type: 'text'
-        }
-      ]
-    },
-    {
       name: 'formSection',
       title: 'Form Section',
       type: 'object',
