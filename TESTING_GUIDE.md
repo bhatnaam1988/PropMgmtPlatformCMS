@@ -12,9 +12,9 @@
 
 ### **Step 1: Navigate to Property Page**
 
-1. Go to: https://sanity-nextjs-pages.preview.emergentagent.com
+1. Go to: https://sanity-nextjs.preview.emergentagent.com
 2. Click on any property to view details
-3. Or directly visit: https://sanity-nextjs-pages.preview.emergentagent.com/property/84656
+3. Or directly visit: https://sanity-nextjs.preview.emergentagent.com/property/84656
 
 ---
 

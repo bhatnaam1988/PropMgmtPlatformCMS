@@ -213,7 +213,7 @@ export default async function PageName() {
 - **Migration Scripts:** `/app/scripts/`
 
 ### Sanity Studio:
-- **Access:** `https://sanity-nextjs-pages.preview.emergentagent.com/studio`
+- **Access:** `https://sanity-nextjs.preview.emergentagent.com/studio`
 - **Content Editing:** After migration, all content editable in Sanity Studio
 - **No Duplicates:** One entry per page (hybrid approach)
 
