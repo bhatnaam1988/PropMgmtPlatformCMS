@@ -38,8 +38,8 @@ async function restoreRentalServices() {
     const documentData = {
       _type: 'rentalServicesSettingsHybrid',
       heroSection: {
-        heading: 'Property Management Services',
-        description: 'Maximize your rental income while we handle everything from guest communication to property maintenance.',
+        heading: 'Full-Service Rental Management',
+        description: 'Maximize your rental income while we handle everything. Professional management for vacation properties in Grächen and the Swiss Alps.',
         backgroundImage: {
           _type: 'image',
           asset: {
@@ -51,65 +51,65 @@ async function restoreRentalServices() {
       servicesGrid: {
         services: [
           {
-            _key: 'listing-optimization',
-            title: 'Listing Optimization',
-            description: 'Professional photography, compelling descriptions, and strategic pricing to maximize visibility and bookings'
-          },
-          {
             _key: 'guest-communication',
             title: 'Guest Communication',
-            description: '24/7 guest support handling inquiries, bookings, and ensuring excellent customer experience'
+            description: 'Handle all inquiries, bookings, and guest communication in multiple languages'
           },
           {
-            _key: 'cleaning-maintenance',
-            title: 'Cleaning & Maintenance',
-            description: 'Coordinated cleaning services and property care to maintain high standards between guest stays'
+            _key: 'property-marketing',
+            title: 'Property Marketing',
+            description: 'Professional photography, compelling listings, and promotion across major booking platforms'
           },
           {
-            _key: 'revenue-management',
-            title: 'Revenue Management',
-            description: 'Dynamic pricing strategies based on demand, seasonality, and market trends to maximize income'
+            _key: 'pricing-optimization',
+            title: 'Pricing Optimization',
+            description: 'Dynamic pricing strategy to maximize occupancy and revenue throughout the year'
           },
           {
-            _key: 'marketing',
-            title: 'Marketing',
-            description: 'Multi-platform listing management across Airbnb, Booking.com, and other major vacation rental platforms'
+            _key: 'maintenance-coordination',
+            title: 'Maintenance Coordination',
+            description: 'Regular inspections, repairs, and maintenance to keep your property in top condition'
+          },
+          {
+            _key: 'cleaning-services',
+            title: 'Cleaning Services',
+            description: 'Professional turnover cleaning and linen service between each guest stay'
           },
           {
             _key: 'financial-reporting',
             title: 'Financial Reporting',
-            description: 'Detailed monthly reports with income breakdown, expenses, and performance analytics'
+            description: 'Transparent monthly reports with detailed income, expenses, and occupancy analytics'
           }
         ]
       },
       benefitsSection: {
-        heading: 'Benefits of Professional Management',
+        heading: 'The Swiss Alpine Journey Difference',
         benefits: [
           {
-            _key: 'hands-free',
-            title: 'Hands-Free Operation',
-            description: 'We handle all aspects of property management so you can enjoy passive income without the hassle'
+            _key: 'local-expertise',
+            title: 'Local Expertise',
+            description: 'Deep knowledge of Grächen market, local regulations, and what guests expect from Alpine properties'
           },
           {
-            _key: 'higher-occupancy',
-            title: 'Higher Occupancy',
-            description: 'Professional management typically results in 30-50% increase in bookings and revenue'
+            _key: 'premium-service',
+            title: 'Premium Service',
+            description: 'We treat every property like our own, maintaining high standards that drive excellent guest reviews'
           },
           {
-            _key: 'better-reviews',
-            title: 'Better Reviews',
-            description: '5-star service quality ensures excellent guest reviews and improved property reputation'
+            _key: 'transparent-fees',
+            title: 'Transparent Fees',
+            description: 'Simple commission-based pricing with no hidden costs. You keep more of your rental income'
           },
           {
-            _key: 'property-care',
-            title: 'Property Care',
-            description: 'Regular maintenance and inspections keep your property in top condition and protect your investment'
+            _key: 'owner-portal',
+            title: 'Owner Portal',
+            description: 'Real-time access to bookings, earnings, and property performance through your dedicated dashboard'
           }
         ]
       },
       formSection: {
         heading: 'Partner With Us',
-        description: "Let's discuss how we can maximize your rental income. Fill out the form below and we'll contact you within 24 hours to schedule a consultation."
+        description: 'Interested in our rental management services? Tell us about your property and we\'ll schedule a consultation to discuss how we can help maximize your rental income.'
       }
     };
 
