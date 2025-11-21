@@ -8,33 +8,33 @@ export default async function RentalServices() {
   
   const fallbackData = {
     heroSection: {
-      heading: 'Property Management Services',
-      description: 'Maximize your rental income while we handle everything.',
+      heading: 'Full-Service Rental Management',
+      description: 'Maximize your rental income while we handle everything. Professional management for vacation properties in Grächen and the Swiss Alps.',
       backgroundImage: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920',
       backgroundImageAlt: 'Property management'
     },
     servicesGrid: {
       services: [
-        { title: 'Listing Optimization', description: 'Professional photography and pricing.' },
-        { title: 'Guest Communication', description: '24/7 guest support.' },
-        { title: 'Cleaning & Maintenance', description: 'Property care coordination.' },
-        { title: 'Revenue Management', description: 'Dynamic pricing strategies.' },
-        { title: 'Marketing', description: 'Multi-platform listing.' },
-        { title: 'Financial Reporting', description: 'Detailed monthly reports.' }
+        { title: 'Guest Communication', description: 'Handle all inquiries, bookings, and guest communication in multiple languages' },
+        { title: 'Property Marketing', description: 'Professional photography, compelling listings, and promotion across major booking platforms' },
+        { title: 'Pricing Optimization', description: 'Dynamic pricing strategy to maximize occupancy and revenue throughout the year' },
+        { title: 'Maintenance Coordination', description: 'Regular inspections, repairs, and maintenance to keep your property in top condition' },
+        { title: 'Cleaning Services', description: 'Professional turnover cleaning and linen service between each guest stay' },
+        { title: 'Financial Reporting', description: 'Transparent monthly reports with detailed income, expenses, and occupancy analytics' }
       ]
     },
     benefitsSection: {
-      heading: 'Benefits of Professional Management',
+      heading: 'The Swiss Alpine Journey Difference',
       benefits: [
-        { title: 'Hands-Free Operation', description: 'We handle everything.' },
-        { title: 'Higher Occupancy', description: '30-50% increase in bookings.' },
-        { title: 'Better Reviews', description: '5-star service quality.' },
-        { title: 'Property Care', description: 'Regular maintenance.' }
+        { title: 'Local Expertise', description: 'Deep knowledge of Grächen market, local regulations, and what guests expect from Alpine properties' },
+        { title: 'Premium Service', description: 'We treat every property like our own, maintaining high standards that drive excellent guest reviews' },
+        { title: 'Transparent Fees', description: 'Simple commission-based pricing with no hidden costs. You keep more of your rental income' },
+        { title: 'Owner Portal', description: 'Real-time access to bookings, earnings, and property performance through your dedicated dashboard' }
       ]
     },
     formSection: {
       heading: 'Partner With Us',
-      description: "Let's discuss how we can maximize your rental income."
+      description: 'Interested in our rental management services? Tell us about your property and we\'ll schedule a consultation to discuss how we can help maximize your rental income.'
     }
   };
   
