@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Home, XCircle, RefreshCcw, Mail, Phone, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export default function BookingFailurePage() {
+function BookingFailureContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   
