@@ -17,7 +17,7 @@ export async function POST(request) {
 
     // Store in MongoDB
     const client = await clientPromise;
-    const db = client.db('swissalpine');
+    const db = client.db(process.env.MONGO_DB_NAME || 'swissalpine');
     const submission = {
       type: 'cleaning_services',
       name,
