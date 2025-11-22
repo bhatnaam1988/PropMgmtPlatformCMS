@@ -52,7 +52,7 @@ This error **requires infrastructure changes**. No amount of code modification w
 Hi Emergent Support,
 
 My production deployment is failing with MongoDB authorization errors:
-- App URL: https://sanity-nextjs.preview.emergentagent.com
+- App URL: https://gallery-update-1.preview.emergentagent.com
 - Error: "not authorized on swissalpine to execute command"
 - Database: swissalpine
 

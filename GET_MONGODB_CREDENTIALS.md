@@ -65,7 +65,7 @@ Hi Emergent Support,
 
 I need access to the MongoDB Atlas credentials for my deployed application:
 - Application: Swiss Alpine Journey
-- URL: https://sanity-nextjs.preview.emergentagent.com
+- URL: https://gallery-update-1.preview.emergentagent.com
 - Issue: Getting "not authorized on swissalpine" error
 
 Can you please provide:

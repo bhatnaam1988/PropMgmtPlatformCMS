@@ -2,7 +2,7 @@
 
 **Test Date:** November 21, 2025
 **Environment:** Production UAT
-**Webhook URL:** `https://sanity-nextjs.preview.emergentagent.com/api/stripe/webhook`
+**Webhook URL:** `https://gallery-update-1.preview.emergentagent.com/api/stripe/webhook`
 
 ---
 
@@ -13,7 +13,7 @@
 
 **Test Command:**
 ```bash
-curl -X POST https://sanity-nextjs.preview.emergentagent.com/api/stripe/webhook
+curl -X POST https://gallery-update-1.preview.emergentagent.com/api/stripe/webhook
 ```
 
 **Response:**
@@ -119,7 +119,7 @@ Since we couldn't complete a full payment flow in the automated test, here's how
 ### Option 2: Make a Test Booking
 
 1. **Go to Stay Page:**
-   - Visit: `https://sanity-nextjs.preview.emergentagent.com/stay`
+   - Visit: `https://gallery-update-1.preview.emergentagent.com/stay`
    
 2. **Select Property:**
    - Choose any property
@@ -350,7 +350,7 @@ Your webhook is working correctly if:
 - Payment Intents: https://dashboard.stripe.com/test/payments
 
 **Your Application:**
-- Stay Page: https://sanity-nextjs.preview.emergentagent.com/stay
+- Stay Page: https://gallery-update-1.preview.emergentagent.com/stay
 - Test Booking Flow: Select property → Fill details → Use test card
 
 **Test Cards:**

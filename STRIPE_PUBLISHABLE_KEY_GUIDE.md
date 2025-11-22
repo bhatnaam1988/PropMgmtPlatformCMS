@@ -308,7 +308,7 @@ STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxx (new webhook for live mode)
 
 1. **Go to checkout page:**
    ```
-   https://sanity-nextjs.preview.emergentagent.com/checkout?propertyId=84656&checkIn=2026-04-07&checkOut=2026-04-09&adults=2&children=0&infants=0
+   https://gallery-update-1.preview.emergentagent.com/checkout?propertyId=84656&checkIn=2026-04-07&checkOut=2026-04-09&adults=2&children=0&infants=0
    ```
 
 2. **Check Stripe Elements Load:**
