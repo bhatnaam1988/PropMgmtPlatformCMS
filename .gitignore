@@ -7,6 +7,9 @@ node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
 .next/cache/webpack/client-production/0.pack
 .next/cache/webpack/server-production/0.pack
 -e 
-# Environment files
-*.env
-*.env.*
+# Environment files - Only ignore local overrides
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
