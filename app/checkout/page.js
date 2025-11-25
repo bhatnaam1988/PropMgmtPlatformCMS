@@ -12,12 +12,13 @@ import { Checkbox } from '@/components/ui/checkbox';
 import StripePaymentForm from './components/StripePaymentForm';
 import { calculateBookingPrice } from '@/lib/pricing-calculator';
 
-// Initialize Stripe
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-
 function CheckoutContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  
+  // Initialize Stripe at runtime (not build time) to use dashboard env vars
+  const [stripePromise, setStripePromise] = useState(null);
+  const [stripeLoadError, setStripeLoadError] = useState(false);
   
   // Get booking details from URL
   const propertyId = searchParams.get('propertyId');
