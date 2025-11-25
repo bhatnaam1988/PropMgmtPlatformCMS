@@ -12,11 +12,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import StripePaymentForm from './components/StripePaymentForm';
 import { calculateBookingPrice } from '@/lib/pricing-calculator';
 
-// ⚠️ TEMPORARY HARDCODED KEY FOR TESTING - REMOVE AFTER TESTING
-const HARDCODED_STRIPE_PUBLISHABLE = 'pk_live_51QgR12HbvQ7QfHylJtgAAS7UFj7bbZZZVsqe5ryUQqgCLy4b3LuitW7KM5tSc5EqctJOKRBhygCPWdpBroooGmsl00JjEYDyuB';
-
 // Initialize Stripe
-const stripePromise = loadStripe(HARDCODED_STRIPE_PUBLISHABLE || process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 function CheckoutContent() {
   const searchParams = useSearchParams();
