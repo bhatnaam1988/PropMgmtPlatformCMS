@@ -53,6 +53,28 @@ function CheckoutContent() {
   // Step management
   const [currentStep, setCurrentStep] = useState(1); // 1: Guest Details, 2: Payment
 
+  // Fetch Stripe publishable key at runtime (not build time)
+  useEffect(() => {
+    async function loadStripeConfig() {
+      try {
+        const response = await fetch('/api/stripe/config');
+        const data = await response.json();
+        
+        if (data.publishableKey) {
+          setStripePromise(loadStripe(data.publishableKey));
+        } else {
+          console.error('No publishable key returned from API');
+          setStripeLoadError(true);
+        }
+      } catch (error) {
+        console.error('Failed to load Stripe configuration:', error);
+        setStripeLoadError(true);
+      }
+    }
+    
+    loadStripeConfig();
+  }, []);
+
   useEffect(() => {
     if (propertyId && checkIn && checkOut) {
       fetchPropertyAndPricing();
