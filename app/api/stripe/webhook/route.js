@@ -208,11 +208,8 @@ export async function POST(request) {
   let event;
 
   try {
-    // ⚠️ TEMPORARY HARDCODED KEY FOR TESTING - REMOVE AFTER TESTING
-    const HARDCODED_WEBHOOK_SECRET = 'whsec_0c7eWCvSoiP7lnAAUHcjcN6fZpcEMen8';
-    
     // Verify webhook signature
-    const webhookSecret = HARDCODED_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET;
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
     
     if (!webhookSecret || webhookSecret === 'whsec_placeholder') {
       console.warn('⚠️ STRIPE_WEBHOOK_SECRET not configured. Webhook verification skipped for development.');
