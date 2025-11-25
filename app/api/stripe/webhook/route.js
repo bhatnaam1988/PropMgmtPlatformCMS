@@ -211,10 +211,18 @@ export async function POST(request) {
     // Verify webhook signature
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
     
-    if (!webhookSecret || webhookSecret === 'whsec_placeholder') {
-      console.warn('⚠️ STRIPE_WEBHOOK_SECRET not configured. Webhook verification skipped for development.');
-      // In development, parse without verification
-      event = JSON.parse(body);
+    if (!webhookSecret) {
+      // Only allow unverified webhooks in local development
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('⚠️ Development mode: Webhook verification skipped');
+        event = JSON.parse(body);
+      } else {
+        console.error('❌ STRIPE_WEBHOOK_SECRET not configured in production');
+        return NextResponse.json(
+          { error: 'Webhook secret not configured' },
+          { status: 500 }
+        );
+      }
     } else {
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
     }
