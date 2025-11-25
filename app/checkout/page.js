@@ -214,11 +214,29 @@ function CheckoutContent() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  if (loading) {
+  if (stripeLoadError) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
+        <div className="text-center max-w-md p-6">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Payment System Unavailable</h2>
+          <p className="text-gray-600 mb-4">
+            We're unable to load the payment system. Please try again later or contact support.
+          </p>
+          <Button onClick={() => window.location.reload()} className="bg-blue-600 hover:bg-blue-700">
+            Retry
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading || !stripePromise) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
         <div className="text-center">
-          <div className="text-xl">Loading checkout...</div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading checkout...</p>
         </div>
       </div>
     );
