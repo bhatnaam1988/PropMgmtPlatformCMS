@@ -6,14 +6,9 @@ import { NextResponse } from 'next/server';
  */
 export async function GET() {
   try {
-    // ⚠️ TEMPORARY HARDCODED KEYS FOR TESTING - REMOVE AFTER TESTING
-    const HARDCODED_SECRET = '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';
-    const HARDCODED_PUBLISHABLE = 'pk_live_51QgR12HbvQ7QfHylJtgAAS7UFj7bbZZZVsqe5ryUQqgCLy4b3LuitW7KM5tSc5EqctJOKRBhygCPWdpBroooGmsl00JjEYDyuB';
-    const HARDCODED_WEBHOOK = 'whsec_0c7eWCvSoiP7lnAAUHcjcN6fZpcEMen8';
-    
-    const secretKey = HARDCODED_SECRET || process.env.STRIPE_SECRET_KEY || 'NOT_SET';
-    const publishableKey = HARDCODED_PUBLISHABLE || process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'NOT_SET';
-    const webhookSecret = HARDCODED_WEBHOOK || process.env.STRIPE_WEBHOOK_SECRET || 'NOT_SET';
+    const secretKey = process.env.STRIPE_SECRET_KEY || 'NOT_SET';
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'NOT_SET';
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'NOT_SET';
 
     // Extract key prefixes and last 4 characters for security
     const maskKey = (key) => {
