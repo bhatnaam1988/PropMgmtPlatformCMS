@@ -26,6 +26,7 @@ dist
 
 # Local env files - these will be provided by deployment platform
 .env.local
+.env.local.backup.*
 .env.development.local
 .env.test.local
 .env.production.local
