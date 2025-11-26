@@ -192,6 +192,12 @@ async function processFailedPayment(paymentIntent) {
 }
 
 /**
+ * Webhook handler configuration
+ * Disable body parsing to get raw body for signature verification
+ */
+export const runtime = 'nodejs';
+
+/**
  * Webhook handler
  */
 export async function POST(request) {
