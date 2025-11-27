@@ -20,8 +20,10 @@ const UPLISTING_CLIENT_ID = process.env.UPLISTING_CLIENT_ID;
  * @returns {Promise<Object>} Uplisting booking response
  */
 async function createUplistingBooking(bookingData) {
+  // Uplisting uses Basic auth with API key as username and empty password
+  const encodedKey = Buffer.from(`${UPLISTING_API_KEY}:`).toString('base64');
   const headers = {
-    'Authorization': `Basic ${UPLISTING_API_KEY}`,
+    'Authorization': `Basic ${encodedKey}`,
     'X-Uplisting-Client-Id': UPLISTING_CLIENT_ID,
     'Content-Type': 'application/json',
   };
