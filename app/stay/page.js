@@ -201,11 +201,54 @@ function StayPageContent() {
 
           {/* Results */}
           <div className="mb-8">
-            <p className="text-gray-600">{filteredProperties.length} listings found</p>
+            <p className="text-gray-600">{filteredProperties.length} listing{filteredProperties.length !== 1 ? 's' : ''} found</p>
           </div>
 
           {loading ? (
             <div className="text-center py-12">Loading properties...</div>
+          ) : filteredProperties.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 px-4">
+              <div className="text-center max-w-md">
+                <div className="mb-6">
+                  <svg 
+                    className="w-24 h-24 mx-auto text-gray-300" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={1.5} 
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-medium text-gray-900 mb-3">
+                  No properties found
+                </h3>
+                <p className="text-gray-600 mb-8">
+                  We couldn't find any properties matching your search criteria. Try adjusting your filters to see more results.
+                </p>
+                <button
+                  onClick={() => {
+                    setFilters({
+                      location: '',
+                      checkIn: null,
+                      checkOut: null,
+                      adults: 2,
+                      children: 0,
+                      infants: 0,
+                      bedrooms: 'any',
+                      amenities: []
+                    });
+                  }}
+                  className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-full text-base font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                >
+                  Clear all filters
+                </button>
+              </div>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-0">
               {filteredProperties.map((property) => {
