@@ -396,6 +396,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ TESTED: Checkout page 'Complete Your Booking' loads correctly from property page. Booking Summary section displays property image, dates, guest info. Detailed pricing breakdown shows accommodation, cleaning fees, taxes, and total. Form validation working: email validation, required field validation, terms acceptance required. Progress step indicators (Guest Details → Payment) functional. Successfully reaches payment step with Stripe integration after form completion. Form security: button states properly managed."
+      - working: true
+        agent: "testing"
+        comment: "✅ RE-TESTED AFTER UPLISTING FIX: Checkout page fully functional with real pricing data. Booking Summary: property image (Sunny Alps View: Central Bliss), location (Grächen, Wallis), dates (Nov 27 - Nov 29, 2025), guests (2 Adults, 0 Children, 0 Infants). Pricing breakdown with real Uplisting data: CHF 95 x 2 nights = CHF 190, Cleaning fee CHF 169, Subtotal CHF 359, Per booking percentage (3.8%) CHF 14, Per person per night CHF 12, Total CHF 385. Guest information form: all fields functional (first name, last name, email, phone), terms & conditions checkbox working, form validation active. Progress step indicators working (Guest Details → Payment). Successfully navigates to payment step. Complete booking flow operational with real data."
 
   - task: "Booking Success Page"
     implemented: true
