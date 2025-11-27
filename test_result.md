@@ -351,6 +351,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ TESTED: Property detail page (ID 84656) loads 'Sunny Alps View: Central Bliss' correctly. Image gallery functional, booking widget with date/guest selection works. 'Booking Requirements' section visible with max guests, check-in/out times, extra guest fees. 'Fees & Taxes' section shows cleaning fee (CHF 169), VAT (3.8%), tourist tax (CHF 3/guest/night). Reserve button functional and navigates to checkout with proper parameters."
+      - working: true
+        agent: "testing"
+        comment: "✅ RE-TESTED AFTER UPLISTING FIX: Property 84656 'Sunny Alps View: Central Bliss' loads perfectly with real Uplisting data. Location: Grächen, Wallis. Capacity: Sleeps 5, 2 Bedrooms, 3 Beds, 1 Bath. Airbnb-style image gallery with 10+ images functional. Booking widget: date picker and guest selector working, pricing displays real rates. Booking Requirements: max 5 guests, check-in 16:00/check-out 9:00, extra guest fee CHF 30 per guest beyond 4. Fees & Taxes: cleaning fee CHF 169, VAT 3.8%, tourist tax CHF 3/guest/night. Reserve button enabled and successfully navigates to checkout with booking parameters. Complete property information displaying from Uplisting API."
 
   - task: "Property Image Gallery - Airbnb-style layout redesign"
     implemented: true
