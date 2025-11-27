@@ -627,8 +627,8 @@ frontend:
 
 metadata:
   created_by: "main_agent"
-  version: "1.5"
-  test_sequence: 6
+  version: "1.6"
+  test_sequence: 7
   run_ui: false
   backend_testing_complete: true
   backend_test_date: "2025-01-05"
@@ -645,6 +645,9 @@ metadata:
   phase1_integration_testing_complete: true
   phase1_integration_test_date: "2025-01-06"
   phase1_integration_test_results: "12/12 new pages passed"
+  uplisting_fix_frontend_testing_complete: true
+  uplisting_fix_frontend_test_date: "2025-01-27"
+  uplisting_fix_frontend_test_results: "4/4 critical flows passed"
 
 test_plan:
   current_focus:
