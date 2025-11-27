@@ -40,17 +40,17 @@ export default function SearchBar({ className = '' }) {
   const guestsText = `${guests.adults} Adult${guests.adults > 1 ? 's' : ''} - ${guests.children} Children - ${guests.infants} Infant${guests.infants !== 1 ? 's' : ''}`;
 
   return (
-    <div className={`bg-white rounded-2xl shadow-2xl p-6 ${className}`}>
-      <div className="flex flex-col lg:flex-row gap-4 items-stretch">
+    <div className={`bg-white rounded-2xl shadow-2xl p-5 ${className}`}>
+      <div className="flex flex-col lg:flex-row gap-3 items-stretch">
         {/* Location */}
         <div className="relative flex-1 min-w-0">
-          <div className="flex items-center gap-2 px-3 py-3">
-            <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0" />
+          <div className="flex items-center gap-1.5 px-2 py-3">
+            <MapPin className="w-4 h-4 text-gray-400 flex-shrink-0" />
             <div className="flex-1 relative min-w-0">
               <input
                 type="text"
                 placeholder="Where are you going?"
-                className="w-full outline-none text-gray-700 text-sm"
+                className="w-full outline-none text-gray-700 text-sm placeholder:text-gray-400"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 onFocus={() => setShowLocationDropdown(true)}
@@ -82,8 +82,8 @@ export default function SearchBar({ className = '' }) {
         
         {/* Dates */}
         <div className="flex-[1.4] min-w-0">
-          <div className="flex items-center gap-2 px-3 py-3">
-            <Calendar className="w-5 h-5 text-gray-400 flex-shrink-0" />
+          <div className="flex items-center gap-1.5 px-2 py-3">
+            <Calendar className="w-4 h-4 text-gray-400 flex-shrink-0" />
             <DatePicker
               selected={startDate}
               onChange={(dates) => {
@@ -95,7 +95,7 @@ export default function SearchBar({ className = '' }) {
               endDate={endDate}
               selectsRange
               placeholderText="Arrival Date - Departure..."
-              className="w-full outline-none text-gray-700 text-sm min-w-0"
+              className="w-full outline-none text-gray-700 text-sm min-w-0 placeholder:text-gray-400"
               dateFormat="MMM dd"
               minDate={new Date()}
             />
@@ -107,11 +107,11 @@ export default function SearchBar({ className = '' }) {
         {/* Guests */}
         <div className="relative flex-[1.6] min-w-0">
           <button
-            className="flex items-center gap-2 px-3 py-3 w-full text-left"
+            className="flex items-center gap-1.5 px-2 py-3 w-full text-left"
             onClick={() => setShowGuestPicker(!showGuestPicker)}
           >
-            <Users className="w-5 h-5 text-gray-400 flex-shrink-0" />
-            <span className="text-gray-700 text-sm truncate min-w-0">{guestsText}</span>
+            <Users className="w-4 h-4 text-gray-400 flex-shrink-0" />
+            <span className="text-gray-700 text-sm min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">{guestsText}</span>
           </button>
           
           {showGuestPicker && (
