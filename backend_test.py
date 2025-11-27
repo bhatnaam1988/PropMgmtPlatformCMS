@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Backend API Regression Testing - Phase 1 New Pages Integration
-Tests all 8 critical backend APIs to ensure no regression after new page integration
+Comprehensive Backend API Testing for Swiss Alpine Journey
+Testing all Uplisting-dependent APIs after critical API key fix
+Focus on Properties, Availability, Pricing, Stripe Payment Intent, and Email systems
 """
 
 import requests
@@ -13,6 +14,21 @@ import os
 # Configuration
 BASE_URL = "https://config-relay.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
+
+# Test property IDs from Uplisting
+TEST_PROPERTY_IDS = [84656, 174947, 186289]
+PRIMARY_TEST_PROPERTY = 84656  # "Sunny Alps View: Central Bliss"
+
+# Test dates (future dates)
+today = datetime.now()
+check_in = (today + timedelta(days=30)).strftime('%Y-%m-%d')  # 30 days from now
+check_out = (today + timedelta(days=35)).strftime('%Y-%m-%d')  # 35 days from now
+
+print(f"🧪 COMPREHENSIVE BACKEND API TESTING AFTER UPLISTING FIX")
+print(f"📅 Test dates: {check_in} to {check_out}")
+print(f"🏠 Primary test property: {PRIMARY_TEST_PROPERTY}")
+print(f"🌐 Base URL: {BASE_URL}")
+print("=" * 80)
 
 def print_test_result(test_name, success, details=""):
     """Print formatted test results"""
