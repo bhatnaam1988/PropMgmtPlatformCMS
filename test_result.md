@@ -204,7 +204,7 @@ backend:
     file: "/app/app/api/stripe/webhook/route.js"
     stuck_count: 0
     priority: "critical"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
@@ -212,6 +212,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ TESTED: CRITICAL WEBHOOK SECURITY WORKING. Webhook correctly requires valid Stripe signature (returns 400 for invalid/missing signature). Webhook structure ready for payment_intent.succeeded and payment_intent.payment_failed events. Uplisting booking creation and email alert integration confirmed in code review."
+      - working: true
+        agent: "main"
+        comment: "✅ CRITICAL FIX APPLIED: Fixed Uplisting booking creation in webhook handler. Applied same fix as properties API - removed double base64 encoding of API key. Updated createUplistingBooking() function to use pre-encoded UPLISTING_API_KEY directly. Updated Client ID to f4fd1410-9636-013e-aeff-2a9672a658e7. This ensures successful bookings are created in Uplisting after payment completion. Needs testing via full payment flow."
 
   - task: "Booking Validation Utilities"
     implemented: true
