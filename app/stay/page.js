@@ -180,8 +180,10 @@ function StayPageContent() {
               />
               
               <GuestsSelect
-                value={totalGuests}
-                onChange={(value) => setFilters({...filters, adults: value, children: 0, infants: 0})}
+                adults={filters.adults}
+                children={filters.children}
+                infants={filters.infants}
+                onGuestsChange={(guests) => setFilters({...filters, ...guests})}
               />
               
               <BedroomsSelect
