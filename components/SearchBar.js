@@ -37,19 +37,19 @@ export default function SearchBar({ className = '' }) {
   };
 
   const totalGuests = guests.adults + guests.children + guests.infants;
-  const guestsText = `${guests.adults} Adult${guests.adults > 1 ? 's' : ''} - ${guests.children} Children - ${guests.infants} Infant${guests.infants !== 1 ? 's' : ''}`;
+  const guestsText = `${guests.adults} Adult${guests.adults > 1 ? 's' : ''} · ${guests.children} Children · ${guests.infants} Infant${guests.infants !== 1 ? 's' : ''}`;
 
   return (
     <div className={`bg-white rounded-2xl shadow-2xl p-5 ${className}`}>
-      <div className="flex flex-col lg:flex-row gap-3 items-stretch">
+      <div className="flex flex-col lg:flex-row gap-2 items-stretch">
         {/* Location */}
-        <div className="relative flex-1 min-w-0">
-          <div className="flex items-center gap-1.5 px-2 py-3">
+        <div className="relative lg:flex-[1.2] min-w-0">
+          <div className="flex items-center gap-1.5 px-2.5 py-3">
             <MapPin className="w-4 h-4 text-gray-400 flex-shrink-0" />
             <div className="flex-1 relative min-w-0">
               <input
                 type="text"
-                placeholder="Where are you going?"
+                placeholder="Where to?"
                 className="w-full outline-none text-gray-700 text-sm placeholder:text-gray-400"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -78,11 +78,9 @@ export default function SearchBar({ className = '' }) {
           </div>
         </div>
         
-        <div className="hidden lg:block w-px bg-gray-200 self-stretch" />
-        
         {/* Dates */}
-        <div className="flex-[1.4] min-w-0">
-          <div className="flex items-center gap-1.5 px-2 py-3">
+        <div className="lg:flex-[1.6] min-w-0">
+          <div className="flex items-center gap-1.5 px-2.5 py-3">
             <Calendar className="w-4 h-4 text-gray-400 flex-shrink-0" />
             <DatePicker
               selected={startDate}
@@ -94,7 +92,7 @@ export default function SearchBar({ className = '' }) {
               startDate={startDate}
               endDate={endDate}
               selectsRange
-              placeholderText="Arrival Date - Departure..."
+              placeholderText="Check-in — Check-out"
               className="w-full outline-none text-gray-700 text-sm min-w-0 placeholder:text-gray-400"
               dateFormat="MMM dd"
               minDate={new Date()}
@@ -102,12 +100,10 @@ export default function SearchBar({ className = '' }) {
           </div>
         </div>
         
-        <div className="hidden lg:block w-px bg-gray-200 self-stretch" />
-        
         {/* Guests */}
-        <div className="relative flex-[1.6] min-w-0">
+        <div className="relative lg:flex-[1.8] min-w-0">
           <button
-            className="flex items-center gap-1.5 px-2 py-3 w-full text-left"
+            className="flex items-center gap-1.5 px-2.5 py-3 w-full text-left"
             onClick={() => setShowGuestPicker(!showGuestPicker)}
           >
             <Users className="w-4 h-4 text-gray-400 flex-shrink-0" />
