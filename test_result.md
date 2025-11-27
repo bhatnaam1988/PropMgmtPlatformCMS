@@ -630,14 +630,16 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Property Image Gallery - Square layout redesign"
+    - "Properties API - List all properties"
+    - "Properties API - Single property details"
+    - "Availability API - Property availability & pricing"
+    - "Pricing Calculator API"
+    - "Stripe Webhook Handler"
   stuck_tasks: []
-  test_all: false
+  test_all: true
   test_priority: "high_first"
-  phase1_integration_complete: true
-  all_new_pages_tested: true
-  header_footer_consistency_verified: true
-  feature2_image_gallery_ready_for_testing: true
+  uplisting_api_fix_applied: true
+  needs_comprehensive_backend_testing: true
 
 agent_communication:
   - agent: "main"
