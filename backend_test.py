@@ -30,13 +30,7 @@ print(f"🏠 Primary test property: {PRIMARY_TEST_PROPERTY}")
 print(f"🌐 Base URL: {BASE_URL}")
 print("=" * 80)
 
-def print_test_result(test_name, success, details=""):
-    """Print formatted test results"""
-    status = "✅ PASS" if success else "❌ FAIL"
-    print(f"{status} {test_name}")
-    if details:
-        print(f"   Details: {details}")
-    print()
+# Old test functions removed - using new comprehensive test approach
 
 def test_properties_list():
     """Test GET /api/properties - Get list of properties"""
