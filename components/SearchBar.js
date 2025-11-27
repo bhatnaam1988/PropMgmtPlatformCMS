@@ -43,7 +43,7 @@ export default function SearchBar({ className = '' }) {
     <div className={`bg-white rounded-2xl shadow-2xl p-4 ${className}`}>
       <div className="flex flex-col md:flex-row gap-4">
         {/* Location */}
-        <div className="flex-1 relative">
+        <div className="relative md:flex-[0_0_20%] md:min-w-[180px]">
           <div className="flex items-center gap-3 px-4 py-3 border-r border-gray-200">
             <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0" />
             <div className="flex-1 relative">
@@ -79,7 +79,7 @@ export default function SearchBar({ className = '' }) {
         </div>
         
         {/* Dates */}
-        <div className="flex-1">
+        <div className="md:flex-[0_0_28%] md:min-w-[240px]">
           <div className="flex items-center gap-3 px-4 py-3 border-r border-gray-200">
             <Calendar className="w-5 h-5 text-gray-400 flex-shrink-0" />
             <DatePicker
@@ -101,9 +101,9 @@ export default function SearchBar({ className = '' }) {
         </div>
         
         {/* Guests */}
-        <div className="flex-1 relative">
+        <div className="relative md:flex-[0_0_32%] md:min-w-[280px]">
           <button
-            className="flex items-center gap-3 px-4 py-3 w-full"
+            className="flex items-center gap-3 px-4 py-3 w-full text-left"
             onClick={() => setShowGuestPicker(!showGuestPicker)}
           >
             <Users className="w-5 h-5 text-gray-400 flex-shrink-0" />
