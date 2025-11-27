@@ -635,17 +635,13 @@ metadata:
   phase1_integration_test_results: "12/12 new pages passed"
 
 test_plan:
-  current_focus:
-    - "Properties API - List all properties"
-    - "Properties API - Single property details"
-    - "Availability API - Property availability & pricing"
-    - "Pricing Calculator API"
-    - "Stripe Webhook Handler"
+  current_focus: []
   stuck_tasks: []
-  test_all: true
+  test_all: false
   test_priority: "high_first"
   uplisting_api_fix_applied: true
-  needs_comprehensive_backend_testing: true
+  needs_comprehensive_backend_testing: false
+  uplisting_fix_testing_complete: true
 
 agent_communication:
   - agent: "main"
