@@ -114,6 +114,15 @@ function StayPageContent() {
 
   const totalGuests = filters.adults + filters.children + filters.infants;
   
+  const calculateNights = () => {
+    if (!filters.checkIn || !filters.checkOut) return 0;
+    const diffTime = Math.abs(filters.checkOut - filters.checkIn);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  const nights = calculateNights();
+  
   const filteredProperties = properties.filter(property => {
     // Filter by guest capacity
     if (totalGuests && property.maximum_capacity < totalGuests) return false;
@@ -150,15 +159,6 @@ function StayPageContent() {
     
     return true;
   });
-
-  const calculateNights = () => {
-    if (!filters.checkIn || !filters.checkOut) return 0;
-    const diffTime = Math.abs(filters.checkOut - filters.checkIn);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
-  };
-
-  const nights = calculateNights();
 
   return (
     <div className="min-h-screen bg-white">
