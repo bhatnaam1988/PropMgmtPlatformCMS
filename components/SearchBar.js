@@ -195,10 +195,10 @@ export default function SearchBar({ className = '' }) {
         </div>
         
         {/* Search Button */}
-        <div className="md:self-center">
+        <div className="flex-shrink-0 lg:self-center">
           <Button 
             onClick={handleSearch}
-            className="bg-black text-white hover:bg-gray-800 rounded-full px-8 py-6 w-full md:w-auto"
+            className="bg-black text-white hover:bg-gray-800 rounded-full px-6 lg:px-8 py-3 lg:py-4 w-full lg:w-auto text-sm lg:text-base font-medium whitespace-nowrap"
           >
             Plan Your Journey
           </Button>
