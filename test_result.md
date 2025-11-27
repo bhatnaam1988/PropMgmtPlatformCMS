@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Phase 1: Integrate new pages from Figma design export into Next.js application - About, Contact, Legal, Jobs, Cleaning Services, Rental Services, Travel Tips, Behind the Scenes, Other Locations, Grächen location pages. Add Header and Footer components with proper navigation. Test all new pages for functionality and proper display."
+user_problem_statement: "CURRENT TASK: Fix Uplisting API 401 error caused by incorrect API key encoding. The API key was being double-encoded (base64 encoding an already base64-encoded key), preventing successful API calls to Uplisting service. Updated /app/lib/uplisting.js and /app/app/api/stripe/webhook/route.js to use the pre-encoded API key directly. Fixed Client ID to correct value: f4fd1410-9636-013e-aeff-2a9672a658e7. Test all backend APIs to confirm Uplisting integration is working."
 
 backend:
   - task: "Email Alert System - Resend Integration"
