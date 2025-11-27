@@ -78,7 +78,7 @@ Total = CHF 284
 
 ### **Step 1: Go to any property**
 ```
-https://gallery-update-1.preview.emergentagent.com/property/84656
+https://config-relay.preview.emergentagent.com/property/84656
 ```
 
 ### **Step 2: Select dates and click Reserve**

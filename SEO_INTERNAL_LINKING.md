@@ -67,7 +67,7 @@ All pages have optimized metadata including:
 User-agent: *
 Allow: /
 
-Sitemap: https://gallery-update-1.preview.emergentagent.com/sitemap.xml
+Sitemap: https://config-relay.preview.emergentagent.com/sitemap.xml
 ```
 
 ### 4. Schema.org Structured Data ✅

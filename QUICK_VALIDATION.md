@@ -34,7 +34,7 @@ curl http://localhost:3000/api/validate-env | jq '.'
     "resend_api": "✅ Configured",
     "admin_email": "✅ aman.bhatnagar11@gmail.com",
     "mongodb": "✅ Connected",
-    "base_url": "✅ https://gallery-update-1.preview.emergentagent.com"
+    "base_url": "✅ https://config-relay.preview.emergentagent.com"
   },
   "summary": {
     "total_checks": 9,

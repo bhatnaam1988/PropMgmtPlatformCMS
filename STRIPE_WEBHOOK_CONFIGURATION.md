@@ -4,7 +4,7 @@
 
 ### Preview Environment (Test Mode):
 ```
-https://gallery-update-1.preview.emergentagent.com/api/stripe/webhook
+https://config-relay.preview.emergentagent.com/api/stripe/webhook
 ```
 
 ### Production Environment (Live Mode):
@@ -25,7 +25,7 @@ https://rental-insights-4.emergent.host/api/stripe/webhook
 1. Click **"Add endpoint"** button
 2. Enter the Endpoint URL:
    ```
-   https://gallery-update-1.preview.emergentagent.com/api/stripe/webhook
+   https://config-relay.preview.emergentagent.com/api/stripe/webhook
    ```
 
 ### Step 3: Select Events to Listen For
@@ -192,7 +192,7 @@ Select these 2 events:
 
 ### Preview Environment:
 - [ ] Webhook added in Stripe (TEST mode)
-- [ ] URL: `https://gallery-update-1.preview.emergentagent.com/api/stripe/webhook`
+- [ ] URL: `https://config-relay.preview.emergentagent.com/api/stripe/webhook`
 - [ ] Events: `payment_intent.succeeded`, `payment_intent.payment_failed`
 - [ ] Signing secret copied
 - [ ] `.env.local` updated with secret

@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import os
 
 # Configuration
-BASE_URL = "https://gallery-update-1.preview.emergentagent.com"
+BASE_URL = "https://config-relay.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
 
 def print_test_result(test_name, success, details=""):

@@ -29,7 +29,7 @@ The first item (Turnover Cleaning) is now skipped in the display.
 Since the Sanity API token may have limited permissions, here's how to update the data manually through the Sanity Studio:
 
 ### Step 1: Access Sanity Studio
-1. Navigate to: `https://gallery-update-1.preview.emergentagent.com/studio`
+1. Navigate to: `https://config-relay.preview.emergentagent.com/studio`
 2. Login with your Sanity credentials
 
 ### Step 2: Find Cleaning Services Document
@@ -114,7 +114,7 @@ Also update the **Benefits Section** if needed:
 
 After making changes in Sanity:
 1. Clear browser cache or open in incognito mode
-2. Navigate to: `https://gallery-update-1.preview.emergentagent.com/cleaning-services`
+2. Navigate to: `https://config-relay.preview.emergentagent.com/cleaning-services`
 3. Verify that only 3 services are displayed in one row
 4. Check that spacing and layout look professional
 5. Test on mobile devices to ensure responsiveness

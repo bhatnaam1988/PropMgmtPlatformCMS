@@ -74,7 +74,7 @@ curl http://localhost:3000/api/stripe/config
 ```bash
 # .env.local still has all keys:
 UPLISTING_API_KEY=YzU5NjQ2YTUtYmRjYy00NTZjLWJiNGMtNWUxZjA0NzViMjU0 ✅
-UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7 ✅
+UPLISTING_CLIENT_ID=config-relay ✅
 RESEND_API_KEY=re_ERQXRMqa_DqmFAnpBk24a4nNCCYiFBhyM ✅
 STRIPE_WEBHOOK_SECRET=whsec_l6r8N5Nc6mRAFltW96SJQhMhwGGGggOb ✅
 ```
@@ -100,7 +100,7 @@ Recent webhook logs show successful processing:
 
 ```
 UPLISTING_API_KEY=YzU5NjQ2YTUtYmRjYy00NTZjLWJiNGMtNWUxZjA0NzViMjU0
-UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7
+UPLISTING_CLIENT_ID=config-relay
 RESEND_API_KEY=re_ERQXRMqa_DqmFAnpBk24a4nNCCYiFBhyM
 ```
 

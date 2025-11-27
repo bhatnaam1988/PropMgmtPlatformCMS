@@ -245,7 +245,7 @@ MONGO_DB_NAME=swissalpine
 ## Testing After Fix
 
 1. **Clear browser cache** or open incognito window
-2. **Go to Stay page:** `https://gallery-update-1.preview.emergentagent.com/stay`
+2. **Go to Stay page:** `https://config-relay.preview.emergentagent.com/stay`
 3. **Select property** and proceed to checkout
 4. **Fill guest details**
 5. **Enter test card:** 4242 4242 4242 4242
