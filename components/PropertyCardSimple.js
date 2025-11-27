@@ -78,9 +78,15 @@ export default function PropertyCardSimple({ property }) {
         <span className="flex items-center gap-1">
           <Users className="w-4 h-4" /> Sleeps {property.maximum_capacity}
         </span>
-        <span>{property.bedrooms} Bedroom{property.bedrooms > 1 ? 's' : ''}</span>
-        <span>{property.beds} Bed{property.beds > 1 ? 's' : ''}</span>
-        <span>{property.bathrooms} Bath</span>
+        <span className="flex items-center gap-1">
+          <Bed className="w-4 h-4" /> {property.bedrooms} Bedroom{property.bedrooms > 1 ? 's' : ''}
+        </span>
+        <span className="flex items-center gap-1">
+          <Bed className="w-4 h-4" /> {property.beds} Bed{property.beds > 1 ? 's' : ''}
+        </span>
+        <span className="flex items-center gap-1">
+          <Bath className="w-4 h-4" /> {property.bathrooms} Bath
+        </span>
       </div>
       <p className="text-sm text-gray-600 mb-4">
         {property.address?.street || 'Central location'}
