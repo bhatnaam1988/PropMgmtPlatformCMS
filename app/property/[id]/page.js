@@ -102,6 +102,48 @@ export default function PropertyDetailPage() {
     }
   }
 
+  async function fetchCalendarAvailability() {
+    if (calendarDataFetched) return; // Only fetch once
+    
+    setLoadingAvailability(true);
+    setAvailabilityError(null);
+    
+    try {
+      // Calculate 6 months from today
+      const today = new Date();
+      const sixMonthsLater = new Date();
+      sixMonthsLater.setMonth(today.getMonth() + 6);
+      
+      const from = formatDateLocal(today);
+      const to = formatDateLocal(sixMonthsLater);
+      
+      const res = await fetch(`/api/availability/${params.id}?from=${from}&to=${to}`);
+      
+      if (!res.ok) {
+        throw new Error('Failed to fetch availability data');
+      }
+      
+      const data = await res.json();
+      setAvailabilityData(data);
+      
+      // Parse unavailable dates from calendar data
+      if (data.calendar?.calendar?.days) {
+        const unavailable = data.calendar.calendar.days
+          .filter(day => !day.available)
+          .map(day => new Date(day.date));
+        
+        setUnavailableDates(unavailable);
+      }
+      
+      setCalendarDataFetched(true);
+    } catch (error) {
+      console.error('Error fetching calendar availability:', error);
+      setAvailabilityError('Unable to load availability calendar. Please refresh the page or contact support if the problem persists.');
+    } finally {
+      setLoadingAvailability(false);
+    }
+  }
+
   const handleBooking = () => {
     if (!checkIn || !checkOut) {
       alert('Please select check-in and check-out dates');
