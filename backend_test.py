@@ -680,69 +680,7 @@ def main():
     else:
         print(f"\n❌ CRITICAL SYSTEM FAILURES DETECTED - UPLISTING FIX MAY HAVE ISSUES")
         return 1
-    
-    # Test 3: Availability API - Property availability & pricing
-    success, availability_data = test_availability(property_id)
-    test_results['availability'] = success
-    
-    # Test 4: Pricing Calculator API - Bulk pricing calculations
-    success, pricing_data = test_pricing_calculator(property_ids)
-    test_results['pricing_calculator'] = success
-    
-    # Test 5: Stripe Create Payment Intent API
-    success, payment_data = test_stripe_payment_intent(property_id)
-    test_results['stripe_payment_intent'] = success
-    
-    # Test 6: Stripe Webhook Handler (security test)
-    test_results['stripe_webhook'] = test_stripe_webhook()
-    
-    # Test 7: Email Alert System
-    success, email_data = test_email_alert_system()
-    test_results['email_alert_system'] = success
-    
-    # Test 8: Booking Validation API
-    test_results['booking_validation'] = test_booking_validation()
-    
-    # Summary
-    print("=" * 80)
-    print("📊 BACKEND REGRESSION TEST SUMMARY")
-    print("=" * 80)
-    
-    passed = sum(test_results.values())
-    total = len(test_results)
-    
-    # Map test names to API descriptions
-    api_descriptions = {
-        'properties_list': 'Properties API - GET /api/properties',
-        'single_property': 'Single Property API - GET /api/properties/[id]',
-        'availability': 'Availability API - GET /api/availability/[propertyId]',
-        'pricing_calculator': 'Pricing Calculator API - POST /api/pricing',
-        'stripe_payment_intent': 'Stripe Create Payment Intent - POST /api/stripe/create-payment-intent',
-        'stripe_webhook': 'Stripe Webhook Handler - POST /api/stripe/webhook',
-        'email_alert_system': 'Email Alert System - GET /api/test-email',
-        'booking_validation': 'Booking Validation API - POST /api/bookings'
-    }
-    
-    for test_name, result in test_results.items():
-        status = "✅ PASS" if result else "❌ FAIL"
-        description = api_descriptions.get(test_name, test_name.replace('_', ' ').title())
-        print(f"{status} {description}")
-    
-    print()
-    print(f"Overall Result: {passed}/{total} backend APIs passed regression testing")
-    
-    if passed == total:
-        print("🎉 ALL BACKEND APIS PASSED REGRESSION TESTING!")
-        print("✅ No regression detected after new page integration")
-    else:
-        print("⚠️  REGRESSION DETECTED: Some backend APIs have issues")
-        print("🔧 These APIs need attention before deployment")
-    
-    return test_results
 
 if __name__ == "__main__":
-    results = main()
-    
-    # Exit with error code if any tests failed
-    if not all(results.values()):
-        sys.exit(1)
+    exit_code = main()
+    sys.exit(exit_code)
