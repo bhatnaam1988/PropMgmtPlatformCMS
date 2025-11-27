@@ -469,6 +469,22 @@ export default function PropertyDetailPage() {
                 {/* Date Selection */}
                 <div className="mb-4">
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Check-in / Check-out</label>
+                  
+                  {availabilityError && (
+                    <div className="mb-3 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                      <div className="flex items-start gap-2">
+                        <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="font-medium">Availability Error</p>
+                          <p className="mt-1">{availabilityError}</p>
+                          <p className="mt-2 text-xs">
+                            Contact: <a href="mailto:admin@example.com" className="underline">admin@example.com</a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
                     <DatePicker
@@ -481,10 +497,22 @@ export default function PropertyDetailPage() {
                       startDate={checkIn}
                       endDate={checkOut}
                       selectsRange
-                      placeholderText="Select dates"
+                      placeholderText={loadingAvailability ? "Loading calendar..." : "Select dates"}
                       className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg"
                       dateFormat="MMM dd"
                       minDate={new Date()}
+                      excludeDates={unavailableDates}
+                      onCalendarOpen={fetchCalendarAvailability}
+                      disabled={loadingAvailability}
+                      dayClassName={(date) => {
+                        const isUnavailable = unavailableDates.some(
+                          unavailableDate => 
+                            unavailableDate.getDate() === date.getDate() &&
+                            unavailableDate.getMonth() === date.getMonth() &&
+                            unavailableDate.getFullYear() === date.getFullYear()
+                        );
+                        return isUnavailable ? 'unavailable-date' : undefined;
+                      }}
                       popperClassName="z-[9999]"
                     />
                   </div>
