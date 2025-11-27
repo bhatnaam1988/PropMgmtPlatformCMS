@@ -31,6 +31,13 @@ export default function PropertyDetailPage() {
   const [validationErrors, setValidationErrors] = useState([]);
   const [validationWarnings, setValidationWarnings] = useState([]);
   
+  // Availability calendar state
+  const [availabilityData, setAvailabilityData] = useState(null);
+  const [loadingAvailability, setLoadingAvailability] = useState(false);
+  const [availabilityError, setAvailabilityError] = useState(null);
+  const [unavailableDates, setUnavailableDates] = useState([]);
+  const [calendarDataFetched, setCalendarDataFetched] = useState(false);
+  
   // Initialize booking widget state from URL params if available
   const [checkIn, setCheckIn] = useState(
     searchParams.get('checkIn') ? new Date(searchParams.get('checkIn')) : null
