@@ -77,32 +77,117 @@ export function DateRangePicker({ checkIn, checkOut, onChange }) {
   );
 }
 
-// Guests Dropdown
-export function GuestsSelect({ value, onChange }) {
+// Guests Dropdown with detailed selector
+export function GuestsSelect({ adults, children, infants, onGuestsChange }) {
+  const [open, setOpen] = useState(false);
+  
+  const totalGuests = adults + children + infants;
+  const displayText = `${adults} Adult${adults > 1 ? 's' : ''} - ${children} Children - ${infants} Infant${infants !== 1 ? 's' : ''}`;
+
+  const updateGuests = (type, value) => {
+    const newGuests = { adults, children, infants };
+    newGuests[type] = Math.max(type === 'adults' ? 1 : 0, value);
+    onGuestsChange(newGuests);
+  };
+
   return (
     <div className="relative">
-      <label htmlFor="guests-select" className="text-sm font-medium text-gray-700 mb-2 block">
+      <label className="text-sm font-medium text-gray-700 mb-2 block">
         Guests
       </label>
-      <div className="relative">
-        <UsersIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-600 pointer-events-none z-10" aria-hidden="true" />
-        <Select 
-          value={value.toString()} 
-          onValueChange={(val) => onChange(parseInt(val))}
-          aria-label="Filter by number of guests"
-        >
-          <SelectTrigger id="guests-select" className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white">
-            <SelectValue placeholder="Select guests" />
-          </SelectTrigger>
-          <SelectContent className="z-[9999]">
-            <SelectItem value="1">1 guest</SelectItem>
-            <SelectItem value="2">2 guests</SelectItem>
-            <SelectItem value="3">3 guests</SelectItem>
-            <SelectItem value="4">4 guests</SelectItem>
-            <SelectItem value="5">5+ guests</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            aria-label="Select guests"
+            className="w-full h-[50px] pl-10 pr-4 border border-gray-200 rounded-lg bg-white justify-start font-normal hover:bg-white hover:border-gray-300"
+          >
+            <UsersIcon className="absolute left-3 w-5 h-5 text-gray-600" aria-hidden="true" />
+            <span className="truncate">{displayText}</span>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[300px] p-4" align="start">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="font-medium">Adults</div>
+                <div className="text-sm text-gray-500">Age 13+</div>
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => updateGuests('adults', adults - 1)}
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 hover:bg-gray-50"
+                  disabled={adults <= 1}
+                >
+                  <span className="text-lg">−</span>
+                </button>
+                <span className="w-8 text-center font-medium">{adults}</span>
+                <button
+                  onClick={() => updateGuests('adults', adults + 1)}
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 hover:bg-gray-50"
+                >
+                  <span className="text-lg">+</span>
+                </button>
+              </div>
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="font-medium">Children</div>
+                <div className="text-sm text-gray-500">Ages 2-12</div>
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => updateGuests('children', children - 1)}
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 hover:bg-gray-50"
+                  disabled={children <= 0}
+                >
+                  <span className="text-lg">−</span>
+                </button>
+                <span className="w-8 text-center font-medium">{children}</span>
+                <button
+                  onClick={() => updateGuests('children', children + 1)}
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 hover:bg-gray-50"
+                >
+                  <span className="text-lg">+</span>
+                </button>
+              </div>
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="font-medium">Infants</div>
+                <div className="text-sm text-gray-500">Under 2</div>
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => updateGuests('infants', infants - 1)}
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 hover:bg-gray-50"
+                  disabled={infants <= 0}
+                >
+                  <span className="text-lg">−</span>
+                </button>
+                <span className="w-8 text-center font-medium">{infants}</span>
+                <button
+                  onClick={() => updateGuests('infants', infants + 1)}
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 hover:bg-gray-50"
+                >
+                  <span className="text-lg">+</span>
+                </button>
+              </div>
+            </div>
+            
+            <Button 
+              onClick={() => setOpen(false)}
+              className="w-full bg-black text-white hover:bg-gray-800 rounded-full"
+            >
+              Save
+            </Button>
+          </div>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
