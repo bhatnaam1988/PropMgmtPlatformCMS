@@ -635,13 +635,18 @@ metadata:
   phase1_integration_test_results: "12/12 new pages passed"
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Homepage - Property showcase"
+    - "Stay Page - Property listings with filters"
+    - "Property Detail Page - Full property information"
+    - "Checkout Page - Payment and booking form"
   stuck_tasks: []
-  test_all: false
+  test_all: true
   test_priority: "high_first"
   uplisting_api_fix_applied: true
   needs_comprehensive_backend_testing: false
   uplisting_fix_testing_complete: true
+  needs_frontend_testing: true
 
 agent_communication:
   - agent: "main"
