@@ -315,6 +315,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ TESTED: Homepage loads correctly with hero section 'Swiss Alpine Journey'. Property showcase displays 3 properties. 'Plan Your Journey' button navigation works properly to /stay page. Hero section, navigation, and footer all functional. Responsive design tested across mobile/tablet/desktop viewports."
+      - working: true
+        agent: "testing"
+        comment: "✅ RE-TESTED AFTER UPLISTING FIX: Homepage property showcase now displays real data from Uplisting API. Found 3 property cards with actual property images and information. 'View All Properties' CTA button functional. Hero section 'Swiss Alpine Journey' with tagline displays correctly. No placeholder data detected - all properties showing real Uplisting content."
 
   - task: "Stay Page - Property listings with filters"
     implemented: true
