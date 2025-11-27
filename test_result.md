@@ -650,18 +650,15 @@ metadata:
   uplisting_fix_frontend_test_results: "4/4 critical flows passed"
 
 test_plan:
-  current_focus:
-    - "Homepage - Property showcase"
-    - "Stay Page - Property listings with filters"
-    - "Property Detail Page - Full property information"
-    - "Checkout Page - Payment and booking form"
+  current_focus: []
   stuck_tasks: []
-  test_all: true
+  test_all: false
   test_priority: "high_first"
   uplisting_api_fix_applied: true
   needs_comprehensive_backend_testing: false
   uplisting_fix_testing_complete: true
-  needs_frontend_testing: true
+  needs_frontend_testing: false
+  uplisting_fix_frontend_testing_complete: true
 
 agent_communication:
   - agent: "main"
