@@ -148,6 +148,21 @@ code {
   width: 100%;
 }
 
+/* Unavailable dates styling - strikethrough and not selectable */
+.react-datepicker__day.unavailable-date {
+  text-decoration: line-through;
+  color: #d1d5db !important;
+  background-color: #f9fafb !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+.react-datepicker__day.unavailable-date:hover {
+  background-color: #f9fafb !important;
+  color: #d1d5db !important;
+}
+
+
 .react-datepicker__input-container {
   width: 100%;
 }
