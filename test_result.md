@@ -333,6 +333,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ TESTED: Stay page fully functional with title 'Book your Stay'. 3 property listings load correctly. All filters working: location (Grächen), date picker with range selection, guest selection (1-5+ guests), bedroom filter. Property cards show constraint badges (6 visible), pricing updates with date selection. Filter interactions affect property display appropriately."
+      - working: true
+        agent: "testing"
+        comment: "✅ RE-TESTED AFTER UPLISTING FIX: Stay page shows '3 listings found' with real Uplisting data. All filters functional: date picker visible and working, guest selector, bedroom filter, location filter. Property cards display real property information. CHF pricing visible on property cards indicating successful API integration. All 3 properties (84656, 174947, 186289) accessible and displaying correctly."
 
   - task: "Property Detail Page - Full property information"
     implemented: true
