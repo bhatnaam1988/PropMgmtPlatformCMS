@@ -126,7 +126,7 @@ backend:
     file: "/app/app/api/properties/route.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
@@ -134,6 +134,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ TESTED: API returns 3 properties with complete data structure. All properties include fees and taxes information. Response format correct with 'properties' array. Property IDs 84656, 174947 confirmed available for testing."
+      - working: true
+        agent: "main"
+        comment: "✅ CRITICAL FIX APPLIED: Fixed 401 Unauthorized error caused by double base64 encoding of API key. The UPLISTING_API_KEY is already base64 encoded (YzU5NjQ2YTUtYmRjYy00NTZjLWJiNGMtNWUxZjA0NzViMjU0), but code was encoding it again with Buffer.from().toString('base64'). Updated /app/lib/uplisting.js to use the pre-encoded key directly: Authorization: Basic ${UPLISTING_API_KEY}. Also updated Client ID to correct value: f4fd1410-9636-013e-aeff-2a9672a658e7. Local test confirmed: API now returns 3 properties successfully. Frontend display verified via screenshot - stay page showing all 3 properties with pricing. Needs comprehensive backend testing to validate all Uplisting endpoints."
 
   - task: "Properties API - Single property details"
     implemented: true
