@@ -140,6 +140,14 @@ function StayPageContent() {
       if (!hasAllAmenities) return false;
     }
     
+    // Filter by availability - if dates are selected, filter out unavailable properties
+    if (nights > 0) {
+      const pricing = pricingData[property.id];
+      if (pricing && !pricing.available) {
+        return false;
+      }
+    }
+    
     return true;
   });
 
