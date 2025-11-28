@@ -56,6 +56,7 @@ export default function PropertyDetailPage() {
     infants: parseInt(searchParams.get('infants') || '0')
   });
   const [showGuestPicker, setShowGuestPicker] = useState(false);
+  const [guestValidationError, setGuestValidationError] = useState(null);
 
   useEffect(() => {
     fetchProperty();
