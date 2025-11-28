@@ -6,8 +6,8 @@ Complete guide to configure Stripe webhooks for your deployed application.
 
 ## Overview
 
-**Your Application URL:** `https://config-relay.preview.emergentagent.com`
-**Webhook Endpoint:** `https://config-relay.preview.emergentagent.com/api/stripe/webhook`
+**Your Application URL:** `https://rental-fix.preview.emergentagent.com`
+**Webhook Endpoint:** `https://rental-fix.preview.emergentagent.com/api/stripe/webhook`
 **Mode:** Test Mode (for UAT testing)
 
 ---
@@ -44,7 +44,7 @@ Complete guide to configure Stripe webhooks for your deployed application.
 
 2. **Enter Endpoint URL:**
    ```
-   https://config-relay.preview.emergentagent.com/api/stripe/webhook
+   https://rental-fix.preview.emergentagent.com/api/stripe/webhook
    ```
    
    **Important:** 
@@ -197,7 +197,7 @@ Stripe provides a built-in testing tool:
 The best way to verify everything works:
 
 1. **Make a Test Booking:**
-   - Go to: `https://config-relay.preview.emergentagent.com/stay`
+   - Go to: `https://rental-fix.preview.emergentagent.com/stay`
    - Select a property and dates
    - Proceed to checkout
 
@@ -353,7 +353,7 @@ When ready to accept real payments:
    - Generate new Live mode API keys
 
 2. **Create New Webhook for Live Mode:**
-   - Same URL: `https://config-relay.preview.emergentagent.com/api/stripe/webhook`
+   - Same URL: `https://rental-fix.preview.emergentagent.com/api/stripe/webhook`
    - Same events: `payment_intent.succeeded`, etc.
    - Get new webhook signing secret
 
@@ -372,7 +372,7 @@ When ready to accept real payments:
 
 ### Webhook URL:
 ```
-https://config-relay.preview.emergentagent.com/api/stripe/webhook
+https://rental-fix.preview.emergentagent.com/api/stripe/webhook
 ```
 
 ### Required Events:

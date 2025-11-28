@@ -26,7 +26,7 @@ All website pages have been prepared for Sanity CMS management. This guide expla
 
 ### Step 1: Access Sanity Studio
 
-1. Go to: `https://config-relay.preview.emergentagent.com/studio`
+1. Go to: `https://rental-fix.preview.emergentagent.com/studio`
 2. Login with your credentials
 3. Click **"Content"** in the left sidebar
 

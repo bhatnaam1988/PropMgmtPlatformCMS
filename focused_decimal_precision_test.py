@@ -13,7 +13,7 @@ import sys
 from datetime import datetime, timedelta
 
 # Configuration
-BASE_URL = "https://config-relay.preview.emergentagent.com"
+BASE_URL = "https://rental-fix.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
 
 # Test property ID from review request

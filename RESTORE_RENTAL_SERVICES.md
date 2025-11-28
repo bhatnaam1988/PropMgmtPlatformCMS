@@ -22,7 +22,7 @@ Sanity keeps document history and may allow you to restore deleted documents.
    - If found, you can view previous versions and restore
 
 3. **Alternative - Vision Tool:**
-   - Open Sanity Studio: `https://config-relay.preview.emergentagent.com/studio`
+   - Open Sanity Studio: `https://rental-fix.preview.emergentagent.com/studio`
    - Click on **"Vision"** tab
    - Run this query to check if document exists in history:
      ```groq
@@ -68,7 +68,7 @@ If the migration script doesn't work due to token permissions, you can manually 
 ### Steps:
 
 1. **Open Sanity Studio:**
-   - Go to: `https://config-relay.preview.emergentagent.com/studio`
+   - Go to: `https://rental-fix.preview.emergentagent.com/studio`
 
 2. **Create New Document:**
    - Click **"+"** or **"Create"** button
@@ -156,7 +156,7 @@ If the above options don't work:
 3. ✅ All content is showing from fallback
 
 **To verify:**
-- Visit: `https://config-relay.preview.emergentagent.com/rental-services`
+- Visit: `https://rental-fix.preview.emergentagent.com/rental-services`
 - The page should load normally with all content
 
 ---
