@@ -628,7 +628,13 @@ export default function PropertyDetailPage() {
                 <div className="mb-6 relative">
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Guests</label>
                   <button
-                    onClick={() => setShowGuestPicker(!showGuestPicker)}
+                    onClick={() => {
+                      setShowGuestPicker(!showGuestPicker);
+                      // Clear error when opening picker
+                      if (!showGuestPicker) {
+                        setGuestValidationError(null);
+                      }
+                    }}
                     className="w-full flex items-center justify-between px-4 py-3 border border-gray-200 rounded-lg text-left"
                   >
                     <span>{totalGuests} guest{totalGuests !== 1 ? 's' : ''}</span>
