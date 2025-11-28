@@ -56,7 +56,7 @@ export default function SearchBar({ className = '' }) {
   const guestsText = `${guests.adults} Adult${guests.adults > 1 ? 's' : ''} · ${guests.children} Children · ${guests.infants} Infant${guests.infants !== 1 ? 's' : ''}`;
 
   return (
-    <div className={`bg-white rounded-2xl shadow-2xl p-5 ${className}`}>
+    <div ref={searchBarRef} className={`bg-white rounded-2xl shadow-2xl p-5 ${className}`}>
       <div className="flex flex-col lg:flex-row gap-2 items-stretch">
         {/* Location */}
         <div className="relative lg:flex-[1.2] min-w-0">
