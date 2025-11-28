@@ -705,11 +705,32 @@ export default function PropertyDetailPage() {
                         </div>
 
                         <Button
-                          onClick={() => setShowGuestPicker(false)}
+                          onClick={() => {
+                            const totalGuests = guests.adults + guests.children + guests.infants;
+                            const maxCapacity = property?.maximum_capacity || 0;
+                            
+                            // Validate guest count
+                            if (totalGuests > maxCapacity) {
+                              setGuestValidationError(`This property can accommodate a maximum of ${maxCapacity} guests. You have selected ${totalGuests} guests.`);
+                            } else {
+                              setGuestValidationError(null);
+                              setShowGuestPicker(false);
+                            }
+                          }}
                           className="w-full bg-black text-white hover:bg-gray-800 rounded-full"
                         >
                           Save
                         </Button>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Guest Validation Error */}
+                  {guestValidationError && (
+                    <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                      <div className="flex items-start gap-2">
+                        <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                        <span>{guestValidationError}</span>
                       </div>
                     </div>
                   )}
