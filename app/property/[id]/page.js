@@ -741,7 +741,7 @@ export default function PropertyDetailPage() {
                       {property.fees?.find(f => f.attributes?.label === 'cleaning_fee' && f.attributes?.enabled) && (
                         <div className="flex items-start gap-2">
                           <span className="font-medium">Cleaning Fee:</span>
-                          <span>CHF {property.fees.find(f => f.attributes?.label === 'cleaning_fee').attributes.amount}</span>
+                          <span>CHF {formatCurrency(property.fees.find(f => f.attributes?.label === 'cleaning_fee').attributes.amount)}</span>
                         </div>
                       )}
                       
