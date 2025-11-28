@@ -527,8 +527,29 @@ export default function PropertyDetailPage() {
                       selected={checkIn}
                       onChange={(dates) => {
                         const [start, end] = dates;
+                        
+                        // When check-in is selected (start exists but end doesn't yet)
+                        if (start && !end && start !== checkIn) {
+                          const dateStr = formatDateLocal(start);
+                          const dayData = availabilityMap[dateStr];
+                          const minStay = dayData?.minStay || 1;
+                          
+                          // Calculate minimum check-out date
+                          const minCheckOut = new Date(start);
+                          minCheckOut.setDate(minCheckOut.getDate() + minStay);
+                          
+                          setMinimumStay(minStay);
+                          setMinCheckOutDate(minCheckOut);
+                        }
+                        
                         setCheckIn(start);
                         setCheckOut(end);
+                        
+                        // Reset minimum stay when both dates are cleared
+                        if (!start && !end) {
+                          setMinimumStay(1);
+                          setMinCheckOutDate(null);
+                        }
                       }}
                       startDate={checkIn}
                       endDate={checkOut}
@@ -538,6 +559,36 @@ export default function PropertyDetailPage() {
                       dateFormat="MMM dd"
                       minDate={new Date()}
                       excludeDates={unavailableDates}
+                      filterDate={(date) => {
+                        // Always exclude unavailable dates
+                        const isUnavailable = unavailableDates.some(
+                          unavailableDate => 
+                            unavailableDate.getDate() === date.getDate() &&
+                            unavailableDate.getMonth() === date.getMonth() &&
+                            unavailableDate.getFullYear() === date.getFullYear()
+                        );
+                        if (isUnavailable) return false;
+                        
+                        // If check-in is selected, apply minimum stay rule for check-out
+                        if (checkIn && !checkOut && minCheckOutDate) {
+                          // Disable dates before minimum check-out date
+                          if (date < minCheckOutDate) return false;
+                          
+                          // Check if date is closed for departure
+                          const dateStr = formatDateLocal(date);
+                          const dayData = availabilityMap[dateStr];
+                          if (dayData?.closedForDeparture) return false;
+                        }
+                        
+                        // If selecting check-in, check if closed for arrival
+                        if (!checkIn) {
+                          const dateStr = formatDateLocal(date);
+                          const dayData = availabilityMap[dateStr];
+                          if (dayData?.closedForArrival) return false;
+                        }
+                        
+                        return true;
+                      }}
                       onCalendarOpen={fetchCalendarAvailability}
                       disabled={loadingAvailability}
                       dayClassName={(date) => {
@@ -547,7 +598,15 @@ export default function PropertyDetailPage() {
                             unavailableDate.getMonth() === date.getMonth() &&
                             unavailableDate.getFullYear() === date.getFullYear()
                         );
-                        return isUnavailable ? 'unavailable-date' : undefined;
+                        
+                        if (isUnavailable) return 'unavailable-date';
+                        
+                        // Mark dates below minimum stay when check-in is selected
+                        if (checkIn && !checkOut && minCheckOutDate && date < minCheckOutDate) {
+                          return 'below-minimum-stay';
+                        }
+                        
+                        return undefined;
                       }}
                       popperClassName="z-[9999]"
                     />
