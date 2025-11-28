@@ -315,7 +315,7 @@ export default function PropertyDetailPage() {
                   </span>
                   <span className="flex items-center gap-1 bg-black text-white px-3 py-1 rounded-full text-sm">
                     <Star className="w-4 h-4 fill-current" />
-                    4.9
+                    4.9 by verified Airbnb guests
                   </span>
                 </div>
                 
