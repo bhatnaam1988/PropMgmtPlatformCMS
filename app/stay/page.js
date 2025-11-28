@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Home } from 'lucide-react';
@@ -17,6 +17,7 @@ import {
 
 function StayPageContent() {
   const searchParams = useSearchParams();
+  const filtersRef = useRef(null);
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pricingData, setPricingData] = useState({});
