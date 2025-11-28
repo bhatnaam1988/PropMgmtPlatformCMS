@@ -52,8 +52,8 @@ export default function PropertyCard({ property, priceDisplay, showFallbackWarni
   if (cleaningFee > 0) {
     constraintBadges.push({
       icon: Sparkles,
-      text: `CHF ${cleaningFee} cleaning`,
-      tooltip: `One-time cleaning fee: CHF ${cleaningFee}`
+      text: `CHF ${formatCurrency(cleaningFee)} cleaning`,
+      tooltip: `One-time cleaning fee: CHF ${formatCurrency(cleaningFee)}`
     });
   }
 
