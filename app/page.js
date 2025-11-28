@@ -133,36 +133,38 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Activities Section */}
-      <section className="py-20" aria-labelledby="activities-heading">
-        <div className="container mx-auto px-4">
-          <h2 id="activities-heading" className="sr-only">Activities and Experiences</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {data.activitiesSection?.activities?.map((activity, index) => (
-              <article key={index} className="text-center p-8">
-                <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                  {index === 0 ? (
-                    <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                      <path d="M3 18l6-6 4 4 8-8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  ) : index === 1 ? (
-                    <Sparkles className="w-12 h-12" aria-hidden="true" />
-                  ) : (
-                    <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                      <path d="M3 12h18M3 6h18M3 18h18" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
-                  )}
-                </div>
-                <h3 className="text-xl font-medium mb-4">{activity.title}</h3>
-                <p className="text-gray-600 mb-4">{activity.description}</p>
-                <Link href={activity.link || '/explore/travel-tips'} className="text-black hover:underline font-medium">
-                  Learn More →
-                </Link>
-              </article>
-            ))}
+      {/* Activities Section - Only render if activities exist */}
+      {data.activitiesSection?.activities && data.activitiesSection.activities.length > 0 && (
+        <section className="py-20" aria-labelledby="activities-heading">
+          <div className="container mx-auto px-4">
+            <h2 id="activities-heading" className="sr-only">Activities and Experiences</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {data.activitiesSection.activities.map((activity, index) => (
+                <article key={index} className="text-center p-8">
+                  <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
+                    {index === 0 ? (
+                      <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path d="M3 18l6-6 4 4 8-8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    ) : index === 1 ? (
+                      <Sparkles className="w-12 h-12" aria-hidden="true" />
+                    ) : (
+                      <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path d="M3 12h18M3 6h18M3 18h18" strokeWidth="2" strokeLinecap="round"/>
+                      </svg>
+                    )}
+                  </div>
+                  <h3 className="text-xl font-medium mb-4">{activity.title}</h3>
+                  <p className="text-gray-600 mb-4">{activity.description}</p>
+                  <Link href={activity.link || '/explore/travel-tips'} className="text-black hover:underline font-medium">
+                    Learn More →
+                  </Link>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Newsletter Section - Client Component */}
       <Newsletter 
