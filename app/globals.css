@@ -162,6 +162,20 @@ code {
   color: #d1d5db !important;
 }
 
+/* Below minimum stay dates - when check-in is selected */
+.react-datepicker__day.below-minimum-stay {
+  text-decoration: line-through;
+  color: #fca5a5 !important;
+  background-color: #fef2f2 !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+.react-datepicker__day.below-minimum-stay:hover {
+  background-color: #fef2f2 !important;
+  color: #fca5a5 !important;
+}
+
 
 .react-datepicker__input-container {
   width: 100%;
