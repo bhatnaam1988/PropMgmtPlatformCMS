@@ -757,7 +757,7 @@ export default function PropertyDetailPage() {
                       {property.taxes?.find(t => t.attributes?.label === 'per_person_per_night' && t.attributes?.amount > 0) && (
                         <div className="flex items-start gap-2">
                           <span className="font-medium">Tourist Tax:</span>
-                          <span>CHF {property.taxes.find(t => t.attributes?.label === 'per_person_per_night').attributes.amount} per guest per night</span>
+                          <span>CHF {formatCurrency(property.taxes.find(t => t.attributes?.label === 'per_person_per_night').attributes.amount)} per guest per night</span>
                         </div>
                       )}
                     </div>
