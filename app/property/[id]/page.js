@@ -669,12 +669,12 @@ export default function PropertyDetailPage() {
                     
                     <div className="flex justify-between">
                       <span className="text-gray-700">
-                        {currency} {basePrice} x {pricingData.totalNights} night{pricingData.totalNights > 1 ? 's' : ''}
+                        {currency} {formatCurrency(basePrice)} x {pricingData.totalNights} night{pricingData.totalNights > 1 ? 's' : ''}
                         {pricingData.totalNights !== nights && (
                           <span className="text-xs text-yellow-700 ml-1">({nights} nights selected)</span>
                         )}
                       </span>
-                      <span className="font-medium">{currency} {Math.round(totalAccommodation)}</span>
+                      <span className="font-medium">{currency} {formatCurrency(totalAccommodation)}</span>
                     </div>
                     {pricingData.totalNights !== nights && (
                       <p className="text-xs text-yellow-700">
@@ -683,7 +683,7 @@ export default function PropertyDetailPage() {
                     )}
                     <div className="flex justify-between pt-2 border-t border-gray-200">
                       <span className="font-medium">Total</span>
-                      <span className="font-medium">{currency} {Math.round(totalAccommodation)}</span>
+                      <span className="font-medium">{currency} {formatCurrency(totalAccommodation)}</span>
                     </div>
                     <p className="text-xs text-gray-500 mt-2">
                       Service fees and taxes will be added at checkout
