@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Users, Bed, Bath, Calendar, Clock, Sparkles 
 import { Button } from '@/components/ui/button';
 import { formatDateLocal } from '@/lib/uplisting';
 import { optimizeUplistingImage, IMAGE_SIZES, getImageSizes } from '@/lib/image-optimizer';
+import { formatCurrency } from '@/lib/currency-formatter';
 
 export default function PropertyCard({ property, priceDisplay, showFallbackWarning, isUnavailable, filters, nights }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
