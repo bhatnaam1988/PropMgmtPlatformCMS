@@ -166,22 +166,24 @@ export default async function About() {
         </section>
       )}
 
-      {/* Stats - Content from Sanity */}
-      <section className="py-16" aria-labelledby="stats-heading">
-        <div className="container mx-auto px-4">
-          <h2 id="stats-heading" className="sr-only">Our Achievements</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {data.statsSection?.stats?.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-medium text-primary mb-2" aria-label={`${stat.number} ${stat.label}`}>
-                  {stat.number}
+      {/* Stats - Content from Sanity - Only render if stats exist */}
+      {data.statsSection?.stats && data.statsSection.stats.length > 0 && (
+        <section className="py-16" aria-labelledby="stats-heading">
+          <div className="container mx-auto px-4">
+            <h2 id="stats-heading" className="sr-only">Our Achievements</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {data.statsSection.stats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-3xl md:text-4xl font-medium text-primary mb-2" aria-label={`${stat.number} ${stat.label}`}>
+                    {stat.number}
+                  </div>
+                  <div className="text-muted-foreground">{stat.label}</div>
                 </div>
-                <div className="text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Why Choose Us - Content from Sanity */}
       <section className="py-16 bg-muted/50" aria-labelledby="why-choose-heading">
