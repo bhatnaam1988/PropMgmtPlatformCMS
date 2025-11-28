@@ -413,7 +413,7 @@ export default function PropertyDetailPage() {
 
             {/* Right Column - Booking Widget */}
             <div className="lg:col-span-1">
-              <div className="sticky top-28 border border-gray-200 rounded-2xl p-6 shadow-lg">
+              <div ref={bookingWidgetRef} className="sticky top-28 border border-gray-200 rounded-2xl p-6 shadow-lg">
                 
                 {/* Validation Errors */}
                 {validationErrors.length > 0 && (
