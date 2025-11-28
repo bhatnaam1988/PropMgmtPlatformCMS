@@ -116,9 +116,6 @@ export function Header() {
             </DropdownMenu>
           </nav>
 
-          {/* Right side spacer for balance */}
-          <div className="hidden md:block w-[200px]" aria-hidden="true"></div>
-
           {/* Mobile Menu Button and Logo */}
           <div className="flex md:hidden items-center justify-between w-full">
             <button
