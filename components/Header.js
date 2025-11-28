@@ -48,12 +48,16 @@ export function Header() {
 
           {/* Desktop Navigation - Left Aligned */}
           <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
-            <Link
+            <a
               href="/stay"
-              className="text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = '/stay';
+              }}
+              className="text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1 cursor-pointer"
             >
               Stay
-            </Link>
+            </a>
             <DropdownMenu>
               <DropdownMenuTrigger 
                 className="flex items-center gap-1 text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
