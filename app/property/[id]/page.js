@@ -611,6 +611,16 @@ export default function PropertyDetailPage() {
                       popperClassName="z-[9999]"
                     />
                   </div>
+                  
+                  {/* Minimum Stay Info */}
+                  {checkIn && !checkOut && minimumStay > 1 && (
+                    <div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700">
+                      <div className="flex items-start gap-2">
+                        <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                        <span>Minimum stay: {minimumStay} night{minimumStay > 1 ? 's' : ''} from this check-in date</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Guest Selection */}
