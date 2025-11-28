@@ -185,46 +185,50 @@ export default async function About() {
         </section>
       )}
 
-      {/* Why Choose Us - Content from Sanity */}
-      <section className="py-16 bg-muted/50" aria-labelledby="why-choose-heading">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
-              <Image
-                src={data.whyChooseSection?.image?.asset?.url || "https://images.unsplash.com/photo-1578416043044-298e3d1da20e?w=1080"}
-                alt={data.whyChooseSection?.image?.alt || "Cozy mountain chalet interior"}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-            <div>
-              <h2 id="why-choose-heading" className="mb-6">{data.whyChooseSection?.heading}</h2>
-              <div className="space-y-6">
-                {data.whyChooseSection?.points?.map((point, index) => (
-                  <article key={index} className="flex gap-4">
-                    <div className="flex-shrink-0">
-                      <Star className="h-6 w-6 text-primary" aria-hidden="true" />
-                    </div>
-                    <div>
-                      <h3 className="mb-2">{point.title}</h3>
-                      <p className="text-muted-foreground">{point.description}</p>
-                    </div>
-                  </article>
-                ))}
+      {/* Why Choose Us - Content from Sanity - Only render if points exist */}
+      {data.whyChooseSection?.points && data.whyChooseSection.points.length > 0 && (
+        <section className="py-16 bg-muted/50" aria-labelledby="why-choose-heading">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+                <Image
+                  src={data.whyChooseSection?.image?.asset?.url || "https://images.unsplash.com/photo-1578416043044-298e3d1da20e?w=1080"}
+                  alt={data.whyChooseSection?.image?.alt || "Cozy mountain chalet interior"}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
-              {/* Internal Links - Content from Sanity */}
-              <div className="mt-8 space-y-2">
-                {data.whyChooseSection?.links?.map((link, index) => (
-                  <Link key={index} href={link.url} className="block text-black hover:underline font-medium">
-                    {link.text}
-                  </Link>
-                ))}
+              <div>
+                <h2 id="why-choose-heading" className="mb-6">{data.whyChooseSection?.heading}</h2>
+                <div className="space-y-6">
+                  {data.whyChooseSection.points.map((point, index) => (
+                    <article key={index} className="flex gap-4">
+                      <div className="flex-shrink-0">
+                        <Star className="h-6 w-6 text-primary" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <h3 className="mb-2">{point.title}</h3>
+                        <p className="text-muted-foreground">{point.description}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+                {/* Internal Links - Content from Sanity - Only render if links exist */}
+                {data.whyChooseSection?.links && data.whyChooseSection.links.length > 0 && (
+                  <div className="mt-8 space-y-2">
+                    {data.whyChooseSection.links.map((link, index) => (
+                      <Link key={index} href={link.url} className="block text-black hover:underline font-medium">
+                        {link.text}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Final CTA - Content from Sanity */}
       <section className="py-16" aria-labelledby="cta-heading">
