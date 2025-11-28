@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -10,6 +10,7 @@ import { formatDateLocal } from '@/lib/uplisting';
 
 export default function SearchBar({ className = '' }) {
   const router = useRouter();
+  const searchBarRef = useRef(null);
   const [location, setLocation] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -22,6 +23,21 @@ export default function SearchBar({ className = '' }) {
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   
   const locations = ['Grächen, Wallis', 'Verbier', 'Zermatt', 'Saas-Fee'];
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
+        setShowGuestPicker(false);
+        setShowLocationDropdown(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleSearch = () => {
     const params = new URLSearchParams();
