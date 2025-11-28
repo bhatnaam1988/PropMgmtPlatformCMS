@@ -720,7 +720,7 @@ export default function PropertyDetailPage() {
                         <div className="flex items-start gap-2">
                           <Info className="w-4 h-4 mt-0.5" />
                           <span>
-                            Extra guest fee: CHF {property.fees.find(f => f.attributes?.label === 'extra_guest_charge').attributes.amount} 
+                            Extra guest fee: CHF {formatCurrency(property.fees.find(f => f.attributes?.label === 'extra_guest_charge').attributes.amount)} 
                             {' '}per guest beyond {property.fees.find(f => f.attributes?.label === 'extra_guest_charge').attributes.guests_included}
                           </span>
                         </div>
