@@ -155,13 +155,17 @@ export function Header() {
                 <Home className="h-4 w-4" aria-hidden="true" />
                 <span>Swiss Alpine Journey</span>
               </Link>
-              <Link
+              <a
                 href="/stay"
-                className="text-foreground hover:text-primary transition-colors py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
-                onClick={() => setIsMenuOpen(false)}
+                className="text-foreground hover:text-primary transition-colors py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMenuOpen(false);
+                  window.location.href = '/stay';
+                }}
               >
                 Stay
-              </Link>
+              </a>
               <Link
                 href="/blog"
                 className="text-foreground hover:text-primary transition-colors py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
