@@ -135,34 +135,36 @@ export default async function About() {
         </div>
       </section>
 
-      {/* Values - Content from Sanity */}
-      <section className="py-16 bg-muted/50" aria-labelledby="values-heading">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 id="values-heading" className="mb-4">{data.valuesSection?.heading}</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              {data.valuesSection?.description}
-            </p>
+      {/* Values - Content from Sanity - Only render if values exist */}
+      {data.valuesSection?.values && data.valuesSection.values.length > 0 && (
+        <section className="py-16 bg-muted/50" aria-labelledby="values-heading">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 id="values-heading" className="mb-4">{data.valuesSection?.heading}</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                {data.valuesSection?.description}
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {data.valuesSection.values.map((value, index) => {
+                const IconComponent = Icons[value.icon] || Icons.Heart;
+                return (
+                  <Card key={index} className="text-center">
+                    <CardContent className="p-6">
+                      <div className="flex justify-center mb-3">
+                        <IconComponent className="h-8 w-8 text-primary" aria-hidden="true" />
+                      </div>
+                      <h3 className="mb-3">{value.title}</h3>
+                      <p className="text-muted-foreground text-sm">{value.description}</p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {data.valuesSection?.values?.map((value, index) => {
-              const IconComponent = Icons[value.icon] || Icons.Heart;
-              return (
-                <Card key={index} className="text-center">
-                  <CardContent className="p-6">
-                    <div className="flex justify-center mb-3">
-                      <IconComponent className="h-8 w-8 text-primary" aria-hidden="true" />
-                    </div>
-                    <h3 className="mb-3">{value.title}</h3>
-                    <p className="text-muted-foreground text-sm">{value.description}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Stats - Content from Sanity */}
       <section className="py-16" aria-labelledby="stats-heading">
