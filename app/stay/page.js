@@ -289,11 +289,11 @@ function StayPageContent() {
                 if (pricingLoading) {
                   priceDisplay = 'Loading...';
                 } else if (nights > 0 && pricing?.total) {
-                  priceDisplay = `${currency} ${pricing.total} for ${nights} night${nights > 1 ? 's' : ''}`;
+                  priceDisplay = `${currency} ${formatCurrency(pricing.total)} for ${nights} night${nights > 1 ? 's' : ''}`;
                 } else if (pricing?.averageRate) {
-                  priceDisplay = `${currency} ${pricing.averageRate}/night`;
+                  priceDisplay = `${currency} ${formatCurrency(pricing.averageRate)}/night`;
                 } else {
-                  priceDisplay = `${currency} 300/night`;
+                  priceDisplay = `${currency} ${formatCurrency(300)}/night`;
                 }
                 
                 const showFallbackWarning = pricing?.useFallback;
