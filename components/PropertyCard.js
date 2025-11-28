@@ -184,7 +184,7 @@ export default function PropertyCard({ property, priceDisplay, showFallbackWarni
         {extraGuestFee && (
           <p className="text-xs text-gray-600 mb-2 flex items-center gap-1">
             <Users className="w-3 h-3" />
-            Extra guest fee: CHF {extraGuestFee.attributes.amount} per guest after {extraGuestFee.attributes.guests_included}
+            Extra guest fee: CHF {formatCurrency(extraGuestFee.attributes.amount)} per guest after {extraGuestFee.attributes.guests_included}
           </p>
         )}
         
