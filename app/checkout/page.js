@@ -560,15 +560,15 @@ function CheckoutContent() {
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-700">
-                    {currency} {pricing?.averageRate || 0} x {nights} night{nights > 1 ? 's' : ''}
+                    {currency} {formatCurrency(pricing?.averageRate || 0)} x {nights} night{nights > 1 ? 's' : ''}
                   </span>
-                  <span className="font-medium">{currency} {accommodationTotal}</span>
+                  <span className="font-medium">{currency} {formatCurrency(accommodationTotal)}</span>
                 </div>
 
                 {cleaningFee > 0 && (
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-700">Cleaning fee</span>
-                    <span className="font-medium">{currency} {cleaningFee}</span>
+                    <span className="font-medium">{currency} {formatCurrency(cleaningFee)}</span>
                   </div>
                 )}
 
@@ -580,13 +580,13 @@ function CheckoutContent() {
                         ({calculatedPricing.guests} guests)
                       </span>
                     </span>
-                    <span className="font-medium">{currency} {calculatedPricing.extraGuestFee}</span>
+                    <span className="font-medium">{currency} {formatCurrency(calculatedPricing.extraGuestFee)}</span>
                   </div>
                 )}
 
                 <div className="flex justify-between text-sm border-t border-gray-100 pt-2">
                   <span className="text-gray-700">Subtotal</span>
-                  <span className="font-medium">{currency} {subtotal}</span>
+                  <span className="font-medium">{currency} {formatCurrency(subtotal)}</span>
                 </div>
 
                 {/* Dynamic Tax Breakdown */}
@@ -595,33 +595,33 @@ function CheckoutContent() {
                     <div key={index} className="flex justify-between text-sm">
                       <span className="text-gray-700">
                         {tax.name}
-                        {tax.type === 'percentage' && ` (${tax.rate}%)`}
+                        {tax.type === 'percentage' && ` (${formatCurrency(tax.rate)}%)`}
                         {tax.type === 'per_person_per_night' && (
                           <span className="text-xs text-gray-500 block">
-                            ({tax.guests} guests × {tax.nights} nights × {currency} {tax.rate})
+                            ({tax.guests} guests × {tax.nights} nights × {currency} {formatCurrency(tax.rate)})
                           </span>
                         )}
                         {tax.type === 'per_night' && (
                           <span className="text-xs text-gray-500 block">
-                            ({tax.nights} nights × {currency} {tax.rate})
+                            ({tax.nights} nights × {currency} {formatCurrency(tax.rate)})
                           </span>
                         )}
                       </span>
-                      <span className="font-medium">{currency} {tax.amount}</span>
+                      <span className="font-medium">{currency} {formatCurrency(tax.amount)}</span>
                     </div>
                   ))
                 ) : (
                   totalTax > 0 && (
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-700">Taxes</span>
-                      <span className="font-medium">{currency} {totalTax}</span>
+                      <span className="font-medium">{currency} {formatCurrency(totalTax)}</span>
                     </div>
                   )
                 )}
 
                 <div className="flex justify-between pt-3 border-t border-gray-200">
                   <span className="font-medium text-lg">Total</span>
-                  <span className="font-medium text-lg">{currency} {grandTotal}</span>
+                  <span className="font-medium text-lg">{currency} {formatCurrency(grandTotal)}</span>
                 </div>
               </div>
 
