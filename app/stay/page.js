@@ -47,6 +47,25 @@ function StayPageContent() {
     }
   }, [properties, filters.checkIn, filters.checkOut]);
 
+  // Close all dropdowns when clicking outside the filter area
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (filtersRef.current && !filtersRef.current.contains(event.target)) {
+        // The shadcn Popover components handle their own click-outside
+        // This is mainly for the DatePicker which might need manual handling
+        const datepickerPopper = document.querySelector('.react-datepicker-popper');
+        if (datepickerPopper && !datepickerPopper.contains(event.target)) {
+          // DatePicker will close automatically when clicking outside
+        }
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   async function fetchProperties() {
     try {
       const res = await fetch('/api/properties');
