@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -22,6 +22,7 @@ export default function PropertyDetailPage() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const bookingWidgetRef = useRef(null);
   
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
