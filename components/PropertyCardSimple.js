@@ -27,7 +27,7 @@ export default function PropertyCardSimple({ property }) {
   };
 
   return (
-    <div className="group">
+    <Link href={`/property/${property.id}`} className="block group cursor-pointer">
       <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
         <Image
           src={optimizeUplistingImage(
@@ -91,11 +91,9 @@ export default function PropertyCardSimple({ property }) {
       <p className="text-sm text-gray-600 mb-4">
         {property.address?.street || 'Central location'}
       </p>
-      <Link href={`/property/${property.id}`}>
-        <Button variant="outline" className="w-full rounded-full">
-          View Details
-        </Button>
-      </Link>
-    </div>
+      <Button variant="outline" className="w-full rounded-full pointer-events-none">
+        View Details
+      </Button>
+    </Link>
   );
 }
