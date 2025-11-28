@@ -82,23 +82,30 @@ export default function ContactForm({ content }) {
               <CardContent className="p-6">
                 <h2 className="mb-6">Contact Info</h2>
                 <div className="space-y-6">
-                  <div className="flex items-start gap-3">
-                    <Phone className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium">Phone</p>
-                      <p className="text-muted-foreground">{content.contactInfo.phone}</p>
+                  {/* Phone - Only render if phone exists */}
+                  {content.contactInfo?.phone && (
+                    <div className="flex items-start gap-3">
+                      <Phone className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                      <div>
+                        <p className="font-medium">Phone</p>
+                        <p className="text-muted-foreground">{content.contactInfo.phone}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                   
-                  <div className="flex items-start gap-3">
-                    <Mail className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium">Email</p>
-                      <p className="text-muted-foreground break-all">{content.contactInfo.email}</p>
+                  {/* Email - Only render if email exists */}
+                  {content.contactInfo?.email && (
+                    <div className="flex items-start gap-3">
+                      <Mail className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                      <div>
+                        <p className="font-medium">Email</p>
+                        <p className="text-muted-foreground break-all">{content.contactInfo.email}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
-                  {content.contactInfo.whatsapp && (
+                  {/* WhatsApp - Only render if whatsapp exists */}
+                  {content.contactInfo?.whatsapp && (
                     <div className="flex items-start gap-3">
                       <MessageCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                       <div>
@@ -108,13 +115,16 @@ export default function ContactForm({ content }) {
                     </div>
                   )}
 
-                  <div className="flex items-start gap-3">
-                    <Clock className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium">Response Time</p>
-                      <p className="text-muted-foreground">{content.contactInfo.responseTime}</p>
+                  {/* Response Time - Only render if responseTime exists */}
+                  {content.contactInfo?.responseTime && (
+                    <div className="flex items-start gap-3">
+                      <Clock className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                      <div>
+                        <p className="font-medium">Response Time</p>
+                        <p className="text-muted-foreground">{content.contactInfo.responseTime}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
