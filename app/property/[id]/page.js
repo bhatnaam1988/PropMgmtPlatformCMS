@@ -64,6 +64,20 @@ export default function PropertyDetailPage() {
     }
   }, [checkIn, checkOut, property]);
 
+  // Close guest picker when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (bookingWidgetRef.current && !bookingWidgetRef.current.contains(event.target)) {
+        setShowGuestPicker(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   async function fetchProperty() {
     try {
       const res = await fetch(`/api/properties/${params.id}`);
