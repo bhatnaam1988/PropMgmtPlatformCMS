@@ -145,12 +145,29 @@ export default function PropertyDetailPage() {
       const data = await res.json();
       setAvailabilityData(data);
       
-      // Parse unavailable dates from calendar data
+      // Parse calendar data into map for quick lookup
       if (data.calendar?.calendar?.days) {
-        const unavailable = data.calendar.calendar.days
-          .filter(day => !day.available)
-          .map(day => new Date(day.date));
+        const calendarMap = {};
+        const unavailable = [];
         
+        data.calendar.calendar.days.forEach(day => {
+          const dateStr = day.date;
+          calendarMap[dateStr] = {
+            available: day.available,
+            minStay: day.minimum_length_of_stay || 1,
+            maxStay: day.maximum_available_nights,
+            dayRate: day.day_rate,
+            closedForArrival: day.closed_for_arrival || false,
+            closedForDeparture: day.closed_for_departure || false
+          };
+          
+          // Build unavailable dates array for strikethrough
+          if (!day.available) {
+            unavailable.push(new Date(day.date));
+          }
+        });
+        
+        setAvailabilityMap(calendarMap);
         setUnavailableDates(unavailable);
       }
       
