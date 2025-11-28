@@ -39,6 +39,9 @@ export default function PropertyDetailPage() {
   const [availabilityError, setAvailabilityError] = useState(null);
   const [unavailableDates, setUnavailableDates] = useState([]);
   const [calendarDataFetched, setCalendarDataFetched] = useState(false);
+  const [availabilityMap, setAvailabilityMap] = useState({});
+  const [minimumStay, setMinimumStay] = useState(1);
+  const [minCheckOutDate, setMinCheckOutDate] = useState(null);
   
   // Initialize booking widget state from URL params if available
   const [checkIn, setCheckIn] = useState(
