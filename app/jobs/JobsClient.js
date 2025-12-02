@@ -62,11 +62,11 @@ export default function JobsClient({ content }) {
       {/* Company Values */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="flex flex-wrap justify-center gap-8">
             {content.valuesSection.values.map((value, idx) => {
               const Icon = valueIcons[idx] || Heart;
               return (
-                <Card key={idx}>
+                <Card key={idx} className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] max-w-sm">
                   <CardContent className="p-6 text-center">
                     <Icon className="h-10 w-10 text-primary mx-auto mb-4" />
                     <h3 className="mb-3">{value.title}</h3>

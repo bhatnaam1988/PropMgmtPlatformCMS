@@ -9,6 +9,7 @@ import {
   markForManualReview,
   isPaymentIntentProcessed,
 } from '@/lib/booking-store';
+import { logger } from '@/lib/logger';
 
 const UPLISTING_API_KEY = process.env.UPLISTING_API_KEY;
 const UPLISTING_API_URL = process.env.UPLISTING_API_URL;
@@ -48,7 +49,7 @@ async function createUplistingBooking(bookingData) {
     },
   };
 
-  console.log('📤 Creating Uplisting booking:', uplistingPayload);
+  logger.info('Creating Uplisting booking', { propertyId: bookingData.propertyId });
 
   const response = await fetch(`${UPLISTING_API_URL}/v2/bookings`, {
     method: 'POST',
@@ -62,16 +63,16 @@ async function createUplistingBooking(bookingData) {
   try {
     data = JSON.parse(textResponse);
   } catch (e) {
-    console.error('❌ Non-JSON response from Uplisting:', textResponse);
-    throw new Error(`Uplisting API error: ${textResponse}`);
+    logger.error('Non-JSON response from Uplisting', { error: e.message, status: response.status });
+    throw new Error(`Uplisting API error`);
   }
 
   if (!response.ok) {
-    console.error('❌ Uplisting API error:', data);
-    throw new Error(`Uplisting booking failed: ${JSON.stringify(data)}`);
+    logger.error('Uplisting API error', { status: response.ok });
+    throw new Error(`Uplisting booking failed`);
   }
 
-  console.log('✅ Uplisting booking created:', data.data?.id);
+  logger.info('Uplisting booking created', { bookingId: data.data?.id });
   return data;
 }
 
@@ -82,18 +83,18 @@ async function createUplistingBooking(bookingData) {
 async function processSuccessfulPayment(paymentIntent) {
   const paymentIntentId = paymentIntent.id;
   
-  console.log(`🎉 Processing successful payment: ${paymentIntentId}`);
+  logger.info('Processing successful payment', { paymentIntentId });
 
   // Check if already processed (idempotency)
   if (await isPaymentIntentProcessed(paymentIntentId)) {
-    console.log(`⚠️ Payment Intent ${paymentIntentId} already processed. Skipping.`);
+    logger.warn('Payment Intent already processed', { paymentIntentId });
     return { success: true, message: 'Already processed' };
   }
 
   // Get booking from database
   const booking = await findBookingByPaymentIntent(paymentIntentId);
   if (!booking) {
-    console.error(`❌ No booking found for Payment Intent: ${paymentIntentId}`);
+    logger.error('No booking found for Payment Intent', { paymentIntentId });
     throw new Error('Booking not found');
   }
 
@@ -126,7 +127,7 @@ async function processSuccessfulPayment(paymentIntent) {
     const uplistingBookingId = uplistingResponse.data?.id;
     await updateBookingWithUplisting(paymentIntentId, uplistingBookingId, 'confirmed');
 
-    console.log(`✅ Booking completed successfully. Uplisting ID: ${uplistingBookingId}`);
+    logger.info('Booking completed successfully', { uplistingBookingId, bookingId: booking.bookingId });
     
     return {
       success: true,
@@ -136,7 +137,7 @@ async function processSuccessfulPayment(paymentIntent) {
 
   } catch (error) {
     // All retry attempts failed
-    console.error(`💥 Failed to create Uplisting booking after retries:`, error);
+    logger.error('Failed to create Uplisting booking after retries', error);
 
     // Send critical admin alert via email
     await alertUplistingBookingFailure({
@@ -179,7 +180,7 @@ async function processSuccessfulPayment(paymentIntent) {
 async function processFailedPayment(paymentIntent) {
   const paymentIntentId = paymentIntent.id;
   
-  console.log(`❌ Processing failed payment: ${paymentIntentId}`);
+  logger.warn('Processing failed payment', { paymentIntentId });
 
   // Update booking status
   await updateBookingStatus(paymentIntentId, 'failed', 'cancelled', {
@@ -221,10 +222,10 @@ export async function POST(request) {
     if (!webhookSecret) {
       // Only allow unverified webhooks in local development
       if (process.env.NODE_ENV === 'development') {
-        console.warn('⚠️ Development mode: Webhook verification skipped');
+        logger.warn('Development mode: Webhook verification skipped');
         event = JSON.parse(body);
       } else {
-        console.error('❌ STRIPE_WEBHOOK_SECRET not configured in production');
+        logger.error('STRIPE_WEBHOOK_SECRET not configured in production');
         return NextResponse.json(
           { error: 'Webhook secret not configured' },
           { status: 500 }
@@ -235,14 +236,14 @@ export async function POST(request) {
     }
     
   } catch (err) {
-    console.error('❌ Webhook signature verification failed:', err.message);
+    logger.error('Webhook signature verification failed', { error: err.message });
     return NextResponse.json(
-      { error: `Webhook Error: ${err.message}` },
+      { error: 'Webhook signature verification failed' },
       { status: 400 }
     );
   }
 
-  console.log(`📥 Webhook received: ${event.type}`);
+  logger.info('Webhook received', { eventType: event.type });
 
   try {
     switch (event.type) {
@@ -257,13 +258,13 @@ export async function POST(request) {
         return NextResponse.json(failureResult);
 
       default:
-        console.log(`⚠️ Unhandled event type: ${event.type}`);
+        logger.warn('Unhandled event type', { eventType: event.type });
         return NextResponse.json({ received: true });
     }
   } catch (error) {
-    console.error('❌ Error processing webhook:', error);
+    logger.error('Error processing webhook', error);
     return NextResponse.json(
-      { error: 'Webhook processing failed', message: error.message },
+      { error: 'Webhook processing failed. Please contact support.' },
       { status: 500 }
     );
   }

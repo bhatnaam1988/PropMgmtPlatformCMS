@@ -1,488 +1,750 @@
-# 🔒 SECURITY AUDIT REPORT - PRE-DEPLOYMENT
-
-**Audit Date:** Current Session  
-**Scope:** All API endpoints, environment variables, sensitive data handling  
-**Status:** COMPREHENSIVE SECURITY REVIEW
-
----
-
-## 📊 EXECUTIVE SUMMARY
-
-### Endpoints Found:
-- **Total API Endpoints:** 15
-- **Debug/Test Endpoints:** 1 (needs removal)
-- **Production Endpoints:** 14 (need review)
-
-### Security Issues Identified:
-- 🚨 **HIGH:** 1 test endpoint exposing email functionality
-- ⚠️ **MEDIUM:** 1 endpoint exposing Stripe publishable key (acceptable but document)
-- ✅ **LOW:** Error messages exposing stack traces (minor)
+# 🔒 Security Audit Report - Swiss Alpine Journey Rental Platform
+**Date:** December 2024  
+**Application Type:** Property Rental Platform (Next.js 14 + MongoDB)  
+**Audit Level:** Pre-Production Deployment Security Review  
+**Status:** ⚠️ REQUIRES FIXES BEFORE PRODUCTION DEPLOYMENT
 
 ---
 
-## 🚨 CRITICAL FINDINGS
+## Executive Summary
 
-### 1. TEST/DEBUG ENDPOINT - HIGH RISK
+This security audit identifies **CRITICAL** and **HIGH** priority vulnerabilities that must be addressed before production deployment. The application handles sensitive customer data (PII, payment information) and integrates with third-party services (Stripe, Uplisting, Sanity.io), requiring robust security measures.
 
-#### `/app/app/api/test-email/route.js` ⚠️ **MUST REMOVE**
-
-**Risk Level:** 🚨 HIGH
-
-**What it does:**
-- Sends test emails to admin
-- Publicly accessible (no authentication)
-- Exposes admin email address
-- Can be used to spam admin inbox
-- Shows stack traces on error
-
-**Security Issues:**
-```javascript
-// Line 55: Exposes admin email in response
-recipient: process.env.ADMIN_EMAIL
-
-// Line 63: Exposes stack traces
-stack: error.stack
-```
-
-**Attack Scenarios:**
-1. ❌ Anyone can trigger email sending
-2. ❌ Email bombing/spam attack on admin
-3. ❌ Stack trace reveals internal paths
-4. ❌ No rate limiting
-
-**Recommendation:** 🗑️ **DELETE IMMEDIATELY**
+### Risk Level Summary
+- 🔴 **CRITICAL Issues:** 3
+- 🟠 **HIGH Priority:** 5
+- 🟡 **MEDIUM Priority:** 4
+- 🟢 **LOW Priority:** 3
 
 ---
 
-## ⚠️ MEDIUM RISK FINDINGS
-
-### 2. STRIPE CONFIG ENDPOINT
-
-#### `/app/app/api/stripe/config/route.js`
-
-**Risk Level:** ⚠️ MEDIUM (Acceptable with documentation)
-
-**What it does:**
-- Returns Stripe publishable key at runtime
-- Publicly accessible (by design)
-
-**Code Review:**
-```javascript
-export async function GET() {
-  const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-  return NextResponse.json({ publishableKey });
-}
-```
-
-**Security Analysis:**
-- ✅ **OK:** Publishable keys are meant to be public
-- ✅ **OK:** Only returns publishable key (not secret)
-- ✅ **OK:** No sensitive data exposed
-- ⚠️ **NOTE:** Anyone can see which Stripe account you use
-
-**Recommendation:** ✅ **KEEP** (This is production code, working as intended)
-
-**Documentation:** This endpoint is necessary for runtime Stripe key loading. Publishable keys are designed to be public and safe to expose.
-
----
-
-## ✅ PRODUCTION ENDPOINTS - SECURITY REVIEW
-
-### 3. STRIPE PAYMENT INTENT CREATION
-
-#### `/app/app/api/stripe/create-payment-intent/route.js`
-
-**Security Status:** ✅ SECURE
-
-**What it does:**
-- Creates Stripe Payment Intents
-- Validates booking data
-- Uses secret key (server-side only)
-
-**Security Measures:**
-- ✅ Secret key never exposed
-- ✅ Input validation present
-- ✅ Idempotency key used
-- ✅ Metadata attached for tracking
-- ✅ No sensitive data in response (only client_secret)
-
-**Code Review:**
-```javascript
-// ✅ Secret key used securely
-const paymentIntent = await stripe.paymentIntents.create({
-  amount: toStripeCents(pricing.grandTotal),
-  currency: stripeConfig.currency,
-  // ...
-});
-
-// ✅ Only client_secret returned (safe)
-return NextResponse.json({
-  clientSecret: paymentIntent.client_secret,
-  // ...
-});
-```
-
-**Recommendation:** ✅ **SECURE - No changes needed**
-
----
-
-### 4. STRIPE WEBHOOK HANDLER
-
-#### `/app/app/api/stripe/webhook/route.js`
-
-**Security Status:** ✅ SECURE
-
-**What it does:**
-- Receives Stripe webhook events
-- Verifies webhook signatures
-- Creates Uplisting bookings
-- Sends confirmation emails
-
-**Security Measures:**
-- ✅ Webhook signature verification (prevents spoofing)
-- ✅ Idempotency check (prevents double-processing)
-- ✅ Secret keys never exposed
-- ✅ Proper error handling
-- ✅ Production requires webhook secret
-
-**Code Review:**
-```javascript
-// ✅ Signature verification
-event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-
-// ✅ Idempotency check
-const alreadyProcessed = await isPaymentIntentProcessed(paymentIntentId);
-if (alreadyProcessed) {
-  return NextResponse.json({ received: true, note: 'Already processed' });
-}
-```
-
-**Areas to Improve:**
-```javascript
-// Line 63: Stack trace in error response
-catch (error) {
-  console.error('Uplisting API error:', error);
-  throw new Error(`Uplisting API error: ${error.message}`);
-}
-```
-
-**Recommendation:** ✅ **SECURE** but remove stack traces in production errors
-
----
-
-### 5. BOOKING API
-
-#### `/app/app/api/bookings/route.js`
-
-**Security Status:** ✅ SECURE
-
-**What it does:**
-- Retrieves booking data from MongoDB
-- Requires bookingId parameter
-
-**Security Measures:**
-- ✅ MongoDB connection secure
-- ✅ No sensitive data exposed
-- ✅ Query by bookingId only (no injection risk)
-
-**Recommendation:** ✅ **SECURE - No changes needed**
-
----
-
-### 6. FORM ENDPOINTS (6 endpoints)
-
-#### Files:
-- `/app/app/api/forms/cleaning-services/route.js`
-- `/app/app/api/forms/cleaning/route.js`
-- `/app/app/api/forms/contact/route.js`
-- `/app/app/api/forms/jobs/route.js`
-- `/app/app/api/forms/rental-services/route.js`
-- `/app/app/api/forms/rental/route.js`
-
-**Security Status:** ⚠️ REVIEW NEEDED
-
-**What they do:**
-- Accept form submissions
-- Send emails via Resend
-- Store data in MongoDB
-
-**Potential Issues:**
-- ⚠️ No rate limiting (spam risk)
-- ⚠️ No CSRF protection
-- ⚠️ Email validation needed
-- ⚠️ Input sanitization check needed
-
-**Recommendation:** ⚠️ **ADD RATE LIMITING** (future enhancement)
-
----
-
-### 7. PROPERTY ENDPOINTS
-
-#### `/app/app/api/properties/route.js`
-#### `/app/app/api/properties/[id]/route.js`
-
-**Security Status:** ✅ SECURE
-
-**What they do:**
-- Fetch property data from Uplisting
-- Public endpoints (property listings)
-
-**Security Measures:**
-- ✅ API key used securely
-- ✅ No write operations
-- ✅ Read-only access
-
-**Recommendation:** ✅ **SECURE - No changes needed**
-
----
-
-### 8. AVAILABILITY ENDPOINT
-
-#### `/app/app/api/availability/[propertyId]/route.js`
-
-**Security Status:** ✅ SECURE
-
-**What it does:**
-- Checks property availability from Uplisting
-
-**Recommendation:** ✅ **SECURE - No changes needed**
-
----
-
-### 9. PRICING ENDPOINT
-
-#### `/app/app/api/pricing/route.js`
-
-**Security Status:** ✅ SECURE
-
-**What it does:**
-- Calculates booking pricing
-- No external API calls
-- Pure calculation
-
-**Recommendation:** ✅ **SECURE - No changes needed**
-
----
-
-## 🔐 ENVIRONMENT VARIABLES SECURITY AUDIT
-
-### Files Checked:
-- `/app/.env` (committed to repo)
-- `/app/.env.local` (gitignored, local only)
-
-### 1. Stripe Keys
-
-#### In `.env` (Committed):
+## 🔴 CRITICAL SECURITY ISSUES (MUST FIX)
+
+### 1. **EXPOSED API KEYS IN CODEBASE**
+**Severity:** CRITICAL  
+**Risk:** Full system compromise, unauthorized access to third-party services, financial fraud
+
+**Details:**
+- Sanity API Token exposed in `/app/.env` file (plaintext)
+- `.env` and `.env.local` contain real API keys for Stripe, Uplisting, Resend
+- Files found:
+  ```
+  /app/.env - Contains SANITY_API_TOKEN (full access token)
+  /app/.env.local - Contains STRIPE_SECRET_KEY, UPLISTING_API_KEY, RESEND_API_KEY
+  ```
+
+**Evidence:**
 ```bash
-# STRIPE_SECRET_KEY=
-# NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
-# STRIPE_WEBHOOK_SECRET=
-```
-✅ **SECURE:** No actual keys, only comments
-
-#### In `.env.local` (Gitignored):
-```bash
-STRIPE_SECRET_KEY=sk_test_... (TEST)
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_... (TEST)
-STRIPE_WEBHOOK_SECRET=whsec_... (TEST)
-```
-✅ **SECURE:** Test keys only, file not deployed
-
-**Production Keys:** Stored in Emergent Dashboard ✅ SECURE
-
----
-
-### 2. Uplisting Keys
-
-#### In `.env` (Committed):
-```bash
+SANITY_API_TOKEN=skZRlQ73VpCchEOureYWpV6yjWGwZ5d4DieEDCT1AA7z1uB0qfR31rI5StaW65WOWhl9xkcfx5RB7wA4rWfH1rvtIexqmF1A6n9tC57VfvxggJkpAQvnIpMrF5xWm98NQ9im4w1VpesYZX2PFFwrX1cPiOe9ve22gMCi1g2ux7I6PbKhjA3b
+STRIPE_SECRET_KEY=sk_test_51QgR1DHJGligTDgH...
 UPLISTING_API_KEY=YzU5NjQ2YTUtYmRjYy00NTZjLWJiNGMtNWUxZjA0NzViMjU0
-UPLISTING_API_URL=https://connect.uplisting.io
-UPLISTING_CLIENT_ID=swisslodge-app (OLD/INVALID)
 ```
-
-🚨 **ISSUE FOUND:** 
-- Uplisting API key is hardcoded in `.env` (committed file)
-- This key is visible in repository
-- Should be in environment variables only
-
-**Recommendation:** 🔧 **MOVE TO ENV VARS ONLY**
-
----
-
-### 3. MongoDB Connection
-
-#### In `.env` (Committed):
-```bash
-MONGO_URL=mongodb://localhost:27017
-MONGO_DB_NAME=swissalpine
-```
-✅ **SECURE:** Local development only, production uses Atlas
-
----
-
-### 4. Email Service (Resend)
-
-#### In `.env` (Committed):
-```bash
-RESEND_API_KEY=re_ERQXRMqa_DqmFAnpBk24a4nNCCYiFBhyM
-```
-
-🚨 **ISSUE FOUND:**
-- Resend API key hardcoded in `.env`
-- Visible in repository
-- Should be environment variable only
-
-**Recommendation:** 🔧 **MOVE TO ENV VARS ONLY**
-
----
-
-### 5. Admin Configuration
-
-#### In `.env` (Committed):
-```bash
-ADMIN_EMAIL=info@swissalpinejourney.ch
-ADMIN_ALERT_ENABLED=true
-```
-✅ **SECURE:** Email is public contact, not sensitive
-
----
-
-## 📋 SECURITY RECOMMENDATIONS SUMMARY
-
-### IMMEDIATE ACTIONS REQUIRED:
-
-#### 1. 🗑️ Remove Test Endpoint
-- **File:** `/app/app/api/test-email/route.js`
-- **Risk:** HIGH
-- **Action:** DELETE
-
-#### 2. 🔧 Remove Hardcoded API Keys from `.env`
-- **Keys to Remove:**
-  - `UPLISTING_API_KEY`
-  - `UPLISTING_CLIENT_ID`
-  - `RESEND_API_KEY`
-- **Risk:** MEDIUM
-- **Action:** Comment out, move to dashboard only
-
-#### 3. 📝 Remove Debug Documentation
-- **Files:**
-  - `/app/CLEANUP_CHECKLIST.md`
-  - `/app/CLEANUP_COMPLETED.md`
-  - `/app/WEBHOOK_TEST_RESULTS.md`
-- **Risk:** LOW (information disclosure)
-- **Action:** DELETE
-
----
-
-### RECOMMENDED ACTIONS (Future):
-
-#### 4. 🚦 Add Rate Limiting
-- **Endpoints:** Form submission endpoints
-- **Risk:** Medium (spam/DoS)
-- **Action:** Implement rate limiting middleware
-
-#### 5. 🛡️ Remove Stack Traces in Production
-- **Files:** Webhook handler, error responses
-- **Risk:** LOW (information disclosure)
-- **Action:** Only show stack traces in development
-
-#### 6. 📊 Add Request Logging
-- **Purpose:** Security monitoring
-- **Action:** Log all payment/booking requests
-
----
-
-## ✅ SECURE CONFIGURATIONS
-
-### What's Already Secure:
-1. ✅ Stripe webhook signature verification
-2. ✅ No secret keys in frontend code
-3. ✅ MongoDB connection secure
-4. ✅ Payment intent idempotency
-5. ✅ Webhook idempotency
-6. ✅ Input validation in payment creation
-7. ✅ Proper error handling (mostly)
-8. ✅ `.env.local` is gitignored
-9. ✅ `.dockerignore` excludes sensitive files
-10. ✅ Production uses dashboard env vars
-
----
-
-## 🎯 PROPOSED CLEANUP ACTIONS
-
-### Phase 1: Remove Test Endpoints (CRITICAL)
-```bash
-rm /app/app/api/test-email/route.js
-```
-
-### Phase 2: Clean Up `.env` File (IMPORTANT)
-Update `/app/.env` to remove hardcoded keys:
-```bash
-# Before:
-UPLISTING_API_KEY=YzU5NjQ2YTUtYmRjYy00NTZjLWJiNGMtNWUxZjA0NzViMjU0
-RESEND_API_KEY=re_ERQXRMqa_DqmFAnpBk24a4nNCCYiFBhyM
-
-# After:
-# UPLISTING_API_KEY=  (set in Emergent Dashboard)
-# RESEND_API_KEY=  (set in Emergent Dashboard)
-```
-
-### Phase 3: Remove Debug Documentation
-```bash
-rm /app/CLEANUP_CHECKLIST.md
-rm /app/CLEANUP_COMPLETED.md
-rm /app/WEBHOOK_TEST_RESULTS.md
-```
-
----
-
-## 📊 SECURITY SCORE
-
-| Category | Score | Notes |
-|----------|-------|-------|
-| API Endpoints | 🟡 7/10 | Remove test endpoint |
-| Environment Variables | 🟡 6/10 | Move keys to env vars |
-| Secret Management | 🟢 9/10 | Good separation |
-| Error Handling | 🟢 8/10 | Minor improvements needed |
-| Authentication | 🟡 5/10 | Forms need rate limiting |
-| Data Validation | 🟢 8/10 | Good validation present |
-| **Overall** | **🟡 7.2/10** | **GOOD - Minor fixes needed** |
-
----
-
-## ✅ APPROVAL REQUEST
-
-**Proposed Changes:**
-1. Delete test email endpoint
-2. Remove hardcoded API keys from `.env`
-3. Delete debug documentation files
-4. Update Emergent Dashboard with all env vars
 
 **Impact:**
-- ✅ No impact on production functionality
-- ✅ Improved security posture
-- ✅ Cleaner codebase
+- Unauthorized access to Sanity CMS (content manipulation, data theft)
+- Stripe account compromise (payment manipulation, refund fraud)
+- Uplisting booking manipulation
+- Email service abuse (spam, phishing)
 
-**Should I proceed with these changes?**
-
----
-
-## 📄 FILES TO MODIFY
-
-### Delete (3 files):
-1. `/app/app/api/test-email/route.js`
-2. `/app/CLEANUP_CHECKLIST.md`
-3. `/app/CLEANUP_COMPLETED.md`
-
-### Modify (1 file):
-4. `/app/.env` - Comment out hardcoded keys
-
-### Keep for Reference:
-- `/app/RUNTIME_STRIPE_KEY_SOLUTION.md` (documents solution)
-- `/app/STRIPE_WEBHOOK_CONFIGURATION.md` (useful reference)
-- `/app/SECURITY_AUDIT_REPORT.md` (this file)
+**Remediation:**
+1. **IMMEDIATE:** Rotate ALL exposed API keys
+2. Remove ALL keys from `.env` files before git commit
+3. Use Emergent Deployment Dashboard to set environment variables
+4. Add `.env` and `.env.local` to `.gitignore`
+5. Implement secret scanning in CI/CD pipeline
 
 ---
 
-**Awaiting your approval to proceed with cleanup and security fixes.**
+### 2. **NO RATE LIMITING ON API ENDPOINTS**
+**Severity:** CRITICAL  
+**Risk:** DDoS attacks, brute force attacks, API abuse, financial loss
+
+**Details:**
+- No rate limiting middleware detected
+- All API routes are unprotected:
+  - `/api/forms/*` - Can be spammed indefinitely
+  - `/api/stripe/create-payment-intent` - Can exhaust Stripe API quota
+  - `/api/properties` - Can be scraped without limits
+  - `/api/bookings` - No protection against booking flood
+
+**Impact:**
+- Form spam flooding database
+- Newsletter subscription bombing
+- Payment intent creation abuse
+- Stripe API quota exhaustion ($$ charges)
+- Database overload
+- Email service quota exhaustion
+
+**Remediation:**
+1. Implement rate limiting middleware (e.g., `next-rate-limit`, `express-rate-limit`)
+2. Set limits per endpoint:
+   - Forms: 5 requests/15 minutes per IP
+   - Payment intents: 10 requests/hour per IP
+   - Properties: 100 requests/hour per IP
+3. Use Redis or memory store for rate limit tracking
+4. Return 429 (Too Many Requests) status code
+
+**Example Implementation Needed:**
+```javascript
+// middleware.js
+import rateLimit from 'next-rate-limit'
+
+const limiter = rateLimit({
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 500,
+})
+
+export async function middleware(request) {
+  if (request.url.includes('/api/')) {
+    try {
+      await limiter.check(response, 10, 'API_RATE_LIMIT')
+    } catch {
+      return new Response('Rate limit exceeded', { status: 429 })
+    }
+  }
+}
+```
+
+---
+
+### 3. **INSECURE CORS CONFIGURATION**
+**Severity:** CRITICAL  
+**Risk:** Cross-Origin attacks, unauthorized API access, data theft
+
+**Details:**
+- CORS is set to `*` (allow all origins) in `/app/.env`:
+  ```bash
+  CORS_ORIGINS=*
+  ```
+- In `next.config.js`:
+  ```javascript
+  { key: "Access-Control-Allow-Origin", value: process.env.CORS_ORIGINS || "*" }
+  { key: "X-Frame-Options", value: "ALLOWALL" }
+  { key: "Content-Security-Policy", value: "frame-ancestors *;" }
+  ```
+
+**Impact:**
+- Any website can make requests to your API
+- Data can be stolen via malicious websites
+- CSRF attacks are easier to execute
+- Clickjacking attacks possible (X-Frame-Options: ALLOWALL)
+
+**Remediation:**
+1. **IMMEDIATE:** Restrict CORS to your production domain only
+2. Update `.env`:
+   ```bash
+   CORS_ORIGINS=https://rental-fix.preview.emergentagent.com,https://yourdomain.com
+   ```
+3. Update `next.config.js`:
+   ```javascript
+   { key: "X-Frame-Options", value: "SAMEORIGIN" } // Change from ALLOWALL
+   { key: "Content-Security-Policy", value: "frame-ancestors 'self';" }
+   ```
+4. Implement proper CSRF tokens for state-changing operations
+
+---
+
+## 🟠 HIGH PRIORITY ISSUES
+
+### 4. **NO INPUT SANITIZATION FOR USER DATA**
+**Severity:** HIGH  
+**Risk:** XSS attacks, NoSQL injection, HTML injection
+
+**Details:**
+- Form inputs are not sanitized before storage or email display
+- Direct string interpolation in email templates:
+  ```javascript
+  // In /app/api/forms/contact/route.js
+  <p>${message.replace(/\n/g, '<br>')}</p>
+  <p><strong>Name:</strong> ${name}</p>
+  ```
+- User input directly inserted into MongoDB without sanitization
+- No protection against NoSQL injection patterns
+
+**Vulnerable Endpoints:**
+- All form routes: `/api/forms/*`
+- Payment intent route: `/api/stripe/create-payment-intent`
+- Booking route: `/api/bookings`
+
+**Attack Vectors:**
+```javascript
+// XSS via email template
+name: "<script>alert('XSS')</script>"
+
+// NoSQL injection attempt
+email: { $ne: null } // Could bypass email checks
+```
+
+**Remediation:**
+1. Install sanitization library: `yarn add dompurify validator`
+2. Sanitize ALL user inputs before processing:
+   ```javascript
+   import validator from 'validator';
+   import DOMPurify from 'isomorphic-dompurify';
+
+   const sanitizedEmail = validator.normalizeEmail(email);
+   const sanitizedName = DOMPurify.sanitize(name, { ALLOWED_TAGS: [] });
+   ```
+3. Use parameterized queries for MongoDB
+4. Validate input types strictly using Zod schemas
+
+---
+
+### 5. **SENSITIVE DATA LOGGED TO CONSOLE**
+**Severity:** HIGH  
+**Risk:** Information disclosure, compliance violations (GDPR, PCI-DSS)
+
+**Details:**
+- 16+ instances of `console.log` in API routes
+- Sensitive data being logged:
+  - Payment intent details with amounts
+  - Guest email addresses and PII
+  - Booking details with property IDs
+  - API key prefixes (still dangerous)
+
+**Evidence:**
+```javascript
+// In /app/api/stripe/create-payment-intent/route.js
+console.log('💰 Calculated pricing:', pricing); // Contains financial data
+
+// In /app/api/bookings/route.js
+console.log('🔑 Using credentials:', {
+  apiKeyPrefix: UPLISTING_API_KEY?.substring(0, 10) + '...',
+});
+```
+
+**Impact:**
+- Logs may be accessible to unauthorized personnel
+- Cloud logging services capture and store this data
+- GDPR violations (logging personal data without consent)
+- PCI-DSS violations (logging payment information)
+- Debugging information aids attackers
+
+**Remediation:**
+1. Remove ALL sensitive console.log statements from production code
+2. Implement proper logging library with log levels:
+   ```javascript
+   import winston from 'winston';
+   
+   const logger = winston.createLogger({
+     level: process.env.NODE_ENV === 'production' ? 'warn' : 'debug',
+     transports: [new winston.transports.File({ filename: 'error.log' })],
+   });
+   
+   // Use: logger.info() instead of console.log()
+   ```
+3. Never log:
+   - Full email addresses (use masked: u***@example.com)
+   - Payment amounts
+   - API keys (even prefixes)
+   - Personal information (names, phones, addresses)
+4. Use environment-based logging:
+   ```javascript
+   if (process.env.NODE_ENV === 'development') {
+     console.log('Debug info...');
+   }
+   ```
+
+---
+
+### 6. **MISSING HTTPS ENFORCEMENT**
+**Severity:** HIGH  
+**Risk:** Man-in-the-middle attacks, session hijacking, data interception
+
+**Details:**
+- No HTTP to HTTPS redirect enforcement in code
+- No Strict-Transport-Security (HSTS) header
+- Cookies not marked as Secure (if any are used)
+
+**Current Headers (from next.config.js):**
+```javascript
+// Missing critical security headers:
+- Strict-Transport-Security (HSTS)
+- X-Content-Type-Options
+- Referrer-Policy
+```
+
+**Remediation:**
+1. Add security headers in `next.config.js`:
+   ```javascript
+   async headers() {
+     return [
+       {
+         source: "/(.*)",
+         headers: [
+           { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
+           { key: "X-Content-Type-Options", value: "nosniff" },
+           { key: "X-XSS-Protection", value: "1; mode=block" },
+           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+         ],
+       },
+     ];
+   }
+   ```
+2. Ensure deployment platform (Kubernetes ingress) enforces HTTPS
+3. Set all cookies with Secure and HttpOnly flags
+
+---
+
+### 7. **WEAK EMAIL VALIDATION**
+**Severity:** HIGH  
+**Risk:** Database pollution, spam, email verification bypass
+
+**Details:**
+- Basic regex email validation is insufficient:
+  ```javascript
+  // In /app/api/forms/newsletter/route.js
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  ```
+- This accepts invalid emails like:
+  - `test@test@test.com`
+  - `test..test@example.com`
+  - `test@localhost`
+  - Emails with special characters that cause email delivery failures
+
+**Impact:**
+- Invalid emails stored in database
+- Email delivery failures
+- Spam signups
+- No verification of email ownership
+
+**Remediation:**
+1. Use proper email validation library:
+   ```javascript
+   import validator from 'validator';
+   
+   if (!validator.isEmail(email, { 
+     allow_utf8_local_part: false,
+     require_tld: true,
+     allow_ip_domain: false 
+   })) {
+     return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
+   }
+   ```
+2. Implement email verification:
+   - Send verification link after signup
+   - Mark emails as unverified until clicked
+   - Add expiration to verification tokens
+3. Check disposable email domains:
+   ```javascript
+   const disposableDomains = ['tempmail.com', 'guerrillamail.com', ...];
+   if (disposableDomains.includes(emailDomain)) {
+     return NextResponse.json({ error: 'Disposable emails not allowed' }, { status: 400 });
+   }
+   ```
+
+---
+
+### 8. **NO ERROR HANDLING FOR THIRD-PARTY API FAILURES**
+**Severity:** HIGH  
+**Risk:** Information disclosure, service disruption, poor UX
+
+**Details:**
+- Generic error messages expose internal implementation:
+  ```javascript
+  // In /app/api/forms/contact/route.js
+  return NextResponse.json(
+    { success: false, error: 'Failed to submit contact form' },
+    { status: 500 }
+  );
+  ```
+- Error messages from Uplisting/Stripe passed directly to client
+- No circuit breaker pattern for failing external services
+- No graceful degradation
+
+**Remediation:**
+1. Implement proper error handling:
+   ```javascript
+   try {
+     // API call
+   } catch (error) {
+     logger.error('API call failed', { error: error.message });
+     return NextResponse.json(
+       { 
+         success: false, 
+         error: 'We are experiencing technical difficulties. Please try again later.' 
+       },
+       { status: 500 }
+     );
+   }
+   ```
+2. Never expose internal error details to client
+3. Implement circuit breaker for external APIs
+4. Add retry logic with exponential backoff (already partially done for bookings)
+
+---
+
+## 🟡 MEDIUM PRIORITY ISSUES
+
+### 9. **MONGODB CONNECTION NOT SECURED**
+**Severity:** MEDIUM  
+**Risk:** Database compromise if network is breached
+
+**Details:**
+- MongoDB connection uses localhost without authentication requirement in code:
+  ```javascript
+  MONGO_URL=mongodb://localhost:27017
+  ```
+- No connection string validation
+- No TLS/SSL enforcement in connection options
+- No connection timeout limits
+
+**Remediation:**
+1. For production, use authenticated MongoDB connection:
+   ```javascript
+   MONGO_URL=mongodb://username:password@host:27017/dbname?authSource=admin&ssl=true
+   ```
+2. Add connection options in `mongodb.js`:
+   ```javascript
+   const client = await MongoClient.connect(MONGO_URL, {
+     useNewUrlParser: true,
+     useUnifiedTopology: true,
+     serverSelectionTimeoutMS: 5000,
+     maxPoolSize: 10,
+     minPoolSize: 5,
+   });
+   ```
+3. Implement IP whitelisting on MongoDB server
+4. Use environment-specific connection strings
+
+---
+
+### 10. **NO REQUEST SIZE LIMITS**
+**Severity:** MEDIUM  
+**Risk:** DoS via large payloads, memory exhaustion
+
+**Details:**
+- Next.js default body size limit (4MB) may be too large for forms
+- No explicit limits set for different endpoints
+- File upload endpoints (if added) would be vulnerable
+
+**Remediation:**
+1. Add body size limits per route:
+   ```javascript
+   export const config = {
+     api: {
+       bodyParser: {
+         sizeLimit: '100kb', // Adjust per endpoint
+       },
+     },
+   };
+   ```
+2. Validate request payload sizes before processing
+3. Implement streaming for large uploads (if needed)
+
+---
+
+### 11. **WEAK ADMIN EMAIL EXPOSED**
+**Severity:** MEDIUM  
+**Risk:** Targeted phishing, spam, social engineering
+
+**Details:**
+- Admin email hardcoded in `.env`:
+  ```bash
+  ADMIN_EMAIL=aman.bhatnagar11@gmail.com
+  ```
+- Same email used for all notifications
+- No separate admin panel authentication
+
+**Remediation:**
+1. Use role-based email addresses:
+   ```bash
+   ADMIN_EMAIL=bookings@yourdomain.com
+   ALERT_EMAIL=alerts@yourdomain.com
+   ```
+2. Implement proper admin authentication
+3. Use email aliases to protect personal emails
+4. Add SPF/DKIM records to prevent spoofing
+
+---
+
+### 12. **NO WEBHOOK SIGNATURE VERIFICATION IN DEVELOPMENT**
+**Severity:** MEDIUM  
+**Risk:** Fake webhook injection in dev/staging
+
+**Details:**
+- Webhook verification skipped in development mode:
+  ```javascript
+  // In /app/api/stripe/webhook/route.js
+  if (process.env.NODE_ENV === 'development') {
+    console.warn('⚠️ Development mode: Webhook verification skipped');
+    event = JSON.parse(body);
+  }
+  ```
+
+**Remediation:**
+1. Always verify webhooks, even in development:
+   ```javascript
+   if (!webhookSecret) {
+     return NextResponse.json(
+       { error: 'Webhook secret not configured' },
+       { status: 500 }
+     );
+   }
+   ```
+2. Use Stripe CLI for local webhook testing
+3. Never deploy to staging/production without webhook secret
+
+---
+
+## 🟢 LOW PRIORITY ISSUES (BEST PRACTICES)
+
+### 13. **MISSING CONTENT SECURITY POLICY (CSP)**
+**Severity:** LOW  
+**Risk:** XSS attacks, data injection
+
+**Details:**
+- Current CSP is too permissive:
+  ```javascript
+  { key: "Content-Security-Policy", value: "frame-ancestors *;" }
+  ```
+
+**Remediation:**
+Add comprehensive CSP header:
+```javascript
+{
+  key: "Content-Security-Policy",
+  value: "default-src 'self'; script-src 'self' 'unsafe-inline' js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdn.filestackcontent.com https://images.unsplash.com; font-src 'self'; connect-src 'self' https://connect.uplisting.io https://api.stripe.com; frame-src js.stripe.com; frame-ancestors 'self';"
+}
+```
+
+---
+
+### 14. **NO AUDIT LOGGING**
+**Severity:** LOW  
+**Risk:** Lack of forensic capability, compliance issues
+
+**Details:**
+- No audit trail for:
+  - Failed payment attempts
+  - Booking modifications
+  - Admin actions
+  - Form submissions
+
+**Remediation:**
+1. Implement audit logging for all state-changing operations:
+   ```javascript
+   await db.collection('audit_logs').insertOne({
+     action: 'booking_created',
+     userId: guestEmail,
+     timestamp: new Date(),
+     ipAddress: request.headers.get('x-forwarded-for'),
+     metadata: { bookingId, propertyId }
+   });
+   ```
+
+---
+
+### 15. **NO DEPENDENCY VULNERABILITY SCANNING**
+**Severity:** LOW  
+**Risk:** Known vulnerabilities in dependencies
+
+**Details:**
+- No evidence of regular dependency audits
+- 79 dependencies in `package.json`
+
+**Remediation:**
+1. Run regular security audits:
+   ```bash
+   yarn audit
+   yarn outdated
+   ```
+2. Implement automated dependency scanning (Dependabot, Snyk)
+3. Keep dependencies updated
+
+---
+
+## 🛡️ DEPLOYMENT SECURITY CHECKLIST
+
+### Environment Configuration
+- [ ] **CRITICAL:** Remove ALL API keys from `.env` files
+- [ ] **CRITICAL:** Rotate all exposed keys (Sanity, Stripe, Uplisting, Resend)
+- [ ] Configure environment variables in Emergent Deployment Dashboard
+- [ ] Verify `.env` and `.env.local` are in `.gitignore`
+- [ ] Use different API keys for staging vs production
+
+### Network Security
+- [ ] **CRITICAL:** Change CORS_ORIGINS from `*` to specific domain
+- [ ] Enable HTTPS redirect at load balancer/ingress level
+- [ ] Configure firewall rules to restrict MongoDB access
+- [ ] Enable DDoS protection (if available)
+- [ ] Set up rate limiting middleware
+
+### Application Security
+- [ ] **CRITICAL:** Implement rate limiting on all API routes
+- [ ] Add input sanitization for all user inputs
+- [ ] Remove sensitive console.log statements
+- [ ] Add security headers (HSTS, X-Content-Type-Options, etc.)
+- [ ] Implement email verification for newsletter signups
+- [ ] Add CSRF protection for state-changing operations
+
+### Data Security
+- [ ] Use authenticated MongoDB connection with SSL
+- [ ] Implement encryption at rest for sensitive data
+- [ ] Add field-level encryption for PII (if storing cards - you shouldn't)
+- [ ] Regular database backups with encryption
+- [ ] Implement data retention policies
+
+### Monitoring & Logging
+- [ ] Set up error monitoring (Sentry, LogRocket, etc.)
+- [ ] Configure secure logging (no PII/payment data)
+- [ ] Set up alerts for:
+  - Failed payment attempts (>5 in 10 minutes)
+  - Uplisting booking failures
+  - API rate limit hits
+  - Authentication failures
+  - Database errors
+- [ ] Implement audit logging for critical operations
+
+### Third-Party Integrations
+- [ ] Verify Stripe webhook secret is configured
+- [ ] Test Uplisting API failover scenarios
+- [ ] Configure Sanity CORS restrictions
+- [ ] Set up API key rotation schedule
+- [ ] Document all third-party dependencies
+
+### Compliance
+- [ ] Add Privacy Policy link in footer
+- [ ] Add Terms & Conditions
+- [ ] Implement GDPR-compliant data collection (consent checkboxes)
+- [ ] Add "Right to be Forgotten" data deletion process
+- [ ] Document data processing agreements with third parties
+- [ ] PCI-DSS compliance (handled by Stripe, verify integration)
+
+---
+
+## 📋 RECOMMENDED IMMEDIATE ACTION PLAN
+
+### Phase 1: Critical Fixes (DO BEFORE DEPLOYMENT)
+**Timeline:** 1-2 days
+
+1. **Remove exposed API keys** (30 minutes)
+   - Remove keys from `.env` files
+   - Rotate all API keys
+   - Configure in deployment dashboard
+
+2. **Implement rate limiting** (3-4 hours)
+   - Install rate limiting library
+   - Configure per-endpoint limits
+   - Test with load testing tool
+
+3. **Fix CORS configuration** (1 hour)
+   - Update CORS_ORIGINS to production domain
+   - Fix X-Frame-Options
+   - Test cross-origin requests
+
+### Phase 2: High Priority Fixes (WEEK 1)
+**Timeline:** 3-5 days
+
+4. **Add input sanitization** (4-6 hours)
+   - Install sanitization libraries
+   - Update all form handlers
+   - Add validation schemas with Zod
+
+5. **Remove sensitive logging** (2-3 hours)
+   - Audit all console.log statements
+   - Implement proper logging library
+   - Update error handling
+
+6. **Add security headers** (2 hours)
+   - Update next.config.js
+   - Test with security header analyzer
+   - Verify HTTPS enforcement
+
+7. **Improve email validation** (2 hours)
+   - Install validator library
+   - Update email validation logic
+   - Add disposable email blocking
+
+### Phase 3: Medium Priority (WEEK 2-3)
+**Timeline:** 1 week
+
+8. **Secure MongoDB connection** (2-3 hours)
+9. **Add request size limits** (2 hours)
+10. **Implement audit logging** (4-6 hours)
+11. **Add monitoring and alerting** (1 day)
+
+### Phase 4: Best Practices (ONGOING)
+- Regular dependency updates
+- Security audits
+- Penetration testing
+- Compliance reviews
+
+---
+
+## 🔧 REQUIRED DEPENDENCIES FOR SECURITY FIXES
+
+```bash
+yarn add validator dompurify isomorphic-dompurify
+yarn add next-rate-limit
+yarn add helmet # For additional security headers
+yarn add winston # For proper logging
+```
+
+---
+
+## 📞 POST-DEPLOYMENT VERIFICATION
+
+After implementing fixes, verify:
+
+1. **API Key Security Test:**
+   ```bash
+   # Search codebase for exposed keys
+   grep -r "sk_" /app --exclude-dir=node_modules
+   grep -r "SANITY_API_TOKEN" /app --exclude-dir=node_modules
+   ```
+
+2. **Rate Limiting Test:**
+   ```bash
+   # Attempt 20 rapid requests
+   for i in {1..20}; do curl -X POST https://yourdomain.com/api/forms/newsletter -d '{"email":"test@test.com"}'; done
+   # Should receive 429 after limit
+   ```
+
+3. **CORS Test:**
+   ```bash
+   curl -H "Origin: https://malicious-site.com" https://yourdomain.com/api/properties
+   # Should be blocked
+   ```
+
+4. **Security Headers Test:**
+   Visit: https://securityheaders.com/?q=yourdomain.com&followRedirects=on
+   Target Grade: A or A+
+
+5. **SSL Test:**
+   Visit: https://www.ssllabs.com/ssltest/analyze.html?d=yourdomain.com
+   Target Grade: A or A+
+
+---
+
+## 📚 SECURITY RESOURCES
+
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+- [Next.js Security Best Practices](https://nextjs.org/docs/pages/building-your-application/configuring/content-security-policy)
+- [Stripe Security Guide](https://stripe.com/docs/security/guide)
+- [MongoDB Security Checklist](https://www.mongodb.com/docs/manual/administration/security-checklist/)
+- [GDPR Compliance Guide](https://gdpr.eu/)
+
+---
+
+## 📝 CONCLUSION
+
+**Current Security Status:** ⚠️ **NOT PRODUCTION READY**
+
+**Critical Issues:** 3 must be fixed immediately  
+**Estimated Time to Production-Ready:** 1-2 weeks with full implementation
+
+**Risk Assessment:**
+- **Financial Risk:** HIGH (exposed Stripe keys, no rate limiting)
+- **Data Privacy Risk:** HIGH (exposed user data, no sanitization)
+- **Compliance Risk:** MEDIUM (GDPR violations in logging)
+- **Reputation Risk:** HIGH (potential data breach)
+
+**Recommendation:** **DO NOT DEPLOY** until at least all CRITICAL and HIGH priority issues are resolved.
+
+---
+
+**Report Generated By:** Security Audit System  
+**Next Review:** After implementing Phase 1 & 2 fixes  
+**Questions:** Contact security team for clarification on any item

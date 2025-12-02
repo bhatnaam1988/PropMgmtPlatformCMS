@@ -22,7 +22,12 @@ export default function SearchBar({ className = '' }) {
   });
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   
-  const locations = ['Grächen, Wallis', 'Verbier', 'Zermatt', 'Saas-Fee'];
+  const locations = [
+    { name: 'Grächen, Wallis', active: true },
+    { name: 'Verbier', active: false, comingSoon: true },
+    { name: 'Zermatt', active: false, comingSoon: true },
+    { name: 'Saas-Fee', active: false, comingSoon: true }
+  ];
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -75,17 +80,27 @@ export default function SearchBar({ className = '' }) {
               {showLocationDropdown && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-48 overflow-y-auto">
                   {locations
-                    .filter(loc => loc.toLowerCase().includes(location.toLowerCase()))
+                    .filter(loc => loc.name.toLowerCase().includes(location.toLowerCase()))
                     .map((loc) => (
                       <button
-                        key={loc}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                        key={loc.name}
+                        className={`w-full text-left px-4 py-2 ${
+                          loc.active 
+                            ? 'hover:bg-gray-100 cursor-pointer' 
+                            : 'cursor-not-allowed opacity-50'
+                        }`}
                         onClick={() => {
-                          setLocation(loc);
-                          setShowLocationDropdown(false);
+                          if (loc.active) {
+                            setLocation(loc.name);
+                            setShowLocationDropdown(false);
+                          }
                         }}
+                        disabled={!loc.active}
+                        title={loc.comingSoon ? 'Coming Soon' : ''}
                       >
-                        {loc}
+                        <span className={loc.active ? 'text-gray-900' : 'text-gray-400'}>
+                          {loc.name}
+                        </span>
                       </button>
                     ))}
                 </div>

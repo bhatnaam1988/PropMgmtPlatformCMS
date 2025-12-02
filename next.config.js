@@ -35,15 +35,57 @@ const nextConfig = {
     pagesBufferLength: 2,
   },
   async headers() {
+    // Get allowed origins from environment, default to production URL
+    const allowedOrigins = process.env.CORS_ORIGINS || process.env.NEXT_PUBLIC_BASE_URL || 'https://rental-fix.preview.emergentagent.com';
+    const originList = allowedOrigins.split(',').map(origin => origin.trim());
+    
     return [
       {
         source: "/(.*)",
         headers: [
-          { key: "X-Frame-Options", value: "ALLOWALL" },
-          { key: "Content-Security-Policy", value: "frame-ancestors *;" },
-          { key: "Access-Control-Allow-Origin", value: process.env.CORS_ORIGINS || "*" },
-          { key: "Access-Control-Allow-Methods", value: "GET, POST, PUT, DELETE, OPTIONS" },
-          { key: "Access-Control-Allow-Headers", value: "*" },
+          // CORS - Restrict to specific origins
+          { 
+            key: "Access-Control-Allow-Origin", 
+            value: originList[0] // Primary domain
+          },
+          { 
+            key: "Access-Control-Allow-Methods", 
+            value: "GET, POST, PUT, DELETE, OPTIONS" 
+          },
+          { 
+            key: "Access-Control-Allow-Headers", 
+            value: "Content-Type, Authorization" 
+          },
+          
+          // Security Headers
+          { 
+            key: "Strict-Transport-Security", 
+            value: "max-age=31536000; includeSubDomains" 
+          },
+          { 
+            key: "X-Frame-Options", 
+            value: "SAMEORIGIN" 
+          },
+          { 
+            key: "X-Content-Type-Options", 
+            value: "nosniff" 
+          },
+          { 
+            key: "X-XSS-Protection", 
+            value: "1; mode=block" 
+          },
+          { 
+            key: "Referrer-Policy", 
+            value: "strict-origin-when-cross-origin" 
+          },
+          { 
+            key: "Permissions-Policy", 
+            value: "camera=(), microphone=(), geolocation=()" 
+          },
+          { 
+            key: "Content-Security-Policy", 
+            value: "frame-ancestors 'self';" 
+          },
         ],
       },
     ];

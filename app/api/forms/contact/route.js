@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getEmailService } from '@/lib/email';
 import clientPromise from '@/lib/mongodb';
+import { sanitizeEmail, sanitizeText, sanitizePhone, escapeHtml } from '@/lib/sanitize';
+import { logger } from '@/lib/logger';
 
 export async function POST(request) {
   try {
@@ -15,34 +17,48 @@ export async function POST(request) {
       );
     }
 
+    // Sanitize all inputs
+    let sanitizedData;
+    try {
+      sanitizedData = {
+        inquiryType: sanitizeText(inquiryType, 50),
+        name: sanitizeText(name, 100),
+        email: sanitizeEmail(email),
+        phone: sanitizePhone(phone || ''),
+        subject: sanitizeText(subject, 200),
+        message: sanitizeText(message, 5000)
+      };
+    } catch (error) {
+      return NextResponse.json(
+        { success: false, error: error.message },
+        { status: 400 }
+      );
+    }
+
     // Store in MongoDB
     const client = await clientPromise;
     const db = client.db(process.env.MONGO_DB_NAME || 'swissalpine');
     const submission = {
       type: 'contact',
-      inquiryType,
-      name,
-      email,
-      phone: phone || '',
-      subject,
-      message,
+      ...sanitizedData,
       submittedAt: new Date(),
-      status: 'new'
+      status: 'new',
+      ipAddress: request.headers.get('x-forwarded-for') || 'unknown'
     };
     
     const result = await db.collection('form_submissions').insertOne(submission);
 
-    // Send email notification
+    // Send email notification with escaped HTML
     const emailService = getEmailService();
     const emailHtml = `
       <h2>New Contact Form Submission</h2>
-      <p><strong>Inquiry Type:</strong> ${inquiryType}</p>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-      <p><strong>Subject:</strong> ${subject}</p>
+      <p><strong>Inquiry Type:</strong> ${escapeHtml(sanitizedData.inquiryType)}</p>
+      <p><strong>Name:</strong> ${escapeHtml(sanitizedData.name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(sanitizedData.email)}</p>
+      <p><strong>Phone:</strong> ${escapeHtml(sanitizedData.phone) || 'Not provided'}</p>
+      <p><strong>Subject:</strong> ${escapeHtml(sanitizedData.subject)}</p>
       <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, '<br>')}</p>
+      <p>${escapeHtml(sanitizedData.message).replace(/\n/g, '<br>')}</p>
       <hr>
       <p><small>Submission ID: ${result.insertedId}</small></p>
       <p><small>Submitted: ${new Date().toLocaleString()}</small></p>
@@ -50,20 +66,21 @@ export async function POST(request) {
 
     await emailService.sendEmail({
       to: process.env.ADMIN_EMAIL,
-      subject: `New Contact Inquiry: ${subject}`,
+      subject: `New Contact Inquiry: ${sanitizedData.subject}`,
       html: emailHtml
     });
 
+    logger.secureLog('Contact form submitted', { email: sanitizedData.email, type: sanitizedData.inquiryType });
+
     return NextResponse.json({
       success: true,
-      message: 'Contact form submitted successfully',
-      submissionId: result.insertedId
+      message: 'Contact form submitted successfully'
     });
 
   } catch (error) {
-    console.error('Contact form submission error:', error);
+    logger.error('Contact form submission error', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to submit contact form' },
+      { success: false, error: 'Failed to submit contact form. Please try again later.' },
       { status: 500 }
     );
   }

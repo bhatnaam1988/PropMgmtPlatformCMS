@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { logger } from '@/lib/logger';
 
 const UPLISTING_API_KEY = process.env.UPLISTING_API_KEY;
 const UPLISTING_API_URL = process.env.UPLISTING_API_URL;
@@ -14,11 +15,7 @@ export async function POST(request) {
       'Content-Type': 'application/json'
     };
     
-    console.log('🔑 Using credentials:', {
-      apiKeyPrefix: UPLISTING_API_KEY?.substring(0, 10) + '...',
-      clientId: UPLISTING_CLIENT_ID,
-      url: UPLISTING_API_URL
-    });
+    logger.info('Creating Uplisting booking', { service: 'Uplisting' });
     
     // Get base URL from environment or construct it
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL;
@@ -49,13 +46,7 @@ export async function POST(request) {
       }
     };
     
-    console.log('📤 Creating booking with redirect URLs:', {
-      successUrl,
-      failureUrl,
-      propertyId: bookingData.propertyId
-    });
-    
-    console.log('📦 Full booking payload:', JSON.stringify(uplistingBooking, null, 2));
+    logger.info('Booking payload prepared', { propertyId: bookingData.propertyId });
     
     const response = await fetch(`${UPLISTING_API_URL}/v2/bookings`, {
       method: 'POST',
@@ -72,19 +63,19 @@ export async function POST(request) {
       // Try to parse as JSON regardless of content-type
       data = JSON.parse(textResponse);
     } catch (e) {
-      console.error('❌ Non-JSON response from Uplisting:', textResponse);
+      logger.error('Non-JSON response from Uplisting', { error: e.message });
       data = { error: textResponse };
     }
     
     if (!response.ok) {
-      console.error('❌ Uplisting API error:', data);
+      logger.error('Uplisting API error', { status: response.status });
       return NextResponse.json(
-        { error: 'Failed to create booking', details: data },
+        { error: 'Failed to create booking. Please try again later.' },
         { status: response.status }
       );
     }
     
-    console.log('✅ Booking created successfully:', data.data?.id);
+    logger.info('Booking created successfully', { bookingId: data.data?.id });
     
     // Return booking details including payment link
     return NextResponse.json({
@@ -96,9 +87,9 @@ export async function POST(request) {
     });
     
   } catch (error) {
-    console.error('❌ Error creating booking:', error);
+    logger.error('Error creating booking', error);
     return NextResponse.json(
-      { error: 'Internal server error', message: error.message },
+      { error: 'Failed to create booking. Please try again later.' },
       { status: 500 }
     );
   }

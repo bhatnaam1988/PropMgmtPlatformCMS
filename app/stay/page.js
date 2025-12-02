@@ -318,7 +318,7 @@ function StayPageContent() {
           <div className="mt-20 bg-gray-50 rounded-2xl p-12 text-center">
             <h2 className="text-3xl font-light mb-4">Have a question about our listings or locations?</h2>
             <p className="text-gray-600 mb-8">Contact us and we would be happy to help</p>
-            <Link href="/about">
+            <Link href="/contact">
               <Button className="bg-black text-white hover:bg-gray-800 rounded-full px-8">
                 Get in Touch
               </Button>

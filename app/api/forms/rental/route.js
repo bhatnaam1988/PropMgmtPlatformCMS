@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getEmailService } from '@/lib/email';
 import clientPromise from '@/lib/mongodb';
+import { sanitizeEmail, sanitizeText, sanitizePhone, escapeHtml } from '@/lib/sanitize';
+import { logger } from '@/lib/logger';
 
 export async function POST(request) {
   try {
@@ -15,33 +17,47 @@ export async function POST(request) {
       );
     }
 
+    // Sanitize all inputs
+    let sanitizedData;
+    try {
+      sanitizedData = {
+        name: sanitizeText(name, 100),
+        email: sanitizeEmail(email),
+        phone: sanitizePhone(phone || ''),
+        propertyAddress: sanitizeText(propertyAddress, 300),
+        propertyType: sanitizeText(propertyType || '', 100),
+        message: sanitizeText(message || '', 2000)
+      };
+    } catch (error) {
+      return NextResponse.json(
+        { success: false, error: error.message },
+        { status: 400 }
+      );
+    }
+
     // Store in MongoDB
     const client = await clientPromise;
     const db = client.db(process.env.MONGO_DB_NAME || 'swissalpine');
     const submission = {
       type: 'rental',
-      name,
-      email,
-      phone: phone || '',
-      propertyAddress,
-      propertyType: propertyType || '',
-      message: message || '',
+      ...sanitizedData,
       submittedAt: new Date(),
-      status: 'new'
+      status: 'new',
+      ipAddress: request.headers.get('x-forwarded-for') || 'unknown'
     };
     
     const result = await db.collection('form_submissions').insertOne(submission);
 
-    // Send email notification
+    // Send email notification with escaped HTML
     const emailService = getEmailService();
     const emailHtml = `
       <h2>New Property Management Partnership Request</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-      <p><strong>Property Address:</strong> ${propertyAddress}</p>
-      <p><strong>Property Type:</strong> ${propertyType || 'Not specified'}</p>
-      ${message ? `<p><strong>About the Property:</strong></p><p>${message.replace(/\n/g, '<br>')}</p>` : ''}
+      <p><strong>Name:</strong> ${escapeHtml(sanitizedData.name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(sanitizedData.email)}</p>
+      <p><strong>Phone:</strong> ${escapeHtml(sanitizedData.phone) || 'Not provided'}</p>
+      <p><strong>Property Address:</strong> ${escapeHtml(sanitizedData.propertyAddress)}</p>
+      <p><strong>Property Type:</strong> ${escapeHtml(sanitizedData.propertyType) || 'Not specified'}</p>
+      ${sanitizedData.message ? `<p><strong>About the Property:</strong></p><p>${escapeHtml(sanitizedData.message).replace(/\n/g, '<br>')}</p>` : ''}
       <hr>
       <p><small>Submission ID: ${result.insertedId}</small></p>
       <p><small>Submitted: ${new Date().toLocaleString()}</small></p>
@@ -49,20 +65,21 @@ export async function POST(request) {
 
     await emailService.sendEmail({
       to: process.env.ADMIN_EMAIL,
-      subject: `New Partnership Request: ${propertyAddress}`,
+      subject: `New Partnership Request: ${sanitizedData.propertyAddress}`,
       html: emailHtml
     });
 
+    logger.secureLog('Partnership request submitted', { email: sanitizedData.email });
+
     return NextResponse.json({
       success: true,
-      message: 'Partnership request submitted successfully',
-      submissionId: result.insertedId
+      message: 'Partnership request submitted successfully'
     });
 
   } catch (error) {
-    console.error('Rental form submission error:', error);
+    logger.error('Rental form submission error', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to submit partnership request' },
+      { success: false, error: 'Failed to submit partnership request. Please try again later.' },
       { status: 500 }
     );
   }

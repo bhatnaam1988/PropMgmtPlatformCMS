@@ -3,6 +3,7 @@ import stripe, { stripeConfig } from '@/lib/stripe-client';
 import { calculateBookingPrice, toStripeCents, validateBookingDates } from '@/lib/pricing-calculator';
 import { generateIdempotencyKey } from '@/lib/retry-utils';
 import { createBooking } from '@/lib/booking-store';
+import { logger } from '@/lib/logger';
 
 export async function POST(request) {
   try {
@@ -61,7 +62,7 @@ export async function POST(request) {
       );
     }
 
-    console.log('📋 Property data fetched:', {
+    logger.info('Property data fetched', {
       id: property.id,
       fees: property.fees?.length || 0,
       taxes: property.taxes?.length || 0
@@ -79,7 +80,7 @@ export async function POST(request) {
       propertyTaxes: property.taxes || []
     });
 
-    console.log('💰 Calculated pricing:', pricing);
+    logger.info('Pricing calculated', { nights, currency: pricing.currency });
 
     // Generate idempotency key
     const idempotencyKey = generateIdempotencyKey('booking', {
@@ -122,7 +123,7 @@ export async function POST(request) {
       }
     );
 
-    console.log('✅ Payment Intent created:', paymentIntent.id);
+    logger.info('Payment Intent created', { paymentIntentId: paymentIntent.id });
 
     // Store initial booking record in MongoDB
     const booking = await createBooking({
@@ -150,7 +151,7 @@ export async function POST(request) {
       marketingConsent: marketingConsent || false,
     });
 
-    console.log('📝 Booking record created:', booking.bookingId);
+    logger.info('Booking record created', { bookingId: booking.bookingId });
 
     // Return client secret for frontend
     return NextResponse.json({
@@ -171,9 +172,9 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    console.error('❌ Error creating payment intent:', error);
+    logger.error('Error creating payment intent', error);
     return NextResponse.json(
-      { error: 'Failed to create payment intent', message: error.message },
+      { error: 'Failed to create payment intent. Please try again later.' },
       { status: 500 }
     );
   }
