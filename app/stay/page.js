@@ -291,9 +291,10 @@ function StayPageContent() {
                 } else if (nights > 0 && pricing?.total) {
                   priceDisplay = `${currency} ${formatCurrency(pricing.total)} for ${nights} night${nights > 1 ? 's' : ''}`;
                 } else if (pricing?.averageRate) {
-                  priceDisplay = `${currency} ${formatCurrency(pricing.averageRate)}/night`;
+                  // Use formatPerNightRate to show whole number (ceiling)
+                  priceDisplay = `${currency} ${formatPerNightRate(pricing.averageRate)}/night`;
                 } else {
-                  priceDisplay = `${currency} ${formatCurrency(300)}/night`;
+                  priceDisplay = `${currency} ${formatPerNightRate(300)}/night`;
                 }
                 
                 const showFallbackWarning = pricing?.useFallback;
