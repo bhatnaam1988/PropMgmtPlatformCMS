@@ -7,7 +7,7 @@ import { Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import PropertyCard from '@/components/PropertyCard';
 import { formatDateLocal } from '@/lib/uplisting';
-import { formatCurrency } from '@/lib/currency-formatter';
+import { formatCurrency, formatPerNightRate } from '@/lib/currency-formatter';
 import {
   LocationSelect,
   DateRangePicker,
