@@ -560,7 +560,7 @@ function CheckoutContent() {
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-700">
-                    {currency} {formatCurrency(pricing?.averageRate || 0)} x {nights} night{nights > 1 ? 's' : ''}
+                    {currency} {formatPerNightRate(pricing?.averageRate || 0)} x {nights} night{nights > 1 ? 's' : ''}
                   </span>
                   <span className="font-medium">{currency} {formatCurrency(accommodationTotal)}</span>
                 </div>
