@@ -107,7 +107,8 @@ export default function PropertyDetailPage() {
       const from = formatDateLocal(checkIn);
       const to = formatDateLocal(checkOut);
       
-      const res = await fetch(`/api/availability/${params.id}?from=${from}&to=${to}`);
+      // Use forBooking=true to get accurate accommodation total with Uplisting's date logic
+      const res = await fetch(`/api/availability/${params.id}?from=${from}&to=${to}&forBooking=true`);
       const data = await res.json();
       
       setPricingData(data.pricing);
