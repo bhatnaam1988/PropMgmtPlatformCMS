@@ -6,30 +6,10 @@ node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
 # For local development, sensitive values should be in .env.local (not committed)
 .next/cache/webpack/client-production/0.pack
 .next/cache/webpack/server-production/0.pack
--e 
+
 # Environment files - Only ignore local overrides
 .env.local
 .env.*.local
 .env.development.local
 .env.test.local
 .env.production.local
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
