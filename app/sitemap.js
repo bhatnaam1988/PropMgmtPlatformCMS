@@ -11,19 +11,23 @@ export default async function sitemap() {
   // Fetch properties for dynamic URLs
   let propertyUrls = [];
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const res = await fetch(`${apiUrl}/api/properties`, {
-      cache: 'no-store'
-    });
-    
-    if (res.ok) {
-      const data = await res.json();
-      propertyUrls = (data.properties || []).map(property => ({
-        url: `${baseUrl}/property/${property.id}`,
-        lastModified: property.updated_at || new Date(),
-        changeFrequency: 'weekly',
-        priority: 0.8,
-      }));
+    // During build time, skip fetching properties (they'll be added at runtime)
+    // This prevents "Dynamic server usage" errors during static generation
+    if (process.env.NODE_ENV !== 'production' || process.env.VERCEL_ENV === 'production') {
+      const apiUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+      const res = await fetch(`${apiUrl}/api/properties`, {
+        next: { revalidate: 3600 } // Cache for 1 hour
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        propertyUrls = (data.properties || []).map(property => ({
+          url: `${baseUrl}/property/${property.id}`,
+          lastModified: property.updated_at || new Date(),
+          changeFrequency: 'weekly',
+          priority: 0.8,
+        }));
+      }
     }
   } catch (error) {
     console.error('Error fetching properties for sitemap:', error);
