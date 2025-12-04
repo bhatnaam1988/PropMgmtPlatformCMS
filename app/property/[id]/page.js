@@ -787,7 +787,7 @@ export default function PropertyDetailPage() {
                     
                     <div className="flex justify-between">
                       <span className="text-gray-700">
-                        {currency} {formatCurrency(basePrice)} x {pricingData.totalNights} night{pricingData.totalNights > 1 ? 's' : ''}
+                        {currency} {formatPerNightRate(basePrice)} x {pricingData.totalNights} night{pricingData.totalNights > 1 ? 's' : ''}
                         {pricingData.totalNights !== nights && (
                           <span className="text-xs text-yellow-700 ml-1">({nights} nights selected)</span>
                         )}
