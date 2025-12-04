@@ -92,8 +92,8 @@ function CheckoutContent() {
       const propData = await propRes.json();
       setProperty(propData.property);
 
-      // Fetch pricing
-      const pricingRes = await fetch(`/api/availability/${propertyId}?from=${checkIn}&to=${checkOut}`);
+      // Fetch pricing with forBooking=true for accurate accommodation total
+      const pricingRes = await fetch(`/api/availability/${propertyId}?from=${checkIn}&to=${checkOut}&forBooking=true`);
       const pricingData = await pricingRes.json();
       setPricing(pricingData.pricing);
 
