@@ -17,7 +17,23 @@ export async function GET(request, { params }) {
       );
     }
     
-    const calendarData = await getAvailability(params.propertyId, from, to);
+    // For bookings, we need to fetch one extra day beyond checkout
+    // because the last night's rate in Uplisting corresponds to the checkout date
+    // Example: Checkout on Jan 9 means last night (Jan 8→9) uses rate for Jan 9
+    let fetchTo = to;
+    if (forBooking) {
+      const checkoutDate = new Date(to);
+      checkoutDate.setDate(checkoutDate.getDate() + 1);
+      fetchTo = checkoutDate.toISOString().split('T')[0];
+      
+      logger.info('Fetching extended calendar for booking', {
+        propertyId: params.propertyId,
+        requestedCheckout: to,
+        fetchingUntil: fetchTo
+      });
+    }
+    
+    const calendarData = await getAvailability(params.propertyId, from, fetchTo);
     
     // For bookings, use the new accommodation total calculation
     if (forBooking) {
