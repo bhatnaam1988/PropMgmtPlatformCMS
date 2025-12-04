@@ -17,7 +17,7 @@ import { validateBooking, getPropertyConstraints } from '@/lib/booking-validatio
 import { MultipleStructuredData } from '@/components/StructuredData';
 import { getPropertySchema, getVacationRentalSchema, getBreadcrumbSchema } from '@/lib/schemas';
 import { optimizeUplistingImage, IMAGE_SIZES, getImageSizes } from '@/lib/image-optimizer';
-import { formatCurrency } from '@/lib/currency-formatter';
+import { formatCurrency, formatPerNightRate } from '@/lib/currency-formatter';
 
 export default function PropertyDetailPage() {
   const params = useParams();
