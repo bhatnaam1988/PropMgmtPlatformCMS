@@ -141,6 +141,17 @@ function CheckoutContent() {
     }
 
     setError('');
+    clearError();
+    
+    // Execute ReCaptcha verification
+    const isVerified = await executeRecaptcha('submit_booking');
+    
+    if (!isVerified) {
+      // ReCaptcha verification failed, error is already set in state
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    
     setCreatingPaymentIntent(true);
 
     try {
