@@ -6,6 +6,7 @@ import SkipLink from '@/components/SkipLink'
 import { getPageMetadata } from '@/lib/metadata'
 import { MultipleStructuredData } from '@/components/StructuredData'
 import { getOrganizationSchema, getLocalBusinessSchema, getWebSiteSchema } from '@/lib/schemas'
+import { RecaptchaProvider } from '@/components/RecaptchaProvider'
 
 export const metadata = getPageMetadata('home')
 
@@ -29,14 +30,16 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <SkipLink />
-        <div className="min-h-screen flex flex-col">
-          <Header />
-          <main id="main-content" className="flex-1" role="main">
-            {children}
-          </main>
-          <Footer />
-          <Toaster />
-        </div>
+        <RecaptchaProvider>
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main id="main-content" className="flex-1" role="main">
+              {children}
+            </main>
+            <Footer />
+            <Toaster />
+          </div>
+        </RecaptchaProvider>
       </body>
     </html>
   )
