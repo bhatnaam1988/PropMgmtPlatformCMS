@@ -12,13 +12,26 @@
  * };
  */
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 export function useRecaptcha() {
   const { executeRecaptcha: executeGoogleRecaptcha } = useGoogleReCaptcha();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isReady, setIsReady] = useState(false);
+
+  // Check if ReCaptcha is ready
+  useEffect(() => {
+    if (executeGoogleRecaptcha) {
+      // Add a small delay to ensure script is fully loaded
+      const timer = setTimeout(() => {
+        setIsReady(true);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [executeGoogleRecaptcha]);
 
   /**
    * Execute ReCaptcha and verify with backend
@@ -27,9 +40,10 @@ export function useRecaptcha() {
    */
   const executeRecaptcha = useCallback(
     async (action = 'submit') => {
-      if (!executeGoogleRecaptcha) {
+      // Check if ReCaptcha is ready
+      if (!executeGoogleRecaptcha || !isReady) {
         console.error('ReCaptcha not loaded yet');
-        setError('ReCaptcha not ready. Please refresh and try again.');
+        setError('Security verification is loading. Please wait a moment and try again.');
         return false;
       }
 
@@ -39,6 +53,10 @@ export function useRecaptcha() {
       try {
         // Get ReCaptcha token from Google
         const token = await executeGoogleRecaptcha(action);
+
+        if (!token) {
+          throw new Error('Failed to generate verification token');
+        }
 
         // Verify token with our backend
         const response = await fetch('/api/verify-recaptcha', {
@@ -52,25 +70,42 @@ export function useRecaptcha() {
         const result = await response.json();
 
         if (!response.ok || !result.success) {
-          throw new Error(result.message || 'Verification failed');
+          // Provide more specific error messages
+          if (response.status === 400) {
+            throw new Error('Security verification failed. This might be due to network issues or browser restrictions. Please try again or contact support if the issue persists.');
+          }
+          throw new Error(result.message || 'Verification failed. Please try again.');
         }
 
         setIsLoading(false);
         return true;
       } catch (err) {
         console.error('ReCaptcha verification failed:', err);
-        setError(err.message || 'Verification failed. Please try again.');
+        
+        // User-friendly error messages
+        let errorMessage = 'Verification failed. Please try again.';
+        
+        if (err.message.includes('network') || err.message.includes('fetch')) {
+          errorMessage = 'Network error. Please check your connection and try again.';
+        } else if (err.message.includes('token')) {
+          errorMessage = 'Security verification issue. Please refresh the page and try again.';
+        } else if (err.message) {
+          errorMessage = err.message;
+        }
+        
+        setError(errorMessage);
         setIsLoading(false);
         return false;
       }
     },
-    [executeGoogleRecaptcha]
+    [executeGoogleRecaptcha, isReady]
   );
 
   return {
     executeRecaptcha,
     isLoading,
     error,
+    isReady,
     clearError: () => setError(null),
   };
 }
