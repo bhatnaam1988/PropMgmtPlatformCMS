@@ -483,6 +483,33 @@ export default function PropertyDetailPage() {
                   </div>
                 )}
 
+                {/* ReCaptcha Error */}
+                {recaptchaError && (
+                  <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <div className="flex items-start gap-2">
+                      <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="font-medium text-red-900 mb-1">Verification Failed</p>
+                        <p className="text-sm text-red-700 mb-3">{recaptchaError}</p>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={handleBooking}
+                            className="text-sm px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                          >
+                            Try Again
+                          </button>
+                          <a
+                            href="/contact"
+                            className="text-sm px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition"
+                          >
+                            Contact Support
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="mb-6">
                   <div className="flex items-baseline gap-2">
                     {pricingLoading ? (
