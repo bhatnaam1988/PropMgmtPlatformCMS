@@ -12,6 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import StripePaymentForm from './components/StripePaymentForm';
 import { calculateBookingPrice } from '@/lib/pricing-calculator';
 import { formatCurrency, formatPerNightRate } from '@/lib/currency-formatter';
+import { useRecaptcha } from '@/hooks/useRecaptcha';
 
 function CheckoutContent() {
   const searchParams = useSearchParams();
