@@ -786,10 +786,10 @@ export default function PropertyDetailPage() {
 
                 <Button
                   onClick={handleBooking}
-                  disabled={!checkIn || !checkOut || pricingLoading || !hasPricingData || (showUnavailableWarning)}
+                  disabled={!checkIn || !checkOut || pricingLoading || !hasPricingData || (showUnavailableWarning) || isVerifying}
                   className="w-full bg-black text-white hover:bg-gray-800 rounded-full py-6 text-lg mb-4 disabled:bg-gray-300 disabled:cursor-not-allowed"
                 >
-                  {pricingLoading ? 'Checking availability...' : showUnavailableWarning ? 'Dates Not Available' : 'Reserve'}
+                  {isVerifying ? 'Verifying...' : pricingLoading ? 'Checking availability...' : showUnavailableWarning ? 'Dates Not Available' : 'Reserve'}
                 </Button>
 
                 <p className="text-center text-sm text-gray-600 mb-4">
