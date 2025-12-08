@@ -18,6 +18,7 @@ import { MultipleStructuredData } from '@/components/StructuredData';
 import { getPropertySchema, getVacationRentalSchema, getBreadcrumbSchema } from '@/lib/schemas';
 import { optimizeUplistingImage, IMAGE_SIZES, getImageSizes } from '@/lib/image-optimizer';
 import { formatCurrency, formatPerNightRate } from '@/lib/currency-formatter';
+import { useRecaptcha } from '@/hooks/useRecaptcha';
 
 export default function PropertyDetailPage() {
   const params = useParams();
