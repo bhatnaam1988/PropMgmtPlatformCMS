@@ -186,7 +186,7 @@ export default function PropertyDetailPage() {
     }
   }
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     if (!checkIn || !checkOut) {
       alert('Please select check-in and check-out dates');
       return;
@@ -195,6 +195,7 @@ export default function PropertyDetailPage() {
     // Clear previous validation messages
     setValidationErrors([]);
     setValidationWarnings([]);
+    clearError();
     
     // Validate booking against property constraints
     const validation = validateBooking({
@@ -219,6 +220,15 @@ export default function PropertyDetailPage() {
     // If there are only warnings (no errors), set them but continue
     if (validation.warnings.length > 0) {
       setValidationWarnings(validation.warnings);
+    }
+    
+    // Execute ReCaptcha verification
+    const isVerified = await executeRecaptcha('reserve_booking');
+    
+    if (!isVerified) {
+      // ReCaptcha verification failed, error is already set in state
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
     }
     
     // Navigate to checkout with booking details
