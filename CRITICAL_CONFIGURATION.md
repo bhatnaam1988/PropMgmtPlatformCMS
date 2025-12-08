@@ -8,7 +8,7 @@
 
 ### Client ID (CRITICAL - DO NOT CHANGE)
 ```
-UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7
+UPLISTING_CLIENT_ID=secure-forms-2
 ```
 
 **⚠️ WARNING:**
@@ -76,7 +76,7 @@ When deploying to production, ensure these environment variables are set in Depl
 **Most Common Cause:** Incorrect `UPLISTING_CLIENT_ID`
 
 **Solution:**
-1. Verify `UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7`
+1. Verify `UPLISTING_CLIENT_ID=secure-forms-2`
 2. Check logs for "Your client ID does not appear to be valid"
 3. Ensure environment variables are loaded (restart server)
 
@@ -98,17 +98,17 @@ If bookings are failing, verify these files have correct values:
 
 1. `/app/.env.local` (development)
    ```bash
-   UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7
+   UPLISTING_CLIENT_ID=secure-forms-2
    ```
 
 2. `/app/.env` (production reference)
    ```bash
-   # UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7
+   # UPLISTING_CLIENT_ID=secure-forms-2
    ```
 
 3. Deployment Dashboard (production)
    - Go to Environment Variables
-   - Set: `UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7`
+   - Set: `UPLISTING_CLIENT_ID=secure-forms-2`
 
 4. Code Files Using Uplisting:
    - `/app/lib/uplisting.js` - Main client
@@ -122,7 +122,7 @@ If bookings are failing, verify these files have correct values:
 When moving to a new environment or context:
 
 - [ ] Copy this file to new environment
-- [ ] Set `UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7` in .env.local
+- [ ] Set `UPLISTING_CLIENT_ID=secure-forms-2` in .env.local
 - [ ] Set all environment variables in deployment dashboard
 - [ ] Test booking flow end-to-end
 - [ ] Verify booking appears in Uplisting dashboard

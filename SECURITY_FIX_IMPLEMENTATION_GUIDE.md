@@ -25,7 +25,7 @@ Edit `/app/.env` and `/app/.env.local`:
 ```bash
 # .env (Keep these)
 MONGO_DB_NAME=swissalpine
-NEXT_PUBLIC_BASE_URL=https://rental-fix.preview.emergentagent.com
+NEXT_PUBLIC_BASE_URL=https://secure-forms-2.preview.emergentagent.com
 STRIPE_CURRENCY=chf
 STRIPE_TAX_MODE=manual
 UPLISTING_API_URL=https://connect.uplisting.io
@@ -178,7 +178,7 @@ Edit `/app/.env`:
 CORS_ORIGINS=*
 
 # To (use your actual domain):
-CORS_ORIGINS=https://rental-fix.preview.emergentagent.com,https://yourdomain.com
+CORS_ORIGINS=https://secure-forms-2.preview.emergentagent.com,https://yourdomain.com
 ```
 
 #### 3.2 Update next.config.js
@@ -187,7 +187,7 @@ Replace the headers section:
 ```javascript
 // /app/next.config.js
 async headers() {
-  const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || ['https://rental-fix.preview.emergentagent.com'];
+  const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || ['https://secure-forms-2.preview.emergentagent.com'];
   
   return [
     {

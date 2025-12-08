@@ -16,7 +16,7 @@ The Pricing Section field is still visible in Sanity Studio because the data exi
 
 Since the field is now removed from the schema but still exists in the document, you can:
 
-1. **Access Sanity Studio:** `https://rental-fix.preview.emergentagent.com/studio`
+1. **Access Sanity Studio:** `https://secure-forms-2.preview.emergentagent.com/studio`
 2. **Open the document:** Find "Cleaning Services Page Content"
 3. **Use Vision Tool (Developer Mode):**
    - Click on "Vision" tab in Sanity Studio
@@ -113,7 +113,7 @@ When you reload Sanity Studio:
 
 ## To verify it's not showing on website:
 
-1. Visit: `https://rental-fix.preview.emergentagent.com/cleaning-services`
+1. Visit: `https://secure-forms-2.preview.emergentagent.com/cleaning-services`
 2. Scroll through the page
 3. Confirm: No pricing section appears between "Benefits" and "Request Form"
 

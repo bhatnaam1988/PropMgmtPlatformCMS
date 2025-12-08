@@ -67,7 +67,7 @@ All pages have optimized metadata including:
 User-agent: *
 Allow: /
 
-Sitemap: https://rental-fix.preview.emergentagent.com/sitemap.xml
+Sitemap: https://secure-forms-2.preview.emergentagent.com/sitemap.xml
 ```
 
 ### 4. Schema.org Structured Data ✅

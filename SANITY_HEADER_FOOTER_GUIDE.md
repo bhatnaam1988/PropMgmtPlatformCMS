@@ -7,7 +7,7 @@ The Header navigation and Footer content can now be managed through Sanity Studi
 
 ## Accessing Sanity Studio
 
-1. Navigate to: `https://rental-fix.preview.emergentagent.com/studio`
+1. Navigate to: `https://secure-forms-2.preview.emergentagent.com/studio`
 2. Log in with your Sanity credentials
 3. You'll see the content management dashboard
 

@@ -11,7 +11,7 @@ from datetime import datetime
 import os
 
 # Configuration
-BASE_URL = "https://rental-fix.preview.emergentagent.com"
+BASE_URL = "https://secure-forms-2.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
 
 def print_test_result(test_name, success, details=""):

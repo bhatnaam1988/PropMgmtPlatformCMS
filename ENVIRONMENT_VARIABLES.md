@@ -36,7 +36,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_51QgR12HbvQ7QfHylP2xJVuX4usoBn29k5Q8V
 
 # Webhook Signing Secret (changes when webhook endpoint is recreated)
 # ⚠️ MUST match the endpoint configured in Stripe Dashboard
-# Current endpoint: https://rental-fix.preview.emergentagent.com/api/stripe/webhook
+# Current endpoint: https://secure-forms-2.preview.emergentagent.com/api/stripe/webhook
 STRIPE_WEBHOOK_SECRET=whsec_eWG9mHTjqFi8VTfPrheLrOGPA9zKgusW
 
 # Stripe Settings
@@ -91,7 +91,7 @@ MONGO_URL=mongodb://localhost:27017/swiss_alpine_journey
 ```bash
 # Base URL (changes with session)
 # Current session: alpine-booking-1
-NEXT_PUBLIC_BASE_URL=https://rental-fix.preview.emergentagent.com
+NEXT_PUBLIC_BASE_URL=https://secure-forms-2.preview.emergentagent.com
 
 # Local development
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
@@ -185,7 +185,7 @@ When Emergent session changes (URL changes), follow these steps:
 
 - [ ] **Update Base URL**
   ```bash
-  NEXT_PUBLIC_BASE_URL=https://rental-fix.preview.emergentagent.com
+  NEXT_PUBLIC_BASE_URL=https://secure-forms-2.preview.emergentagent.com
   ```
 
 - [ ] **Verify Uplisting Client ID** (should NOT change)

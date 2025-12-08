@@ -36,7 +36,7 @@ const nextConfig = {
   },
   async headers() {
     // Get allowed origins from environment, default to production URL
-    const allowedOrigins = process.env.CORS_ORIGINS || process.env.NEXT_PUBLIC_BASE_URL || 'https://rental-fix.preview.emergentagent.com';
+    const allowedOrigins = process.env.CORS_ORIGINS || process.env.NEXT_PUBLIC_BASE_URL || 'https://secure-forms-2.preview.emergentagent.com';
     const originList = allowedOrigins.split(',').map(origin => origin.trim());
     
     return [

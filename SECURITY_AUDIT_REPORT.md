@@ -133,7 +133,7 @@ export async function middleware(request) {
 1. **IMMEDIATE:** Restrict CORS to your production domain only
 2. Update `.env`:
    ```bash
-   CORS_ORIGINS=https://rental-fix.preview.emergentagent.com,https://yourdomain.com
+   CORS_ORIGINS=https://secure-forms-2.preview.emergentagent.com,https://yourdomain.com
    ```
 3. Update `next.config.js`:
    ```javascript

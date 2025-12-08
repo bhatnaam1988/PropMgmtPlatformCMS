@@ -517,7 +517,7 @@ UPLISTING_CLIENT_ID=rental-fix  # ❌ WRONG
 
 **User Provided Correct Value:**
 ```
-UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7
+UPLISTING_CLIENT_ID=secure-forms-2
 ```
 
 **Fix Applied:**
@@ -704,7 +704,7 @@ node /tmp/test_uplisting_fixed.js
 
 2. **Configure Deployment Dashboard** (10 minutes)
    - Set all rotated keys
-   - Set UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7
+   - Set UPLISTING_CLIENT_ID=secure-forms-2
    - Verify CORS_ORIGINS
 
 3. **Test Production** (15 minutes)
@@ -744,7 +744,7 @@ node /tmp/test_uplisting_fixed.js
 
 **1. Uplisting Client ID (CRITICAL):**
 ```
-UPLISTING_CLIENT_ID=f4fd1410-9636-013e-aeff-2a9672a658e7
+UPLISTING_CLIENT_ID=secure-forms-2
 ```
 - This MUST NOT change
 - Required for all bookings

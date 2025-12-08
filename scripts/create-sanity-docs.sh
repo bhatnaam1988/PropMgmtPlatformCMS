@@ -134,4 +134,4 @@ fi
 
 echo ""
 echo "🎉 Done! Documents created in Sanity."
-echo "✨ Visit https://rental-fix.preview.emergentagent.com/studio to view them."
+echo "✨ Visit https://secure-forms-2.preview.emergentagent.com/studio to view them."

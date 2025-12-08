@@ -6,7 +6,7 @@ Since the API token is not working, please follow these manual steps to create t
 
 ## 🎯 Step 1: Access Sanity Studio
 
-1. Open: `https://rental-fix.preview.emergentagent.com/studio`
+1. Open: `https://secure-forms-2.preview.emergentagent.com/studio`
 2. Log in if prompted
 
 ---
@@ -123,7 +123,7 @@ header
 
 ## 🎉 Step 4: Verify
 
-1. Refresh your website: `https://rental-fix.preview.emergentagent.com`
+1. Refresh your website: `https://secure-forms-2.preview.emergentagent.com`
 2. The header and footer should look exactly the same (now powered by Sanity!)
 3. Try editing something in Sanity and republish to see changes
 

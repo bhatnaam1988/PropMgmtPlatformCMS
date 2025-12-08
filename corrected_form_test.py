@@ -7,7 +7,7 @@ import requests
 import json
 
 # Configuration
-BASE_URL = "https://rental-fix.preview.emergentagent.com"
+BASE_URL = "https://secure-forms-2.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
 
 print(f"🧪 CORRECTED FORM API TESTING")

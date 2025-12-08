@@ -15,7 +15,7 @@
 - **Project ID:** vrhdu6hl
 - **Dataset:** production
 - **API Version:** 2024-01-01
-- **Studio URL:** `https://rental-fix.preview.emergentagent.com/studio`
+- **Studio URL:** `https://secure-forms-2.preview.emergentagent.com/studio`
 
 ### ✅ Other Integrations
 - **Uplisting API:** Configured (property management)
@@ -33,7 +33,7 @@
 2. **Ensure you are in TEST mode** (toggle in top right should show "Test mode")
 3. Navigate to **Developers → Webhooks**
 4. Verify webhook endpoint is configured:
-   - **URL:** `https://rental-fix.preview.emergentagent.com/api/stripe/webhook`
+   - **URL:** `https://secure-forms-2.preview.emergentagent.com/api/stripe/webhook`
    - **Events to listen:** `payment_intent.succeeded`, `payment_intent.payment_failed`
    - **Status:** Should be "Active"
 
@@ -63,7 +63,7 @@ Navigate to **Settings → Payment methods**:
 ### 2. Sanity Studio Actions Required
 
 #### A. Access Sanity Studio
-1. Navigate to: `https://rental-fix.preview.emergentagent.com/studio`
+1. Navigate to: `https://secure-forms-2.preview.emergentagent.com/studio`
 2. Login with Sanity credentials
 
 #### B. Content Verification Checklist
@@ -366,7 +366,7 @@ SANITY_API_TOKEN=... ✅
 ## 📧 UAT Testing Credentials to Share with Client
 
 **Sanity Studio:**
-- URL: `https://rental-fix.preview.emergentagent.com/studio`
+- URL: `https://secure-forms-2.preview.emergentagent.com/studio`
 - Email: [Provide if client needs CMS access]
 - Password: [Provide if applicable]
 
@@ -470,6 +470,6 @@ SANITY_API_TOKEN=... ✅
 
 ---
 
-**UAT Environment URL:** https://rental-fix.preview.emergentagent.com
+**UAT Environment URL:** https://secure-forms-2.preview.emergentagent.com
 **UAT Ready:** Pending final review of this checklist
 **Last Updated:** [Current Date]

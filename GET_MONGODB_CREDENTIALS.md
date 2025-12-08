@@ -65,7 +65,7 @@ Hi Emergent Support,
 
 I need access to the MongoDB Atlas credentials for my deployed application:
 - Application: Swiss Alpine Journey
-- URL: https://rental-fix.preview.emergentagent.com
+- URL: https://secure-forms-2.preview.emergentagent.com
 - Issue: Getting "not authorized on swissalpine" error
 
 Can you please provide:

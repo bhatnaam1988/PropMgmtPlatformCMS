@@ -12,9 +12,9 @@
 
 ### **Step 1: Navigate to Property Page**
 
-1. Go to: https://rental-fix.preview.emergentagent.com
+1. Go to: https://secure-forms-2.preview.emergentagent.com
 2. Click on any property to view details
-3. Or directly visit: https://rental-fix.preview.emergentagent.com/property/84656
+3. Or directly visit: https://secure-forms-2.preview.emergentagent.com/property/84656
 
 ---
 

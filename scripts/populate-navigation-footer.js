@@ -182,7 +182,7 @@ async function populateDocuments() {
     console.log('   - Navigation (Header): 5 main menu items with dropdowns');
     console.log('   - Footer: 2 sections (Services, Legal) + Instagram link');
     console.log('\n✨ You can now edit these documents in Sanity Studio!');
-    console.log('   Navigate to: https://rental-fix.preview.emergentagent.com/studio');
+    console.log('   Navigate to: https://secure-forms-2.preview.emergentagent.com/studio');
 
   } catch (error) {
     console.error('❌ Error populating documents:', error);
