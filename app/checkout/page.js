@@ -54,6 +54,9 @@ function CheckoutContent() {
 
   // Step management
   const [currentStep, setCurrentStep] = useState(1); // 1: Guest Details, 2: Payment
+  
+  // ReCaptcha hook
+  const { executeRecaptcha, isLoading: isVerifying, error: recaptchaError, clearError } = useRecaptcha();
 
   // Fetch Stripe publishable key at runtime (not build time)
   useEffect(() => {
