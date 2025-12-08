@@ -58,6 +58,9 @@ export default function PropertyDetailPage() {
   });
   const [showGuestPicker, setShowGuestPicker] = useState(false);
   const [guestValidationError, setGuestValidationError] = useState(null);
+  
+  // ReCaptcha hook
+  const { executeRecaptcha, isLoading: isVerifying, error: recaptchaError, clearError } = useRecaptcha();
 
   useEffect(() => {
     fetchProperty();
