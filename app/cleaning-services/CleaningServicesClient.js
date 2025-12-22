@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Sparkles, CheckCircle, AlertCircle } from 'lucide-react';
+import { Sparkles, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRecaptcha } from '@/hooks/useRecaptcha';
 
@@ -20,6 +20,7 @@ export default function CleaningServicesClient({ content }) {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState({ type: '', text: '' });
   
   // ReCaptcha hook
   const { executeRecaptcha, isLoading: isVerifying, error: recaptchaError, clearError } = useRecaptcha();
@@ -27,6 +28,7 @@ export default function CleaningServicesClient({ content }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitMessage({ type: '', text: '' });
     clearError();
     
     // Execute ReCaptcha verification
@@ -47,13 +49,22 @@ export default function CleaningServicesClient({ content }) {
       });
       const data = await response.json();
       if (data.success) {
-        alert('Request submitted! We\'ll contact you within 24 hours.');
+        setSubmitMessage({ 
+          type: 'success', 
+          text: 'Request Submitted. We will contact you soon. Thanks!!' 
+        });
         setFormData({ name: '', email: '', phone: '', propertyAddress: '', serviceType: '', message: '' });
       } else {
-        alert('Failed to submit. Please try again.');
+        setSubmitMessage({ 
+          type: 'error', 
+          text: 'Failed to submit. Please try again.' 
+        });
       }
     } catch (error) {
-      alert('Failed to submit. Please try again.');
+      setSubmitMessage({ 
+        type: 'error', 
+        text: 'Failed to submit. Please try again.' 
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -227,8 +238,27 @@ export default function CleaningServicesClient({ content }) {
                   className="w-full"
                   disabled={isSubmitting || isVerifying}
                 >
-                  {isVerifying ? 'Verifying...' : isSubmitting ? 'Submitting...' : 'Submit Request'}
+                  {isVerifying ? 'Verifying...' : isSubmitting ? 'Submitting...' : 'Register Interest'}
                 </Button>
+                
+                {/* Success/Error Message */}
+                {submitMessage.text && (
+                  <div 
+                    className={`mt-4 p-4 rounded-lg flex items-center gap-2 ${
+                      submitMessage.type === 'success' 
+                        ? 'bg-green-50 text-green-800 border border-green-200' 
+                        : 'bg-red-50 text-red-800 border border-red-200'
+                    }`}
+                    role="alert"
+                  >
+                    {submitMessage.type === 'success' ? (
+                      <CheckCircle className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                    ) : (
+                      <XCircle className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                    )}
+                    <span>{submitMessage.text}</span>
+                  </div>
+                )}
               </form>
             </CardContent>
           </Card>

@@ -38,7 +38,7 @@ export async function Footer() {
     }
   ];
 
-  const fallbackCopyright = '© 2024 Swiss Alpine Journey. All rights reserved.';
+  const fallbackCopyright = '© 2025 Swiss Alpine Journey. All Rights Reserved.';
 
   // Use Sanity data if available, otherwise use fallback
   const brandSection = fallbackBrand; // Keep brand hardcoded for safety

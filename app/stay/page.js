@@ -231,6 +231,14 @@ function StayPageContent() {
           {/* Results */}
           <div className="mb-8">
             <p className="text-gray-600">{filteredProperties.length} listing{filteredProperties.length !== 1 ? 's' : ''} found</p>
+            {/* Screen reader announcement for filter results */}
+            <div 
+              aria-live="polite" 
+              aria-atomic="true" 
+              className="sr-only"
+            >
+              {filteredProperties.length} properties found
+            </div>
           </div>
 
           {loading ? (

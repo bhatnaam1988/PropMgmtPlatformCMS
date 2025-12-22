@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Heart, Users, Award, Mountain, MapPin, Clock, AlertCircle } from 'lucide-react';
+import { Heart, Users, Award, Mountain, MapPin, Clock, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRecaptcha } from '@/hooks/useRecaptcha';
 
@@ -19,6 +19,7 @@ export default function JobsClient({ content }) {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState({ type: '', text: '' });
   
   // ReCaptcha hook
   const { executeRecaptcha, isLoading: isVerifying, error: recaptchaError, clearError } = useRecaptcha();
@@ -26,6 +27,7 @@ export default function JobsClient({ content }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitMessage({ type: '', text: '' });
     clearError();
     
     // Execute ReCaptcha verification
@@ -46,13 +48,22 @@ export default function JobsClient({ content }) {
       });
       const data = await response.json();
       if (data.success) {
-        alert('Application submitted! We\'ll review and contact you soon.');
+        setSubmitMessage({ 
+          type: 'success', 
+          text: 'Application submitted! We\'ll review and contact you soon.' 
+        });
         setFormData({ name: '', email: '', phone: '', position: '', message: '' });
       } else {
-        alert('Failed to submit. Please try again.');
+        setSubmitMessage({ 
+          type: 'error', 
+          text: 'Failed to submit. Please try again.' 
+        });
       }
     } catch (error) {
-      alert('Failed to submit. Please try again.');
+      setSubmitMessage({ 
+        type: 'error', 
+        text: 'Failed to submit. Please try again.' 
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -234,6 +245,25 @@ export default function JobsClient({ content }) {
                 >
                   {isVerifying ? 'Verifying...' : isSubmitting ? 'Submitting...' : 'Submit Application'}
                 </Button>
+                
+                {/* Success/Error Message */}
+                {submitMessage.text && (
+                  <div 
+                    className={`mt-4 p-4 rounded-lg flex items-center gap-2 ${
+                      submitMessage.type === 'success' 
+                        ? 'bg-green-50 text-green-800 border border-green-200' 
+                        : 'bg-red-50 text-red-800 border border-red-200'
+                    }`}
+                    role="alert"
+                  >
+                    {submitMessage.type === 'success' ? (
+                      <CheckCircle className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                    ) : (
+                      <XCircle className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                    )}
+                    <span>{submitMessage.text}</span>
+                  </div>
+                )}
               </form>
               <p className="text-sm text-muted-foreground text-center mt-4">{content.applicationSection.footerText}</p>
             </CardContent>

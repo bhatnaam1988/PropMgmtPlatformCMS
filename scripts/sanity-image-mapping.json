@@ -1,0 +1,112 @@
+{
+  "images": [
+    {
+      "id": "hero-homepage",
+      "originalUrl": "https://images.unsplash.com/photo-1633341500706-62690376b1ec",
+      "description": "Swiss Alps mountain chalet - Homepage hero",
+      "sanityAssetId": "image-1c0f833657a014f84dc42f136b98e46c173c96b3-1920x1080-jpg",
+      "usage": [
+        "homeSettingsHybrid.heroSection.backgroundImage"
+      ],
+      "sanityUrl": "https://cdn.sanity.io/images/vrhdu6hl/production/1c0f833657a014f84dc42f136b98e46c173c96b3-1920x1080.jpg"
+    },
+    {
+      "id": "hero-graechen",
+      "originalUrl": "https://images.unsplash.com/photo-1656746618448-944c18bb4bd5",
+      "description": "Graechen Switzerland town alpine village",
+      "sanityAssetId": "image-1a5b5582af703125d45eb841843e2d4c5891d5bc-1920x1280-jpg",
+      "usage": [
+        "graechenSettingsHybrid.heroSection.backgroundImage"
+      ],
+      "sanityUrl": "https://cdn.sanity.io/images/vrhdu6hl/production/1a5b5582af703125d45eb841843e2d4c5891d5bc-1920x1280.jpg"
+    },
+    {
+      "id": "autumn-hiking",
+      "originalUrl": "https://images.unsplash.com/photo-1700643612355-f6ef344c7b35",
+      "description": "Autumn mountain hiking switzerland",
+      "sanityAssetId": "image-2cc8cd7fb477398ecfa7afe5ed957079f2dcad5c-1920x2021-jpg",
+      "usage": [
+        "travelTipsSettingsHybrid.heroSection.backgroundImage",
+        "otherLocationsSettingsHybrid"
+      ],
+      "sanityUrl": "https://cdn.sanity.io/images/vrhdu6hl/production/2cc8cd7fb477398ecfa7afe5ed957079f2dcad5c-1920x2021.jpg"
+    },
+    {
+      "id": "cleaning-services",
+      "originalUrl": "https://images.unsplash.com/photo-1691027599401-a8de556be41b",
+      "description": "Swiss mountain chalet - Cleaning services",
+      "sanityAssetId": "image-9038af93e2f9dea4cc6f330945953d29afc774a5-1920x2400-jpg",
+      "usage": [
+        "cleaningServicesSettingsHybrid.heroSection.backgroundImage"
+      ],
+      "sanityUrl": "https://cdn.sanity.io/images/vrhdu6hl/production/9038af93e2f9dea4cc6f330945953d29afc774a5-1920x2400.jpg"
+    },
+    {
+      "id": "rental-services",
+      "originalUrl": "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
+      "description": "Swiss mountain landscape - Rental services",
+      "sanityAssetId": "image-4381f85d976dd4bf0287fc3a7fc390e3a03cce11-1920x1442-jpg",
+      "usage": [
+        "rentalServicesSettingsHybrid.heroSection.backgroundImage"
+      ],
+      "sanityUrl": "https://cdn.sanity.io/images/vrhdu6hl/production/4381f85d976dd4bf0287fc3a7fc390e3a03cce11-1920x1442.jpg"
+    },
+    {
+      "id": "jobs-page",
+      "originalUrl": "https://images.unsplash.com/photo-1633341500706-62690376b1ec",
+      "description": "Swiss Alps mountain chalet - Jobs page",
+      "sanityAssetId": "image-1c0f833657a014f84dc42f136b98e46c173c96b3-1920x1080-jpg",
+      "usage": [
+        "jobsSettingsHybrid.heroSection.backgroundImage"
+      ],
+      "sanityUrl": "https://cdn.sanity.io/images/vrhdu6hl/production/1c0f833657a014f84dc42f136b98e46c173c96b3-1920x1080.jpg"
+    },
+    {
+      "id": "about-hero",
+      "originalUrl": "https://images.unsplash.com/photo-1633341500706-62690376b1ec",
+      "description": "Swiss Alps mountain chalet - About hero",
+      "sanityAssetId": "image-1c0f833657a014f84dc42f136b98e46c173c96b3-1920x1080-jpg",
+      "usage": [
+        "aboutSettingsHybrid.heroSection.backgroundImage"
+      ],
+      "sanityUrl": "https://cdn.sanity.io/images/vrhdu6hl/production/1c0f833657a014f84dc42f136b98e46c173c96b3-1920x1080.jpg"
+    },
+    {
+      "id": "about-welcome",
+      "originalUrl": "https://images.unsplash.com/photo-1629114472586-19096663e723",
+      "description": "Swiss Alps mountain chalet interior - About welcome",
+      "sanityAssetId": "image-4b94ff5343cc48ae1c472284ac485accf38716c4-1920x2560-jpg",
+      "usage": [
+        "aboutSettingsHybrid.welcomeStory.image"
+      ],
+      "sanityUrl": "https://cdn.sanity.io/images/vrhdu6hl/production/4b94ff5343cc48ae1c472284ac485accf38716c4-1920x2560.jpg"
+    },
+    {
+      "id": "about-whychoose",
+      "originalUrl": "https://images.unsplash.com/photo-1633341500706-62690376b1ec",
+      "description": "Swiss Alps mountain chalet - About why choose",
+      "sanityAssetId": "image-1c0f833657a014f84dc42f136b98e46c173c96b3-1920x1080-jpg",
+      "usage": [
+        "aboutSettingsHybrid.whyChooseSection.image"
+      ],
+      "sanityUrl": "https://cdn.sanity.io/images/vrhdu6hl/production/1c0f833657a014f84dc42f136b98e46c173c96b3-1920x1080.jpg"
+    },
+    {
+      "id": "behind-scenes",
+      "originalUrl": "https://images.unsplash.com/photo-1633341500706-62690376b1ec",
+      "description": "Swiss Alps mountain chalet - Behind the scenes",
+      "sanityAssetId": "image-1c0f833657a014f84dc42f136b98e46c173c96b3-1920x1080-jpg",
+      "usage": [
+        "behindTheScenesSettingsHybrid.heroSection.backgroundImage"
+      ],
+      "sanityUrl": "https://cdn.sanity.io/images/vrhdu6hl/production/1c0f833657a014f84dc42f136b98e46c173c96b3-1920x1080.jpg"
+    }
+  ],
+  "notes": {
+    "totalImages": 10,
+    "uniqueUrls": 7,
+    "migrationDate": "2025-01-16",
+    "sanityProjectId": "vrhdu6hl",
+    "sanityDataset": "production"
+  }
+}

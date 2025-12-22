@@ -22,7 +22,13 @@ export default async function Contact() {
     }
   };
   
-  const data = content || fallbackData;
+  // Fix: Check if content has valid data, not just if it exists
+  // Sanity returns empty object {} when document exists but has no content
+  const hasValidContent = content && 
+                          content.heroSection && 
+                          content.heroSection.heading;
+  
+  const data = hasValidContent ? content : fallbackData;
   
   return <ContactForm content={data} />;
 }

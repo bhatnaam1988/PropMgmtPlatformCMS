@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { TrendingUp, CheckCircle, AlertCircle } from 'lucide-react';
+import { TrendingUp, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRecaptcha } from '@/hooks/useRecaptcha';
 
@@ -20,6 +20,7 @@ export default function RentalServicesClient({ content }) {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState({ type: '', text: '' });
   
   // ReCaptcha hook
   const { executeRecaptcha, isLoading: isVerifying, error: recaptchaError, clearError } = useRecaptcha();
@@ -27,6 +28,7 @@ export default function RentalServicesClient({ content }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitMessage({ type: '', text: '' });
     clearError();
     
     // Execute ReCaptcha verification
@@ -47,13 +49,22 @@ export default function RentalServicesClient({ content }) {
       });
       const data = await response.json();
       if (data.success) {
-        alert('Request submitted! We\'ll contact you within 24 hours.');
+        setSubmitMessage({ 
+          type: 'success', 
+          text: 'Request Submitted. We will contact you soon. Thanks!!' 
+        });
         setFormData({ name: '', email: '', phone: '', propertyAddress: '', propertyType: '', message: '' });
       } else {
-        alert('Failed to submit. Please try again.');
+        setSubmitMessage({ 
+          type: 'error', 
+          text: 'Failed to submit. Please try again.' 
+        });
       }
     } catch (error) {
-      alert('Failed to submit. Please try again.');
+      setSubmitMessage({ 
+        type: 'error', 
+        text: 'Failed to submit. Please try again.' 
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -79,15 +90,15 @@ export default function RentalServicesClient({ content }) {
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-16">
+      {/* Services Grid - Display 3 items in one row */}
+      <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {content.servicesGrid.services.map((service, idx) => (
-              <Card key={idx}>
-                <CardContent className="p-6">
-                  <TrendingUp className="h-8 w-8 text-primary mb-4" />
-                  <h3 className="mb-3">{service.title}</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {content.servicesGrid.services.slice(0, 3).map((service, idx) => (
+              <Card key={idx} className="text-center">
+                <CardContent className="p-8">
+                  <TrendingUp className="h-10 w-10 text-primary mb-4 mx-auto" />
+                  <h3 className="mb-3 text-xl font-semibold">{service.title}</h3>
                   <p className="text-muted-foreground">{service.description}</p>
                 </CardContent>
               </Card>
@@ -228,6 +239,25 @@ export default function RentalServicesClient({ content }) {
                 >
                   {isVerifying ? 'Verifying...' : isSubmitting ? 'Submitting...' : 'Submit Partnership Request'}
                 </Button>
+                
+                {/* Success/Error Message */}
+                {submitMessage.text && (
+                  <div 
+                    className={`mt-4 p-4 rounded-lg flex items-center gap-2 ${
+                      submitMessage.type === 'success' 
+                        ? 'bg-green-50 text-green-800 border border-green-200' 
+                        : 'bg-red-50 text-red-800 border border-red-200'
+                    }`}
+                    role="alert"
+                  >
+                    {submitMessage.type === 'success' ? (
+                      <CheckCircle className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                    ) : (
+                      <XCircle className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                    )}
+                    <span>{submitMessage.text}</span>
+                  </div>
+                )}
               </form>
             </CardContent>
           </Card>

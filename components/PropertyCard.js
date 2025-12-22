@@ -86,7 +86,10 @@ export default function PropertyCard({ property, priceDisplay, showFallbackWarni
   };
 
   return (
-    <Link href={buildPropertyUrl()}>
+    <Link 
+      href={buildPropertyUrl()}
+      className="focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:outline-none rounded-2xl block"
+    >
       <div className={`group cursor-pointer ${isUnavailable ? 'opacity-60' : ''}`}>
         <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4">
           {/* Price Badge */}
@@ -113,14 +116,16 @@ export default function PropertyCard({ property, priceDisplay, showFallbackWarni
               <button
                 onClick={handlePrevImage}
                 className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                aria-label={`View previous photo of ${property.name}`}
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
               <button
                 onClick={handleNextImage}
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                aria-label={`View next photo of ${property.name}`}
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4" aria-hidden="true" />
               </button>
             </>
           )}

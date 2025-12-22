@@ -38,6 +38,20 @@ export default async function RentalServices() {
     }
   };
   
-  const data = content || fallbackData;
+  // Fix: Check if content has valid data, not just if it exists
+  // Sanity returns empty object {} when document exists but has no content
+  const hasValidContent = content && 
+                          content.heroSection && 
+                          content.heroSection.heading &&
+                          content.servicesGrid &&
+                          content.servicesGrid.services &&
+                          content.servicesGrid.services.length > 0 &&
+                          content.benefitsSection &&
+                          content.benefitsSection.benefits &&
+                          content.benefitsSection.benefits.length > 0 &&
+                          content.formSection &&
+                          content.formSection.heading;
+  
+  const data = hasValidContent ? content : fallbackData;
   return <RentalServicesClient content={data} />;
 }

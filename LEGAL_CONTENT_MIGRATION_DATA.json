@@ -1,0 +1,177 @@
+{
+  "pageHeader": {
+    "heading": "Legal Information",
+    "description": "Important legal documents and policies for Swiss Alpine Journey"
+  },
+  "navigationCards": [
+    {
+      "icon": "FileText",
+      "title": "Terms & Conditions",
+      "description": "Booking terms and rental conditions",
+      "anchor": "#terms"
+    },
+    {
+      "icon": "Shield",
+      "title": "Privacy Policy",
+      "description": "How we protect your personal data",
+      "anchor": "#privacy"
+    },
+    {
+      "icon": "Cookie",
+      "title": "GDPR Information",
+      "description": "Your data rights under GDPR",
+      "anchor": "#gdpr"
+    }
+  ],
+  "termsSection": {
+    "heading": "Terms & Conditions",
+    "lastUpdated": "December 2024",
+    "sections": [
+      {
+        "title": "1. Booking and Reservation",
+        "content": "By making a reservation with Swiss Alpine Journey, you agree to these terms and conditions. All bookings are subject to availability and confirmation. A booking is only confirmed when you receive written confirmation from us via email. We reserve the right to refuse any booking at our discretion."
+      },
+      {
+        "title": "2. Payment Terms",
+        "content": "A deposit of 30% of the total booking value is required to secure your reservation. The remaining balance must be paid 30 days before your arrival date. Payment can be made by bank transfer or major credit cards (Visa, Mastercard, American Express). All prices are quoted in Swiss Francs (CHF) and include applicable taxes unless otherwise stated."
+      },
+      {
+        "title": "3. Cancellation Policy",
+        "content": "Free cancellation up to 48 hours before check-in. Cancellations within 48 hours: 50% of booking value retained. No-shows: 100% of booking value retained. Different policies may apply during peak seasons (Christmas, New Year, Swiss school holidays). Cancellations must be made in writing via email to be valid."
+      },
+      {
+        "title": "4. Check-in and Check-out",
+        "content": "Check-in time is between 15:00 and 19:00. Check-out time is 10:00. Late check-in or early check-out can be arranged with advance notice and may incur additional charges. Guests must provide valid identification upon check-in. Keys must be returned at check-out, and failure to do so may result in a replacement charge."
+      },
+      {
+        "title": "5. Property Usage and Guest Responsibilities",
+        "content": "The property must be used respectfully and maintained in good condition. Maximum occupancy limits must be strictly observed. Smoking is prohibited inside all properties. Pets are only allowed in designated pet-friendly properties with prior approval. Guests are responsible for any damage caused during their stay. Parties and events are not permitted without prior written consent."
+      },
+      {
+        "title": "6. House Rules",
+        "content": "Quiet hours are from 22:00 to 07:00. Guests must respect neighbors and local community. Rubbish must be disposed of properly in designated bins. All appliances and facilities must be used according to provided instructions. Any issues or damage must be reported immediately to the property manager."
+      },
+      {
+        "title": "7. Liability and Insurance",
+        "content": "Swiss Alpine Journey is not liable for any personal injury, loss, or damage to personal belongings during your stay. Guests are advised to arrange comprehensive travel and personal property insurance. The property owner's insurance does not cover guests' personal belongings. We recommend travel insurance that includes trip cancellation coverage."
+      },
+      {
+        "title": "8. Force Majeure",
+        "content": "Swiss Alpine Journey is not responsible for failure to fulfill obligations due to circumstances beyond our control, including but not limited to natural disasters, extreme weather conditions, government restrictions, pandemics, or other force majeure events. In such cases, we will work with guests to find alternative arrangements or provide appropriate refunds."
+      },
+      {
+        "title": "9. Modifications to Booking",
+        "content": "Requests to modify bookings (dates, number of guests, property) are subject to availability and may incur additional charges. Modifications must be requested at least 14 days before the original check-in date. We cannot guarantee that modification requests will be accommodated."
+      },
+      {
+        "title": "10. Dispute Resolution and Governing Law",
+        "content": "These terms and conditions are governed by Swiss law. Any disputes arising from these terms will be subject to the exclusive jurisdiction of the courts in Switzerland. We encourage guests to contact us directly to resolve any issues before pursuing legal action."
+      }
+    ]
+  },
+  "privacySection": {
+    "heading": "Privacy Policy",
+    "lastUpdated": "December 2024",
+    "sections": [
+      {
+        "title": "1. Information We Collect",
+        "content": "We collect personal information that you provide when making a reservation, including your name, email address, phone number, postal address, and payment information. We also collect information about your stay preferences and any special requests. Additionally, we may collect information about how you use our website through cookies and similar technologies."
+      },
+      {
+        "title": "2. How We Use Your Information",
+        "content": "We use your personal information to process and manage your bookings, communicate with you about your reservation, provide customer support, send booking confirmations and important updates, process payments securely, and improve our services. We may also use your information to send you marketing communications if you have opted in to receive them."
+      },
+      {
+        "title": "3. Data Sharing and Third Parties",
+        "content": "We do not sell your personal information to third parties. We may share your information with trusted service providers who assist us in operating our business, including payment processors (Stripe), property management systems (Uplisting), email services (Resend), and content management systems (Sanity). These providers are contractually obligated to protect your information and use it only for the purposes we specify."
+      },
+      {
+        "title": "4. Data Security",
+        "content": "We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. This includes encryption of sensitive data, secure server infrastructure, regular security audits, and access controls. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security."
+      },
+      {
+        "title": "5. Data Retention",
+        "content": "We retain your personal information for as long as necessary to fulfill the purposes outlined in this privacy policy, comply with legal obligations, resolve disputes, and enforce our agreements. Booking information is typically retained for 7 years for accounting and legal purposes. You can request deletion of your data at any time, subject to legal retention requirements."
+      },
+      {
+        "title": "6. Your Rights",
+        "content": "Under data protection laws, you have the right to access your personal information, request corrections to inaccurate data, request deletion of your data, object to processing of your data, request restriction of processing, and request data portability. To exercise these rights, please contact us using the information provided at the end of this policy."
+      },
+      {
+        "title": "7. Cookies and Tracking Technologies",
+        "content": "Our website uses cookies and similar tracking technologies to enhance user experience, analyze website traffic, and personalize content. We use both first-party and third-party cookies. Essential cookies are necessary for the website to function properly. Analytics cookies help us understand how visitors use our site. You can control cookie preferences through your browser settings."
+      },
+      {
+        "title": "8. International Data Transfers",
+        "content": "Your information may be transferred to and processed in countries other than Switzerland. We ensure that appropriate safeguards are in place to protect your information in accordance with this privacy policy and applicable data protection laws. We use standard contractual clauses approved by the European Commission where applicable."
+      },
+      {
+        "title": "9. Children's Privacy",
+        "content": "Our services are not directed at children under 16, and we do not knowingly collect personal information from children. If we become aware that we have collected information from a child under 16, we will take steps to delete that information promptly."
+      },
+      {
+        "title": "10. Changes to This Policy",
+        "content": "We may update this privacy policy from time to time to reflect changes in our practices or legal requirements. We will notify you of any material changes by posting the updated policy on our website and updating the 'Last Updated' date. Your continued use of our services after such changes constitutes acceptance of the updated policy."
+      },
+      {
+        "title": "11. Contact Information",
+        "content": "If you have any questions about this privacy policy or how we handle your personal information, please contact us at: Email: privacy@swissalpinejourney.com. We will respond to your inquiry within 30 days."
+      }
+    ]
+  },
+  "gdprSection": {
+    "heading": "GDPR Information",
+    "description": "Your rights under the General Data Protection Regulation",
+    "sections": [
+      {
+        "title": "Right to Access",
+        "content": "You have the right to request access to the personal data we hold about you. This includes the right to obtain confirmation of whether we are processing your data, access to your personal data, and information about how we process it. To request access, please contact us with your full name and email address used for booking."
+      },
+      {
+        "title": "Right to Rectification",
+        "content": "If you believe that any personal information we hold about you is inaccurate or incomplete, you have the right to request that we correct or complete it. Please contact us with details of the information you believe is inaccurate and the corrections you would like us to make."
+      },
+      {
+        "title": "Right to Erasure (Right to be Forgotten)",
+        "content": "You have the right to request that we delete your personal data in certain circumstances, such as when the data is no longer necessary for the purposes for which it was collected, you withdraw consent, or you object to processing. Please note that we may need to retain certain information for legal or legitimate business purposes."
+      },
+      {
+        "title": "Right to Restriction of Processing",
+        "content": "You have the right to request that we restrict the processing of your personal data in certain circumstances, such as when you contest the accuracy of the data, the processing is unlawful but you don't want the data erased, or you need the data for legal claims. During the restriction period, we can only store your data and will only process it with your consent."
+      },
+      {
+        "title": "Right to Data Portability",
+        "content": "You have the right to receive your personal data in a structured, commonly used, and machine-readable format and to transmit that data to another controller. This right applies where the processing is based on consent or contract and is carried out by automated means."
+      },
+      {
+        "title": "Right to Object",
+        "content": "You have the right to object to processing of your personal data where we are relying on legitimate interests as the legal basis for processing. You also have the right to object to processing for direct marketing purposes at any time. To exercise this right, please contact us or use the unsubscribe link in our marketing emails."
+      },
+      {
+        "title": "Rights Related to Automated Decision Making",
+        "content": "You have the right not to be subject to decisions based solely on automated processing, including profiling, which produce legal effects or similarly significantly affect you. We do not currently use automated decision-making processes that would have such effects."
+      },
+      {
+        "title": "Right to Withdraw Consent",
+        "content": "Where we process your personal data based on consent, you have the right to withdraw that consent at any time. Withdrawing consent does not affect the lawfulness of processing based on consent before its withdrawal. You can withdraw consent by contacting us or using the unsubscribe mechanism in our communications."
+      },
+      {
+        "title": "Right to Lodge a Complaint",
+        "content": "If you believe that we have not complied with your data protection rights, you have the right to lodge a complaint with the relevant data protection authority. In Switzerland, this is the Federal Data Protection and Information Commissioner (FDPIC). You can also contact your local data protection authority if you are located in the EU/EEA."
+      },
+      {
+        "title": "How to Exercise Your Rights",
+        "content": "To exercise any of the rights described above, please contact us at: Email: privacy@swissalpinejourney.com or via our contact form. Please include your full name, email address used for booking, and a clear description of your request. We will verify your identity before processing your request and respond within 30 days. There is no charge for exercising these rights unless your request is manifestly unfounded or excessive."
+      },
+      {
+        "title": "Data Protection Officer",
+        "content": "For questions specifically related to data protection and your GDPR rights, you can contact our Data Protection Officer at: dpo@swissalpinejourney.com. Our Data Protection Officer is responsible for overseeing our data protection practices and ensuring compliance with GDPR requirements."
+      }
+    ]
+  },
+  "footerText": {
+    "text": "If you have any questions about these legal documents, please",
+    "linkText": "contact us",
+    "linkUrl": "/contact"
+  }
+}

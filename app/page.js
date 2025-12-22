@@ -80,6 +80,7 @@ export default async function HomePage() {
             className="object-cover"
             priority
             sizes="100vw"
+            quality={75}
           />
           <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
         </div>
@@ -114,6 +115,8 @@ export default async function HomePage() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                quality={75}
+                loading="lazy"
               />
             </div>
             <div>

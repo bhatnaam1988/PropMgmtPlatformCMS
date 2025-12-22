@@ -84,7 +84,7 @@ export default async function Graechen() {
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px]" aria-labelledby="hero-heading">
         <Image
-          src="https://images.unsplash.com/photo-1656746618448-944c18bb4bd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxHcmFjaGVuJTIwU3dpdHplcmxhbmQlMjB0b3duJTIwYWxwaW5lJTIwdmlsbGFnZXxlbnwxfHx8fDE3NTkxMTk0ODd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+          src={data.heroSection?.backgroundImage?.asset?.url || "https://images.unsplash.com/photo-1656746618448-944c18bb4bd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxHcmFjaGVuJTIwU3dpdHplcmxhbmQlMjB0b3duJTIwYWxwaW5lJTIwdmlsbGFnZXxlbnwxfHx8fDE3NTkxMTk0ODd8MA&ixlib=rb-4.1.0&q=80&w=1080"}
           alt="Panoramic view of Grächen village"
           fill
           className="object-cover"
@@ -219,7 +219,7 @@ export default async function Graechen() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1700643612355-f6ef344c7b35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXR1bW4lMjBtb3VudGFpbiUyMGhpa2luZyUyMHN3aXR6ZXJsYW5kfGVufDF8fHx8MTc1NzgzOTk5MHww&ixlib=rb-4.1.0&q=80&w=1080"
+                src={data.mountainViewsSection?.image?.asset?.url || "https://images.unsplash.com/photo-1700643612355-f6ef344c7b35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXR1bW4lMjBtb3VudGFpbiUyMGhpa2luZyUyMHN3aXR6ZXJsYW5kfGVufDF8fHx8MTc1NzgzOTk5MHww&ixlib=rb-4.1.0&q=80&w=1080"}
                 alt="Matterhorn views from Grächen"
                 fill
                 className="object-cover"

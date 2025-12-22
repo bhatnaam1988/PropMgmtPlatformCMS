@@ -22,8 +22,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         {/* Preconnect to critical external domains for performance */}
+        <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="preconnect" href="https://cdn.filestackcontent.com" />
         <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.filestackcontent.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <MultipleStructuredData schemas={globalSchemas} />

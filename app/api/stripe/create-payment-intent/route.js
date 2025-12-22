@@ -115,6 +115,7 @@ export async function POST(request) {
           taxBreakdown: JSON.stringify(pricing.taxes),
           grandTotal: pricing.grandTotal.toString(),
           currency: pricing.currency,
+          marketingConsent: marketingConsent ? 'true' : 'false',
         },
         description: `Booking for ${propertyId} from ${checkIn} to ${checkOut}`,
       },

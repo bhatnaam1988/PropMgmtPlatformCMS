@@ -5,6 +5,13 @@
 /* React DatePicker Styles */
 @import 'react-datepicker/dist/react-datepicker.css';
 
+/* Font loading optimization */
+@layer base {
+  * {
+    font-display: swap;
+  }
+}
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
@@ -12,6 +19,7 @@ body {
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-display: swap;
 }
 
 code {
@@ -73,7 +81,7 @@ code {
         --secondary: 210 40% 96.1%;
         --secondary-foreground: 222.2 47.4% 11.2%;
         --muted: 210 40% 96.1%;
-        --muted-foreground: 215.4 16.3% 46.9%;
+        --muted-foreground: 215.4 16.3% 36.9%;
         --accent: 210 40% 96.1%;
         --accent-foreground: 222.2 47.4% 11.2%;
         --destructive: 0 84.2% 60.2%;

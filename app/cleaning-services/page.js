@@ -35,6 +35,15 @@ export default async function CleaningServices() {
     }
   };
   
-  const data = content || fallbackData;
+  // Fix: Check if content has valid data, not just if it exists
+  // Sanity returns empty object {} when document exists but has no content
+  const hasValidContent = content && 
+                          content.heroSection && 
+                          content.heroSection.heading &&
+                          content.servicesGrid &&
+                          content.servicesGrid.services &&
+                          content.servicesGrid.services.length > 0;
+  
+  const data = hasValidContent ? content : fallbackData;
   return <CleaningServicesClient content={data} />;
 }

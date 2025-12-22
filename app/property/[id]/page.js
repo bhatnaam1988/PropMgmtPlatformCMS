@@ -360,14 +360,14 @@ export default function PropertyDetailPage() {
             <div className="lg:col-span-2">
               <div className="mb-8">
                 <h1 className="text-3xl font-light mb-2">{property.name}</h1>
-                <div className="flex items-center gap-4 text-gray-600 mb-4">
+                <div className="flex flex-wrap items-center gap-3 text-gray-600 mb-4">
                   <span className="flex items-center gap-1">
                     <MapPin className="w-4 h-4" />
                     {property.address?.city}, {property.address?.state}
                   </span>
-                  <span className="flex items-center gap-1 bg-black text-white px-3 py-1 rounded-full text-sm">
-                    <Star className="w-4 h-4 fill-current" />
-                    4.9 by verified Airbnb guests
+                  <span className="flex items-center justify-center gap-2 bg-black text-white px-4 py-2 rounded-full text-sm">
+                    <Star className="w-4 h-4 fill-current flex-shrink-0" />
+                    <span className="text-center">4.9 by verified Airbnb guests</span>
                   </span>
                 </div>
                 
@@ -379,10 +379,6 @@ export default function PropertyDetailPage() {
                   <span className="flex items-center gap-2">
                     <Bed className="w-5 h-5" />
                     {property.bedrooms} Bedroom{property.bedrooms > 1 ? 's' : ''}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <Bed className="w-5 h-5" />
-                    {property.beds} Bed{property.beds > 1 ? 's' : ''}
                   </span>
                   <span className="flex items-center gap-2">
                     <Bath className="w-5 h-5" />
@@ -403,15 +399,84 @@ export default function PropertyDetailPage() {
               <div className="mb-8 pb-8 border-b border-gray-200">
                 <h2 className="text-2xl font-light mb-4">Where you'll sleep</h2>
                 <div className="grid md:grid-cols-2 gap-4">
-                  {Array.from({ length: property.bedrooms }).map((_, i) => (
-                    <div key={i} className="border border-gray-200 rounded-2xl p-6">
-                      <Bed className="w-8 h-8 mb-3" />
-                      <h3 className="font-medium mb-1">Bedroom {i + 1}</h3>
-                      <p className="text-gray-600 text-sm">
-                        {i === 0 ? '1 queen bed' : '1 double bed'}
-                      </p>
-                    </div>
-                  ))}
+                  {property.bed_types && property.bed_types.length > 0 ? (
+                    (() => {
+                      // Helper function to format bed type names
+                      const formatBedTypeName = (bedType) => {
+                        const typeMap = {
+                          'sleep_sofa': 'Sofa Bed',
+                          'sofa_bed': 'Sofa Bed',
+                          'double': 'Double Bed',
+                          'queen': 'Queen Bed',
+                          'king': 'King Bed',
+                          'single': 'Single Bed',
+                          'twin': 'Twin Bed',
+                          'bunk': 'Bunk Bed',
+                          'futon': 'Futon'
+                        };
+                        return typeMap[bedType] || bedType.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()) + ' Bed';
+                      };
+                      
+                      // Separate bedroom beds from common area beds
+                      const bedroomBeds = [];
+                      const commonAreaBeds = [];
+                      
+                      property.bed_types.forEach((bedType) => {
+                        // Sleep sofas/futons go in common areas
+                        if (bedType.includes('sofa') || bedType.includes('futon')) {
+                          commonAreaBeds.push(bedType);
+                        } else {
+                          bedroomBeds.push(bedType);
+                        }
+                      });
+                      
+                      // Create bedroom cards (1 card per bedroom, 1 bed per bedroom)
+                      const bedroomCards = [];
+                      for (let i = 0; i < bedroomBeds.length; i++) {
+                        bedroomCards.push({
+                          title: `Bedroom ${i + 1}`,
+                          bedType: bedroomBeds[i]
+                        });
+                      }
+                      
+                      return (
+                        <>
+                          {bedroomCards.map((room, i) => (
+                            <div key={`bedroom-${i}`} className="border border-gray-200 rounded-2xl p-6">
+                              <Bed className="w-8 h-8 mb-3" />
+                              <h3 className="font-medium mb-1">{room.title}</h3>
+                              <p className="text-gray-600 text-sm">
+                                {formatBedTypeName(room.bedType)}
+                              </p>
+                            </div>
+                          ))}
+                          {commonAreaBeds.length > 0 && (
+                            <div key="common-area" className="border border-gray-200 rounded-2xl p-6">
+                              <Bed className="w-8 h-8 mb-3" />
+                              <h3 className="font-medium mb-1">Common Area</h3>
+                              <p className="text-gray-600 text-sm">
+                                {commonAreaBeds.map((bedType, idx) => (
+                                  <span key={idx}>
+                                    {formatBedTypeName(bedType)}
+                                    {idx < commonAreaBeds.length - 1 ? ', ' : ''}
+                                  </span>
+                                ))}
+                              </p>
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()
+                  ) : (
+                    // Fallback to bedroom count if bed_types not available
+                    Array.from({ length: property.bedrooms }).map((_, i) => (
+                      <div key={i} className="border border-gray-200 rounded-2xl p-6">
+                        <Bed className="w-8 h-8 mb-3" />
+                        <h3 className="font-medium mb-1">Bedroom {i + 1}</h3>
+                        <p className="text-gray-600 text-sm">Bed details available upon inquiry</p>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
 
