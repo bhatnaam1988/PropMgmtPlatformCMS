@@ -13,13 +13,18 @@ function LegalClientContent({ content }) {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Handle hash navigation on mount and when URL changes
     const hash = window.location.hash;
     if (hash) {
       const element = document.getElementById(hash.substring(1));
       if (element) {
+        // Wait for the page to render fully before scrolling
         setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+          element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }, 150);
       }
     }
   }, [pathname, searchParams]);
@@ -64,7 +69,7 @@ function LegalClientContent({ content }) {
         </div>
 
         {/* Terms Section */}
-        <section id="terms" className="mb-16">
+        <section id="terms" className="mb-16 scroll-mt-20">
           <Card>
             <CardContent className="p-8">
               <h2 className="mb-6">{content.termsSection?.heading}</h2>
@@ -84,7 +89,7 @@ function LegalClientContent({ content }) {
         </section>
 
         {/* Privacy Section */}
-        <section id="privacy" className="mb-16">
+        <section id="privacy" className="mb-16 scroll-mt-20">
           <Card>
             <CardContent className="p-8">
               <h2 className="mb-6">{content.privacySection?.heading}</h2>
@@ -104,7 +109,7 @@ function LegalClientContent({ content }) {
         </section>
 
         {/* GDPR Section */}
-        <section id="gdpr" className="mb-16">
+        <section id="gdpr" className="mb-16 scroll-mt-20">
           <Card>
             <CardContent className="p-8">
               <h2 className="mb-6">{content.gdprSection?.heading}</h2>
