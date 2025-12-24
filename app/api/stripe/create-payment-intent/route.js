@@ -46,16 +46,33 @@ export async function POST(request) {
     // Fetch property data to get fees and taxes
     const propertyResponse = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/properties/${propertyId}`,
-      { headers: { 'Content-Type': 'application/json' } }
+      { 
+        headers: { 'Content-Type': 'application/json' },
+        cache: 'no-store'
+      }
     );
 
     if (!propertyResponse.ok) {
-      throw new Error('Failed to fetch property data');
+      const errorData = await propertyResponse.json().catch(() => ({ error: 'Unknown error' }));
+      logger.error('Failed to fetch property data', {
+        propertyId,
+        status: propertyResponse.status,
+        error: errorData
+      });
+      
+      return NextResponse.json(
+        { 
+          error: 'Unable to fetch property information. Please try again later.',
+          details: process.env.NODE_ENV === 'development' ? errorData : undefined
+        },
+        { status: 503 }
+      );
     }
 
     const { property } = await propertyResponse.json();
 
     if (!property) {
+      logger.error('Property not found', { propertyId });
       return NextResponse.json(
         { error: 'Property not found' },
         { status: 404 }
