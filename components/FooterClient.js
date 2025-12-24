@@ -48,16 +48,30 @@ export function FooterClient({ brandSection, footerSections, socialMedia, copyri
             <nav key={index} className="min-w-0" aria-labelledby={`footer-${section.title.toLowerCase()}-heading`}>
               <h3 id={`footer-${section.title.toLowerCase()}-heading`} className="font-medium mb-4">{section.title}</h3>
               <ul role="list" className="space-y-2">
-                {section.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <Link 
-                      href={link.url} 
-                      className="block text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
-                    >
-                      {link.text}
-                    </Link>
-                  </li>
-                ))}
+                {section.links.map((link, linkIndex) => {
+                  // Use native <a> for hash links to enable smooth scrolling
+                  const isHashLink = link.url.includes('#');
+                  
+                  return (
+                    <li key={linkIndex}>
+                      {isHashLink ? (
+                        <a 
+                          href={link.url} 
+                          className="block text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                        >
+                          {link.text}
+                        </a>
+                      ) : (
+                        <Link 
+                          href={link.url} 
+                          className="block text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                        >
+                          {link.text}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
           ))}
