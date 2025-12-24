@@ -13,9 +13,17 @@ export async function GET(request, { params }) {
     return NextResponse.json({ property });
   } catch (error) {
     console.error('Error fetching property:', error);
+    
+    // Return appropriate error based on error type
+    const statusCode = error.statusCode || 500;
+    const errorMessage = error.userMessage || 'Failed to fetch property';
+    
     return NextResponse.json(
-      { error: 'Failed to fetch property' },
-      { status: 500 }
+      { 
+        error: errorMessage,
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      },
+      { status: statusCode }
     );
   }
 }
