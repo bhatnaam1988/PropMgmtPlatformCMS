@@ -190,10 +190,25 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    logger.error('Error creating payment intent', error);
+    // Log detailed error information for debugging
+    logger.error('Error creating payment intent', {
+      message: error.message,
+      code: error.code,
+      statusCode: error.statusCode,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
+    
+    // Return user-friendly error message
+    const statusCode = error.statusCode || 500;
+    const errorMessage = error.userMessage || 'Failed to create payment intent. Please try again later.';
+    
     return NextResponse.json(
-      { error: 'Failed to create payment intent. Please try again later.' },
-      { status: 500 }
+      { 
+        error: errorMessage,
+        code: error.code,
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      },
+      { status: statusCode }
     );
   }
 }
