@@ -457,7 +457,7 @@ function CheckoutContent() {
                     }
                   />
                   <label htmlFor="termsAccepted" className="text-sm text-gray-700 cursor-pointer">
-                    I agree to the <Link href="/terms" className="text-blue-600 underline">Terms & Conditions</Link> and <Link href="/privacy" className="text-blue-600 underline">Privacy Policy</Link> *
+                    I agree to the <a href="/legal#terms" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Terms & Conditions</a> and <a href="/legal#privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Privacy Policy</a> *
                   </label>
                 </div>
 
