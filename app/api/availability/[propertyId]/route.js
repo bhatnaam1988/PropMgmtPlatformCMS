@@ -116,10 +116,21 @@ export async function GET(request, { params }) {
       pricing
     });
   } catch (error) {
-    console.error('Error fetching availability:', error);
+    logger.error('Error fetching availability', {
+      propertyId: params.propertyId,
+      message: error.message,
+      statusCode: error.statusCode
+    });
+    
+    const statusCode = error.statusCode || 500;
+    const errorMessage = error.userMessage || 'Failed to fetch availability';
+    
     return NextResponse.json(
-      { error: 'Failed to fetch availability' },
-      { status: 500 }
+      { 
+        error: errorMessage,
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      },
+      { status: statusCode }
     );
   }
 }
