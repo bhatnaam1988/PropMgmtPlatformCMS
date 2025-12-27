@@ -572,40 +572,48 @@ function CheckoutContent() {
                 };
                 
                 return (
-                  <div className="space-y-0 mb-4">
-                    {/* Timeline Item 1 - 100% */}
-                    <div className="flex items-start gap-3 py-3 border-l-2 border-gray-200 pl-4 relative">
-                      <div className="absolute left-[-5px] top-4 w-2 h-2 bg-green-500 rounded-full"></div>
+                  <div className="divide-y divide-gray-100 mb-4">
+                    {/* Row 1 - 100% */}
+                    <div className="flex items-center justify-between py-3">
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900">Before {formatDate(date90DaysBefore)}</p>
-                        <p className="text-sm text-gray-600">100% refund</p>
+                        <p className="text-sm text-gray-600">Before {formatDate(date90DaysBefore)}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-900">100% refund</span>
+                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
                       </div>
                     </div>
                     
-                    {/* Timeline Item 2 - 80% */}
-                    <div className="flex items-start gap-3 py-3 border-l-2 border-gray-200 pl-4 relative">
-                      <div className="absolute left-[-5px] top-4 w-2 h-2 bg-blue-500 rounded-full"></div>
+                    {/* Row 2 - 80% */}
+                    <div className="flex items-center justify-between py-3">
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900">{formatDate(date90DaysBefore)} - {formatDate(date30DaysBefore)}</p>
-                        <p className="text-sm text-gray-600">80% refund</p>
+                        <p className="text-sm text-gray-600">{formatDate(date90DaysBefore)} - {formatDate(date30DaysBefore)}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-900">80% refund</span>
+                        <CheckCircle className="w-4 h-4 text-blue-500 flex-shrink-0" />
                       </div>
                     </div>
                     
-                    {/* Timeline Item 3 - 50% */}
-                    <div className="flex items-start gap-3 py-3 border-l-2 border-gray-200 pl-4 relative">
-                      <div className="absolute left-[-5px] top-4 w-2 h-2 bg-amber-500 rounded-full"></div>
+                    {/* Row 3 - 50% */}
+                    <div className="flex items-center justify-between py-3">
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900">{formatDate(date30DaysBefore)} - {formatDate(date8DaysBefore)}</p>
-                        <p className="text-sm text-gray-600">50% refund</p>
+                        <p className="text-sm text-gray-600">{formatDate(date30DaysBefore)} - {formatDate(date8DaysBefore)}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-900">50% refund</span>
+                        <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0" />
                       </div>
                     </div>
                     
-                    {/* Timeline Item 4 - Non-refundable */}
-                    <div className="flex items-start gap-3 py-3 pl-4 relative">
-                      <div className="absolute left-[-5px] top-4 w-2 h-2 bg-red-500 rounded-full"></div>
+                    {/* Row 4 - Non-refundable */}
+                    <div className="flex items-center justify-between py-3">
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900">After {formatDate(date8DaysBefore)}</p>
-                        <p className="text-sm text-gray-600">Non-refundable</p>
+                        <p className="text-sm text-gray-600">After {formatDate(date8DaysBefore)}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-900">Non-refundable</span>
+                        <XCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
                       </div>
                     </div>
                   </div>
