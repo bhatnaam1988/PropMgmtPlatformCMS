@@ -548,17 +548,48 @@ function CheckoutContent() {
             {/* Cancellation Policy (always visible) */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 className="text-xl font-light mb-4">Cancellation Policy</h2>
-              <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
-                <div>
-                  <p className="text-gray-700 mb-2">
-                    <strong>Free cancellation within 48 hours</strong>
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    Cancel your booking within 48 hours of confirmation for a full refund. 
-                    After 48 hours, cancellation fees may apply.
-                  </p>
+              
+              <div className="space-y-3 mb-4">
+                <div className="flex items-start gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">90+ days before check-in</p>
+                    <p className="text-sm text-gray-600">100% refund</p>
+                  </div>
                 </div>
+                
+                <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">30-89 days before check-in</p>
+                    <p className="text-sm text-gray-600">80% refund</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                  <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">8-29 days before check-in</p>
+                    <p className="text-sm text-gray-600">50% refund</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3 p-3 bg-red-50 rounded-lg border border-red-200">
+                  <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">Less than 8 days before check-in</p>
+                    <p className="text-sm text-gray-600">Non-refundable</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="pt-3 border-t border-gray-200">
+                <p className="text-xs text-gray-500">
+                  Refunds are processed via Stripe to your original payment method. Processing times may vary. 
+                  <a href="/legal#terms" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline ml-1">
+                    View full policy
+                  </a>
+                </p>
               </div>
             </div>
           </div>
