@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import { Home, ArrowLeft, Calendar, Users, MapPin, CheckCircle, AlertCircle } from 'lucide-react';
+import { Home, ArrowLeft, Calendar, Users, MapPin, CheckCircle, AlertCircle, AlertTriangle, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
