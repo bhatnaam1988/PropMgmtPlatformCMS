@@ -549,39 +549,68 @@ function CheckoutContent() {
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 className="text-xl font-light mb-4">Cancellation Policy</h2>
               
-              <div className="space-y-3 mb-4">
-                <div className="flex items-start gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900">90+ days before check-in</p>
-                    <p className="text-sm text-gray-600">100% refund</p>
-                  </div>
-                </div>
+              {checkIn && (() => {
+                const checkInDate = new Date(checkIn);
                 
-                <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900">30-89 days before check-in</p>
-                    <p className="text-sm text-gray-600">80% refund</p>
-                  </div>
-                </div>
+                // Calculate threshold dates (subtracting days from check-in)
+                const date90DaysBefore = new Date(checkInDate);
+                date90DaysBefore.setDate(checkInDate.getDate() - 90);
                 
-                <div className="flex items-start gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                  <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900">8-29 days before check-in</p>
-                    <p className="text-sm text-gray-600">50% refund</p>
-                  </div>
-                </div>
+                const date30DaysBefore = new Date(checkInDate);
+                date30DaysBefore.setDate(checkInDate.getDate() - 30);
                 
-                <div className="flex items-start gap-3 p-3 bg-red-50 rounded-lg border border-red-200">
-                  <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900">Less than 8 days before check-in</p>
-                    <p className="text-sm text-gray-600">Non-refundable</p>
+                const date8DaysBefore = new Date(checkInDate);
+                date8DaysBefore.setDate(checkInDate.getDate() - 8);
+                
+                // Format dates for display
+                const formatDate = (date) => {
+                  return date.toLocaleDateString('en-GB', { 
+                    day: 'numeric', 
+                    month: 'short', 
+                    year: 'numeric' 
+                  });
+                };
+                
+                return (
+                  <div className="space-y-3 mb-4">
+                    {/* Green Tier - 90+ days */}
+                    <div className="flex items-start gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-900">100% refund</p>
+                        <p className="text-sm text-gray-600">Before {formatDate(date90DaysBefore)}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Blue Tier - 30-89 days */}
+                    <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-900">80% refund</p>
+                        <p className="text-sm text-gray-600">Between {formatDate(date90DaysBefore)} - {formatDate(date30DaysBefore)}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Yellow Tier - 8-29 days */}
+                    <div className="flex items-start gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                      <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-900">50% refund</p>
+                        <p className="text-sm text-gray-600">Between {formatDate(date30DaysBefore)} - {formatDate(date8DaysBefore)}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Red Tier - Less than 8 days */}
+                    <div className="flex items-start gap-3 p-3 bg-red-50 rounded-lg border border-red-200">
+                      <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-900">Non-refundable</p>
+                        <p className="text-sm text-gray-600">After {formatDate(date8DaysBefore)}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                );
+              })()}
               
               <div className="pt-3 border-t border-gray-200">
                 <p className="text-xs text-gray-500">
