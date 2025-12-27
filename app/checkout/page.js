@@ -572,40 +572,40 @@ function CheckoutContent() {
                 };
                 
                 return (
-                  <div className="space-y-3 mb-4">
-                    {/* Green Tier - 90+ days */}
-                    <div className="flex items-start gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                  <div className="space-y-0 mb-4">
+                    {/* Timeline Item 1 - 100% */}
+                    <div className="flex items-start gap-3 py-3 border-l-2 border-gray-200 pl-4 relative">
+                      <div className="absolute left-[-5px] top-4 w-2 h-2 bg-green-500 rounded-full"></div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900">100% refund</p>
-                        <p className="text-sm text-gray-600">Before {formatDate(date90DaysBefore)}</p>
+                        <p className="text-sm font-medium text-gray-900">Before {formatDate(date90DaysBefore)}</p>
+                        <p className="text-sm text-gray-600">100% refund</p>
                       </div>
                     </div>
                     
-                    {/* Blue Tier - 30-89 days */}
-                    <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                      <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                    {/* Timeline Item 2 - 80% */}
+                    <div className="flex items-start gap-3 py-3 border-l-2 border-gray-200 pl-4 relative">
+                      <div className="absolute left-[-5px] top-4 w-2 h-2 bg-blue-500 rounded-full"></div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900">80% refund</p>
-                        <p className="text-sm text-gray-600">Between {formatDate(date90DaysBefore)} - {formatDate(date30DaysBefore)}</p>
+                        <p className="text-sm font-medium text-gray-900">{formatDate(date90DaysBefore)} - {formatDate(date30DaysBefore)}</p>
+                        <p className="text-sm text-gray-600">80% refund</p>
                       </div>
                     </div>
                     
-                    {/* Yellow Tier - 8-29 days */}
-                    <div className="flex items-start gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                      <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+                    {/* Timeline Item 3 - 50% */}
+                    <div className="flex items-start gap-3 py-3 border-l-2 border-gray-200 pl-4 relative">
+                      <div className="absolute left-[-5px] top-4 w-2 h-2 bg-amber-500 rounded-full"></div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900">50% refund</p>
-                        <p className="text-sm text-gray-600">Between {formatDate(date30DaysBefore)} - {formatDate(date8DaysBefore)}</p>
+                        <p className="text-sm font-medium text-gray-900">{formatDate(date30DaysBefore)} - {formatDate(date8DaysBefore)}</p>
+                        <p className="text-sm text-gray-600">50% refund</p>
                       </div>
                     </div>
                     
-                    {/* Red Tier - Less than 8 days */}
-                    <div className="flex items-start gap-3 p-3 bg-red-50 rounded-lg border border-red-200">
-                      <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                    {/* Timeline Item 4 - Non-refundable */}
+                    <div className="flex items-start gap-3 py-3 pl-4 relative">
+                      <div className="absolute left-[-5px] top-4 w-2 h-2 bg-red-500 rounded-full"></div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900">Non-refundable</p>
-                        <p className="text-sm text-gray-600">After {formatDate(date8DaysBefore)}</p>
+                        <p className="text-sm font-medium text-gray-900">After {formatDate(date8DaysBefore)}</p>
+                        <p className="text-sm text-gray-600">Non-refundable</p>
                       </div>
                     </div>
                   </div>
